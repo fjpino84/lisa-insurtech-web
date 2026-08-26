@@ -1002,3 +1002,84 @@
 .closing {
   padding-block: var(--s-8) var(--s-9);
 }
+
+/* ==========================================================================
+   Visión y misión
+   ========================================================================== */
+
+.purpose {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+
+.purpose__card {
+  padding: var(--s-5);
+  background: var(--g-surface);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-lg);
+  transition: border-color var(--t-fast), transform var(--t-fast);
+}
+
+.purpose__card:hover {
+  transform: translateY(-0.3rem);
+}
+
+.purpose__icon {
+  display: grid;
+  place-items: center;
+  width: 4.6rem;
+  height: 4.6rem;
+  border-radius: var(--r-md);
+}
+
+.purpose__label {
+  margin-top: var(--s-4);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.purpose__text {
+  margin-top: var(--s-3);
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+}
+
+/* La visión mira adelante: calipso. */
+.purpose__card--vision .purpose__icon {
+  color: var(--c-cyan);
+  background-color: rgba(34, 211, 238, 0.1);
+  border: 0.1rem solid rgba(34, 211, 238, 0.28);
+}
+
+.purpose__card--vision .purpose__label {
+  color: var(--c-cyan);
+}
+
+.purpose__card--vision:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+/* La misión es el trabajo diario: violeta. */
+.purpose__card--mision .purpose__icon {
+  color: #a78bfa;
+  background-color: rgba(167, 139, 250, 0.1);
+  border: 0.1rem solid rgba(167, 139, 250, 0.3);
+}
+
+.purpose__card--mision .purpose__label {
+  color: #a78bfa;
+}
+
+.purpose__card--mision:hover {
+  border-color: rgba(167, 139, 250, 0.42);
+}
+
+@media (max-width: 760px) {
+  .purpose {
+    grid-template-columns: 1fr;
+  }
+}

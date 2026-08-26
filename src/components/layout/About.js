@@ -1,5 +1,6 @@
 import { h } from "../../vendor/preact.js";
 import { Flag } from "../shared/Flag.js";
+import { Icon } from "../shared/Icon.js";
 import { ABOUT } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
 
@@ -18,12 +19,30 @@ export function About() {
     "section",
     { class: `about-blocks ${visible ? "is-visible" : ""}`, id: "somos", ref },
 
+    // Reseña de la compañía.
     h(
       "article",
       { class: "about-block" },
-      h("p", { class: "u-eyebrow" }, "Nuestra misión"),
-      h("h2", { class: "about-block__title" }, ABOUT.mision.title),
-      h("p", { class: "about-block__text" }, ABOUT.mision.text)
+      h("p", { class: "u-eyebrow" }, "Quiénes somos"),
+      h("h2", { class: "about-block__title" }, ABOUT.resena.title),
+      ABOUT.resena.paragraphs.map((texto, i) =>
+        h("p", { key: i, class: "about-block__text" }, texto)
+      )
+    ),
+
+    // Visión y misión, una junto a la otra.
+    h(
+      "div",
+      { class: "purpose" },
+      ABOUT.proposito.map((p) =>
+        h(
+          "article",
+          { key: p.id, class: `purpose__card purpose__card--${p.id}` },
+          h("span", { class: "purpose__icon" }, h(Icon, { name: p.icon, size: 22 })),
+          h("h3", { class: "purpose__label" }, p.label),
+          h("p", { class: "purpose__text" }, p.text)
+        )
+      )
     ),
 
     h(

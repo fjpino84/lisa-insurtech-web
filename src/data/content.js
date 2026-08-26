@@ -182,10 +182,30 @@ export const VALUES = {
 
 /** Misión y presencia, para la sección "Somos LISA". */
 export const ABOUT = {
-  mision: {
+  /** Reseña que abre la sección. */
+  resena: {
     title: "Transformamos la gestión de siniestros con inteligencia artificial",
-    text: "LISA es una Insurtech creada con la misión de innovar y transformar la industria aseguradora.",
+    paragraphs: [
+      "LISA es una Insurtech con más de 5 años en el mercado, desarrollando tecnologías que optimizan la industria aseguradora mediante la combinación de inteligencia artificial e inteligencia humana.",
+      "Entrenamos constantemente nuevos modelos de IA generativa, respaldados por expertos en tecnología, ciberseguridad y seguros con más de 15 años de experiencia, lo que nos permite hablar el idioma de la industria y garantizar el éxito en la implementación de nuestros proyectos.",
+    ],
   },
+
+  /** Visión y misión, una junto a la otra. */
+  proposito: [
+    {
+      id: "vision",
+      label: "Visión",
+      icon: "eye",
+      text: "Ser la empresa líder del ecosistema asegurador aplicando tecnología de vanguardia.",
+    },
+    {
+      id: "mision",
+      label: "Misión",
+      icon: "spark",
+      text: "Generar eficiencias en el ecosistema asegurador, aplicando inteligencia artificial para lograr la automatización de procesos que impacten en la satisfacción de los asegurados.",
+    },
+  ],
   presencia: {
     eyebrow: "Regional Presence",
     title: "Dónde estamos",
