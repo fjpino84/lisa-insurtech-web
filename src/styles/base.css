@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Reset y estilos base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 1rem = 10px */
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--f-sans);
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--c-text);
+  background-color: var(--c-bg-deep);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--f-display);
+  line-height: 1.15;
+  /* Sora se usa sin negrita: la jerarquía la marca el tamaño. */
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 0.2rem solid var(--c-cyan);
+  outline-offset: 0.3rem;
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background-color: rgba(34, 211, 238, 0.3);
+  color: var(--c-text);
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 1rem;
+  height: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-surface-2);
+  border-radius: var(--r-full);
+  border: 0.2rem solid var(--c-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-cyan-deep);
+}
+
+/* --- Utilidades --- */
+.u-visually-hidden {
+  position: absolute;
+  width: 0.1rem;
+  height: 0.1rem;
+  padding: 0;
+  margin: -0.1rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.u-container {
+  width: 100%;
+  max-width: var(--w-content);
+  margin-inline: auto;
+  padding-inline: var(--s-5);
+}
+
+.u-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+}
+
+.u-eyebrow::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 1rem currentColor;
+}
+
+.u-gradient-text {
+  background: var(--g-text-cyan);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.u-mono {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Accesibilidad: respetar reducción de movimiento --- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

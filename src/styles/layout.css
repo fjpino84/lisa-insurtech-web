@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Estructura: shell, barra superior y pie
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--s-4);
+  z-index: 200;
+  padding: var(--s-3) var(--s-4);
+  background-color: var(--c-cyan);
+  color: #041019;
+  font-weight: 600;
+  border-radius: 0 0 var(--r-md) var(--r-md);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
+/* La animación de entrada no debe dejar un `transform` residual: eso
+   crearía un contexto que ancla los elementos fijos a la vista en lugar
+   de a la ventana. Por eso se anima solo la opacidad. */
+.view {
+  animation: view-in var(--t-slow) both;
+}
+
+.view--inner {
+  /* El menú superior es fijo: se reserva su altura más un margen de aire. */
+  padding-top: calc(var(--h-topbar) + var(--s-7));
+  padding-bottom: var(--s-8);
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Marca
+   ========================================================================== */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* El logotipo original ya contiene el isotipo y el texto "LISA Insurtech". */
+.logo__img {
+  width: auto;
+  filter: drop-shadow(0 0.2rem 0.8rem rgba(34, 211, 238, 0.2));
+}
+
+.logo--sm .logo__img { height: 7.2rem; }
+.logo--md .logo__img { height: 5rem; }
+.logo--lg .logo__img { height: 7.2rem; }
+
+/* Variante de solo isotipo, para espacios reducidos. */
+.logo--mark-only.logo--sm .logo__img { height: 3rem; }
+.logo--mark-only.logo--md .logo__img { height: 3.8rem; }
+
+/* ==========================================================================
+   Barra superior
+   ========================================================================== */
+
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-topbar);
+  transition: background-color var(--t-base), border-color var(--t-base), backdrop-filter var(--t-base);
+  border-bottom: 0.1rem solid transparent;
+}
+
+.topbar.is-scrolled {
+  background-color: rgba(10, 20, 36, 0.82);
+  backdrop-filter: blur(1.6rem) saturate(140%);
+  border-bottom-color: var(--c-border);
+}
+
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  width: 100%;
+  max-width: var(--w-content);
+  margin-inline: auto;
+  padding: var(--s-3) var(--s-5);
+  min-height: var(--h-topbar);
+}
+
+.topbar__brand {
+  flex-shrink: 0;
+}
+
+.topbar__nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.topbar__list {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.topbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--c-text-soft);
+  border-radius: var(--r-md);
+  position: relative;
+  transition: color var(--t-fast), background-color var(--t-fast);
+}
+
+.topbar__link:hover {
+  color: var(--c-text);
+  background-color: rgba(120, 170, 210, 0.08);
+}
+
+.topbar__link.is-active {
+  color: var(--c-cyan);
+}
+
+.topbar__link.is-active::after {
+  content: "";
+  position: absolute;
+  left: var(--s-3);
+  right: var(--s-3);
+  bottom: 0.2rem;
+  height: 0.2rem;
+  background: var(--g-cyan);
+  border-radius: var(--r-full);
+}
+
+.topbar__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #04141c;
+  background: var(--g-cyan);
+  border-radius: var(--r-md);
+  box-shadow: var(--glow-cyan-soft);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.topbar__cta:hover {
+  transform: translateY(-0.2rem);
+  box-shadow: var(--glow-cyan);
+}
+
+.topbar__burger {
+  display: none;
+  padding: var(--s-2);
+  color: var(--c-text);
+  border-radius: var(--r-sm);
+}
+
+.topbar__mobile {
+  display: none;
+  padding: var(--s-3) var(--s-5) var(--s-5);
+  background-color: rgba(10, 20, 36, 0.97);
+  backdrop-filter: blur(1.6rem);
+  border-bottom: 0.1rem solid var(--c-border);
+}
+
+.topbar__mobile-link {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3);
+  font-size: 1.6rem;
+  color: var(--c-text-soft);
+  border-radius: var(--r-md);
+}
+
+.topbar__mobile-link.is-active {
+  color: var(--c-cyan);
+  background-color: rgba(34, 211, 238, 0.1);
+}
+
+/* ==========================================================================
+   Pie de página
+   ========================================================================== */
+
+.footer {
+  border-top: 0.1rem solid var(--c-border);
+  background-color: var(--c-bg-deep);
+  padding-block: var(--s-6);
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.footer__legal {
+  margin-top: var(--s-2);
+  font-size: 1.3rem;
+  color: var(--c-cyan-deep);
+}
+
+.footer__nav ul,
+.footer__social {
+  display: flex;
+  gap: var(--s-5);
+  font-size: 1.4rem;
+  color: var(--c-text-mute);
+}
+
+.footer__nav a:hover,
+.footer__social a:hover {
+  color: var(--c-cyan);
+}
+
+/* ==========================================================================
+   Cabeceras de sección internas
+   ========================================================================== */
+
+.page {
+  width: 100%;
+  max-width: 128rem;
+  margin-inline: auto;
+  padding-inline: var(--s-5);
+  /* El menú es fijo: evita que el anclaje por hash oculte el inicio. */
+  scroll-margin-top: calc(var(--h-topbar) + var(--s-5));
+}
+
+.page__head {
+  max-width: 82rem;
+  margin-bottom: var(--s-6);
+}
+
+.page__title {
+  margin-top: var(--s-3);
+  font-size: clamp(3.4rem, 5vw, 5.4rem);
+  font-weight: 400;
+}
+
+.page__lead {
+  margin-top: var(--s-4);
+  font-size: 1.8rem;
+  line-height: 1.65;
+  color: var(--c-text-soft);
+}
+
+.section-head {
+  max-width: 76rem;
+  margin-bottom: var(--s-7);
+}
+
+.section-head__title {
+  margin-top: var(--s-3);
+  font-size: clamp(3rem, 4.2vw, 4.6rem);
+  /* Mismo criterio que el titular de portada: la escala manda, no el grosor. */
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+/* La palabra destacada gana algo de peso para sostener el color. */
+.section-head__title .u-gradient-text {
+  font-weight: 600;
+}

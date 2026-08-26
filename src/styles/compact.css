@@ -1,0 +1,347 @@
+/* ==========================================================================
+   Demostraciones compactas
+   Objetivo: que todo el proceso quepa en una pantalla, sin desplazamiento.
+   Se reparte el cuerpo en tres columnas y se ajusta la escala interna.
+   ========================================================================== */
+
+/* --- Cuerpo en tres columnas de igual peso --- */
+.demo__body {
+  grid-template-columns: 1fr 1.15fr 1.15fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+
+/* Los paneles de LISai y LISux dejan de apilarse: cada uno es una columna. */
+.demo__stack {
+  display: contents;
+}
+
+/* --- Escala interna más contenida --- */
+.demo {
+  padding: var(--s-4);
+}
+
+.demo .panel {
+  padding: var(--s-4);
+}
+
+.demo .panel__head {
+  margin-bottom: var(--s-3);
+}
+
+.demo .panel__icon {
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.demo .panel__title {
+  font-size: 1.5rem;
+}
+
+.demo .panel__sub {
+  font-size: 1.2rem;
+}
+
+/* --- Barra de proceso --- */
+.pipeline {
+  margin-block: var(--s-4);
+  padding: var(--s-4) var(--s-3);
+}
+
+.pipeline__marker {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.pipeline__track {
+  top: 1.8rem;
+  left: calc(50% + 2.2rem);
+  right: calc(-50% + 2.2rem);
+}
+
+.pipeline__label {
+  font-size: 1.1rem;
+}
+
+/* --- Controles --- */
+.demo__controls {
+  margin-bottom: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+}
+
+.demo__stage-info strong {
+  font-size: 1.45rem;
+}
+
+.demo__stage-info span {
+  font-size: 1.25rem;
+}
+
+/* --- Documentos --- */
+.doc {
+  padding: var(--s-2);
+  gap: var(--s-2);
+}
+
+.doc__thumb {
+  width: 3.4rem;
+  height: 4.2rem;
+}
+
+.doc__name {
+  font-size: 1.25rem;
+}
+
+.doc__meta {
+  font-size: 1.1rem;
+}
+
+.doc__state {
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+}
+
+.doc-list {
+  gap: var(--s-2);
+}
+
+/* --- Campos extraídos: una columna dentro de su panel --- */
+.fields {
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+
+.field {
+  padding: var(--s-2) var(--s-3);
+}
+
+.field__value {
+  font-size: 1.45rem;
+  margin-top: 0.2rem;
+}
+
+.field__label {
+  font-size: 1.05rem;
+}
+
+.field__skeleton {
+  height: 1.8rem;
+}
+
+/* --- Reglas de negocio --- */
+.rule {
+  padding: var(--s-2) var(--s-3);
+  gap: var(--s-2);
+}
+
+.rule__label {
+  font-size: 1.3rem;
+}
+
+.rule__detail {
+  font-size: 1.1rem;
+}
+
+.rule__result {
+  font-size: 1.1rem;
+}
+
+.rule__marker {
+  width: 2rem;
+  height: 2rem;
+}
+
+.rules {
+  gap: var(--s-2);
+}
+
+/* --- Encabezado de la solución --- */
+.solution-intro {
+  margin-bottom: var(--s-4);
+}
+
+.solution-intro__text {
+  font-size: 1.45rem;
+  line-height: 1.6;
+}
+
+.demo-header__icon {
+  width: 4.6rem;
+  height: 4.6rem;
+}
+
+.demo-header__name {
+  font-size: clamp(2.2rem, 2.8vw, 2.8rem);
+}
+
+/* ==========================================================================
+   vigIA: el documento manda, por lo que conserva dos columnas
+   ========================================================================== */
+
+.demo__body--fwa {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+
+.demo--fwa .demo__col {
+  gap: var(--s-3);
+}
+
+.demo--fwa .signal {
+  padding: var(--s-2);
+}
+
+.demo--fwa .signal__label {
+  font-size: 1.3rem;
+}
+
+.demo--fwa .signal__detail {
+  font-size: 1.15rem;
+}
+
+.demo--fwa .validation {
+  padding: var(--s-3);
+}
+
+.demo--fwa .validation__text {
+  font-size: 1.3rem;
+}
+
+.demo--fwa .score__value {
+  font-size: 3.6rem;
+}
+
+.demo--fwa .score__facts dd {
+  font-size: 1.35rem;
+}
+
+.demo--fwa .related__item {
+  padding: var(--s-2) var(--s-3);
+}
+
+.demo--fwa .related__name {
+  font-size: 1.3rem;
+}
+
+.demo--fwa .related__meta {
+  font-size: 1.1rem;
+}
+
+.demo--fwa .meta-list li {
+  padding: var(--s-2) var(--s-3);
+}
+
+.demo--fwa .meta-list__label,
+.demo--fwa .meta-list__value {
+  font-size: 1.25rem;
+}
+
+.demo--fwa .meta-conclusion {
+  font-size: 1.25rem;
+  padding: var(--s-2) var(--s-3);
+}
+
+.demo--fwa .pattern__text {
+  font-size: 1.25rem;
+}
+
+/* ==========================================================================
+   Reparto en pantallas menores: se recupera el apilado
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .demo__body {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Los paneles vuelven a formar columna para no quedar demasiado estrechos. */
+  .demo__stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+}
+
+@media (max-width: 900px) {
+  .demo__body,
+  .demo__body--fwa {
+    grid-template-columns: 1fr;
+  }
+
+  .demo__stack {
+    display: contents;
+  }
+}
+
+/* --- Ajuste fino: el bloque completo debe caber bajo el menú --- */
+.page--solutions .solution-intro {
+  margin-bottom: var(--s-3);
+}
+
+.solution-intro .demo-header {
+  margin-bottom: var(--s-2);
+}
+
+.demo-header__icon {
+  width: 4rem;
+  height: 4rem;
+}
+
+.demo-header__name {
+  font-size: clamp(2rem, 2.4vw, 2.4rem);
+}
+
+.demo-header__tagline {
+  font-size: 1.3rem;
+}
+
+/* La descripción se limita a un ancho cómodo de lectura. */
+.solution-intro__text {
+  max-width: 96ch;
+  font-size: 1.4rem;
+}
+
+/* Las vistas internas ajustan su separación superior. */
+.page--solutions {
+  padding-top: 0;
+}
+
+.view--inner:has(.page--solutions) {
+  padding-top: calc(var(--h-topbar) + var(--s-5));
+  padding-bottom: var(--s-6);
+}
+
+/* --- Los tres paneles comparten alto para una lectura ordenada --- */
+.demo--claims .demo__body {
+  align-items: stretch;
+}
+
+.demo--claims .demo__body > .panel,
+.demo--claims .demo__stack > .panel {
+  height: 100%;
+}
+
+/* El contenido se reparte para que el panel llene su alto sin estirar filas. */
+.demo--claims .panel--docs,
+.demo--claims .panel--lisai,
+.demo--claims .panel--lisux {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo--claims .panel--docs .doc-list,
+.demo--claims .panel--lisux .rules {
+  flex: 1;
+}
+
+/* El aviso de espera se centra en el espacio disponible. */
+.demo--claims .panel__empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+
+.demo--claims .panel--lisai .fields {
+  align-content: start;
+}

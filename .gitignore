@@ -1,0 +1,15 @@
+# Material de origen: no forma parte del sitio publicado
+/Design/
+/Equipo/
+/Logo/
+/Premios/
+/Correcciones.md
+/Lisaweb.md
+
+# Artefactos de trabajo
+/lisa-insurtech.html
+node_modules/
+Captura*.png
+*_out.html
+.DS_Store
+Thumbs.db

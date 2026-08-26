@@ -1,0 +1,612 @@
+/* ==========================================================================
+   Gráficos de patrones de LISA vigIA
+   Dispersión de montos y grafo de coalición, cada uno a media pantalla.
+   ========================================================================== */
+
+.chart {
+  position: relative;
+  margin-top: var(--s-3);
+}
+
+.chart__svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  display: block;
+}
+
+/* --- Dispersión --- */
+.chart__band {
+  fill: var(--c-cyan);
+}
+
+.chart__grid {
+  stroke: rgba(120, 170, 210, 0.12);
+  stroke-width: 1;
+}
+
+.chart__tick {
+  fill: var(--c-text-faint);
+  font-family: var(--f-mono);
+  font-size: 12px;
+}
+
+.chart__mean {
+  stroke: var(--c-cyan);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+.chart__mean-label {
+  fill: var(--c-cyan);
+  font-family: var(--f-mono);
+  font-size: 12px;
+}
+
+.chart__axis {
+  stroke: rgba(120, 170, 210, 0.25);
+}
+
+.chart__axis-title {
+  fill: var(--c-text-mute);
+  font-size: 12px;
+}
+
+.chart__dot {
+  fill: rgba(56, 132, 168, 0.55);
+  stroke: var(--c-cyan);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill var(--t-fast);
+}
+
+.chart__dot:hover {
+  fill: var(--c-cyan);
+}
+
+.chart__dot--out {
+  fill: var(--c-danger);
+  stroke: var(--c-bg-deep);
+  stroke-width: 2;
+}
+
+.chart__dot--out.is-current {
+  filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.8));
+}
+
+.chart__halo {
+  fill: var(--c-danger);
+  opacity: 0.18;
+}
+
+/* Línea que enfatiza la distancia respecto del promedio. */
+.chart__drop {
+  stroke: var(--c-danger);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.5;
+}
+
+.chart__tag {
+  fill: var(--c-danger);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  font-size: 1.2rem;
+  color: var(--c-text-mute);
+}
+
+.chart__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.chart__key::before {
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+}
+
+.chart__key--band::before {
+  border-radius: 0.3rem;
+  background-color: rgba(34, 211, 238, 0.25);
+}
+
+.chart__key--out::before {
+  background-color: var(--c-danger);
+}
+
+.chart__key--cur::before {
+  background-color: var(--c-danger);
+  box-shadow: 0 0 0.6rem var(--c-danger);
+}
+
+/* --- Grafo de coalición --- */
+.graph-ring {
+  fill: none;
+  stroke: rgba(120, 170, 210, 0.14);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+
+.graph-edge {
+  stroke: var(--c-purple-light);
+  opacity: 0.45;
+  stroke-linecap: round;
+}
+
+.graph-edge.is-current {
+  stroke: var(--c-danger);
+  opacity: 0.9;
+}
+
+.graph-visits {
+  fill: var(--c-text-mute);
+  font-family: var(--f-mono);
+  font-size: 12px;
+}
+
+.graph-visits.is-current {
+  fill: var(--c-danger);
+  font-weight: 600;
+}
+
+.graph-node {
+  cursor: pointer;
+}
+
+.graph-node__dot {
+  fill: var(--c-surface);
+  stroke: var(--c-purple-light);
+  stroke-width: 2;
+  transition: fill var(--t-fast);
+}
+
+.graph-node:hover .graph-node__dot {
+  fill: var(--c-surface-2);
+}
+
+.graph-node.is-current .graph-node__dot {
+  fill: rgba(248, 113, 113, 0.18);
+  stroke: var(--c-danger);
+  stroke-width: 2.5;
+}
+
+.graph-node__label {
+  fill: var(--c-text-soft);
+  font-size: 13px;
+}
+
+.graph-node.is-current .graph-node__label {
+  fill: var(--c-danger);
+  font-weight: 700;
+}
+
+.graph-hub {
+  fill: rgba(248, 113, 113, 0.16);
+  stroke: var(--c-danger);
+  stroke-width: 2.5;
+}
+
+.graph-hub__initials {
+  fill: var(--c-danger);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.graph-hub__label {
+  fill: var(--c-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.graph-hub__meta {
+  fill: var(--c-text-faint);
+  font-family: var(--f-mono);
+  font-size: 11px;
+}
+
+/* --- Globo informativo --- */
+.tooltip {
+  position: absolute;
+  z-index: 20;
+  width: 24rem;
+  padding: var(--s-3);
+  background-color: rgba(6, 13, 26, 0.97);
+  border: 0.1rem solid var(--c-border-strong);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-md);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+
+.tooltip.is-visible {
+  opacity: 1;
+}
+
+.tooltip__title {
+  margin-bottom: var(--s-2);
+  padding-bottom: var(--s-2);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--c-text);
+  border-bottom: 0.1rem solid var(--c-border);
+}
+
+.tooltip__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  font-size: 1.2rem;
+  line-height: 1.9;
+}
+
+.tooltip__key {
+  color: var(--c-text-faint);
+}
+
+.tooltip__value {
+  color: var(--c-text);
+  font-family: var(--f-mono);
+}
+
+/* --- Cada gráfico ocupa media pantalla --- */
+.patterns__charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+
+/* El panel de patrones va fuera de las columnas: usa todo el ancho. */
+.panel--patterns {
+  margin-top: var(--s-4);
+}
+
+@media (max-width: 1100px) {
+  .patterns__charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Barra de control fija: fase, puntaje y avance siempre a la vista
+   ========================================================================== */
+
+/* Anclada a la ventana, no al contenedor: el recorrido y el botón de
+   avance quedan siempre a la vista, por largo que sea el contenido. */
+.deck {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  max-width: var(--w-content);
+  margin-inline: auto;
+  padding: var(--s-3) var(--s-5);
+  background-color: var(--c-bg-deep);
+  box-shadow: 0 -0.8rem 3.2rem rgba(0, 0, 0, 0.45);
+  animation: deck-in var(--t-base) both;
+}
+
+@keyframes deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Se reserva el alto de la barra para que no tape el final del contenido. */
+.demo--fwa {
+  padding-bottom: 9rem;
+}
+
+/* Puntos de fase: estado del recorrido de un vistazo. */
+.deck__steps {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-shrink: 0;
+}
+
+.deck__step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.deck__dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: rgba(120, 170, 210, 0.25);
+  transition: background-color var(--t-base), box-shadow var(--t-base);
+}
+
+.deck__step.is-done .deck__dot {
+  background-color: var(--c-danger);
+}
+
+.deck__step.is-current .deck__dot {
+  background-color: var(--c-danger);
+  box-shadow: 0 0 0 0.4rem rgba(248, 113, 113, 0.22);
+}
+
+.deck__line {
+  width: 2.4rem;
+  height: 0.2rem;
+  background-color: rgba(120, 170, 210, 0.2);
+}
+
+.deck__step.is-done + .deck__line,
+.deck__line.is-done {
+  background-color: var(--c-danger);
+}
+
+.deck__phase {
+  flex: 1;
+  min-width: 0;
+}
+
+.deck__phase-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deck__phase-hint {
+  font-size: 1.15rem;
+  color: var(--c-text-mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Puntaje en vivo, siempre visible. */
+.deck__score {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  background-color: rgba(6, 13, 26, 0.6);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-md);
+  flex-shrink: 0;
+}
+
+.deck__score-label {
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+}
+
+.deck__score-value {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.deck__score-value--bajo { color: var(--c-success); }
+.deck__score-value--medio { color: var(--c-warning); }
+.deck__score-value--alto { color: var(--c-danger); }
+
+.deck__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .deck {
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+
+  .deck__steps {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .deck__phase {
+    order: 1;
+  }
+
+  .deck__actions {
+    order: 2;
+  }
+}
+
+/* ==========================================================================
+   Los controles de clAIms comparten el comportamiento de la barra fija:
+   la acción siguiente nunca queda fuera de la vista.
+   ========================================================================== */
+
+.demo--claims .demo__controls {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  width: 100%;
+  max-width: var(--w-content);
+  margin-inline: auto;
+  margin-bottom: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--c-bg-deep);
+  box-shadow: 0 -0.8rem 3.2rem rgba(0, 0, 0, 0.45);
+  animation: deck-in var(--t-base) both;
+}
+
+/* Se reserva su alto para que no tape el final del contenido. */
+.demo--claims {
+  padding-bottom: 10rem;
+}
+
+/* --- El mensaje que cierra el motor de reglas --- */
+.rules__ready {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--c-success);
+  background-color: var(--c-success-bg);
+  border: 0.1rem solid rgba(52, 211, 153, 0.3);
+  border-radius: var(--r-md);
+  animation: field-in var(--t-base) both;
+}
+
+.rules__ready svg {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   El pie no debe quedar bajo la barra fija de las demostraciones.
+   ========================================================================== */
+
+body[data-route="soluciones"] .footer {
+  padding-bottom: calc(var(--s-6) + 9rem);
+}
+
+/* El pie no debe crear contexto de apilamiento propio: si lo hace, compite
+   con la barra fija y acaba tapándola al llegar al final de la página. */
+.footer {
+  position: static;
+}
+
+/* --- Documento pendiente: se puede pulsar para retomar la subida --- */
+.doc__button {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* El aviso de acción aparece a la derecha de la tarjeta. */
+.doc__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  padding: 0.4rem var(--s-2);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1204;
+  background-color: var(--c-warning);
+  border-radius: var(--r-sm);
+  flex-shrink: 0;
+  transition: transform var(--t-fast);
+}
+
+.doc--pendiente {
+  cursor: pointer;
+  animation: doc-wait 2.4s ease-in-out infinite;
+}
+
+.doc--pendiente:hover {
+  border-color: var(--c-warning);
+  background-color: rgba(251, 191, 36, 0.12);
+}
+
+.doc--pendiente:hover .doc__action {
+  transform: translateX(0.2rem);
+}
+
+/* Latido suave que señala que falta una acción del visitante. */
+@keyframes doc-wait {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+  }
+  50% {
+    box-shadow: 0 0 1.6rem 0 rgba(251, 191, 36, 0.25);
+  }
+}
+
+/* --- Llamada a la acción hacia vigIA --- */
+
+/* Fondo oscuro: permite que el calipso destaque dentro del propio botón. */
+.handoff__btn {
+  gap: var(--s-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-text);
+  background: linear-gradient(135deg, var(--c-surface) 0%, var(--c-bg-deep) 100%);
+  border: 0.1rem solid var(--c-cyan-deep);
+  box-shadow: var(--glow-cyan-soft);
+}
+
+.handoff__btn:hover:not(:disabled) {
+  border-color: var(--c-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.handoff__btn svg {
+  color: var(--c-cyan);
+}
+
+.handoff__strong {
+  font-weight: 700;
+  color: var(--c-cyan);
+}
+
+/* La segunda mitad, en gris claro, cede el protagonismo a la primera. */
+.handoff__soft {
+  font-weight: 400;
+  color: var(--c-text-soft);
+}
+
+/* ==========================================================================
+   Banda de fondo a ancho completo tras las barras fijas.
+   Las barras se centran dentro de un ancho máximo, así que su fondo no
+   alcanza los bordes de la ventana y el pie asoma por los lados.
+   ========================================================================== */
+
+.demo--claims .demo__controls::before,
+.deck::before {
+  content: "";
+  position: absolute;
+  inset: 0 -100vw;
+  z-index: -1;
+  background-color: var(--c-bg-deep);
+  border-top: 0.1rem solid var(--c-border-strong);
+}
+
+/* El contenido de la barra queda por encima de su propia banda. */
+.demo--claims .demo__controls > *,
+.deck > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* El resplandor del logotipo del pie se proyecta hacia arriba y se percibe
+   a través de la barra fija; en el pie no aporta nada, así que se retira. */
+.footer .logo__img {
+  filter: none;
+}

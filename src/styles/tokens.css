@@ -1,0 +1,100 @@
+/* ==========================================================================
+   LISA Insurtech — Design tokens
+   Paleta extraída de los diseños de referencia (carpeta Design) y del
+   isotipo corporativo (carpeta Logo).
+   Base de tipografía: 10px (1rem = 10px) según especificación.
+   ========================================================================== */
+
+:root {
+  /* --- Fondos (azul noche profundo del diseño) --- */
+  --c-bg-deep: #060d1a;
+  --c-bg: #0a1424;
+  --c-bg-elev: #0f1e33;
+  --c-surface: #13253d;
+  --c-surface-2: #1a2f4d;
+  --c-chrome: #16233a; /* Barra del navegador simulado en las demostraciones */
+
+  /* --- Cian corporativo (acento principal del diseño) --- */
+  --c-cyan: #22d3ee;
+  --c-cyan-bright: #3ee0f5;
+  --c-cyan-dim: #0e9fb8;
+  --c-cyan-deep: #0b7f94;
+
+  /* --- Púrpura del isotipo (acento secundario) --- */
+  --c-purple: #5b2d90;
+  --c-purple-light: #7c4dbd;
+  --c-teal: #3aa8a8;
+
+  /* --- Semánticos --- */
+  --c-danger: #f87171;
+  --c-danger-bg: rgba(248, 113, 113, 0.12);
+  --c-danger-border: rgba(248, 113, 113, 0.35);
+  --c-warning: #fbbf24;
+  --c-success: #34d399;
+  --c-success-bg: rgba(52, 211, 153, 0.12);
+
+  /* --- Texto --- */
+  --c-text: #e8f1fa;
+  --c-text-soft: #a8bdd4;
+  --c-text-mute: #6f88a3;
+  --c-text-faint: #4a6280;
+
+  /* --- Bordes y superficies translúcidas --- */
+  --c-border: rgba(120, 170, 210, 0.14);
+  --c-border-strong: rgba(120, 170, 210, 0.26);
+  --c-glass: rgba(19, 37, 61, 0.72);
+
+  /* --- Degradados --- */
+  --g-brand: linear-gradient(135deg, var(--c-teal) 0%, var(--c-cyan) 45%, var(--c-purple) 100%);
+  --g-cyan: linear-gradient(135deg, var(--c-cyan-bright) 0%, var(--c-cyan-deep) 100%);
+  --g-surface: linear-gradient(160deg, rgba(26, 47, 77, 0.9) 0%, rgba(10, 20, 36, 0.9) 100%);
+  /* El extremo púrpura se aclara para mantener el contraste sobre fondo oscuro. */
+  --g-text-cyan: linear-gradient(100deg, var(--c-cyan-bright) 0%, var(--c-cyan) 62%, #b9a2fb 100%);
+
+  /* --- Sombras y resplandores --- */
+  --sh-sm: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.3);
+  --sh-md: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.4);
+  --sh-lg: 0 2rem 5rem rgba(0, 0, 0, 0.55);
+  --glow-cyan: 0 0 2.4rem rgba(34, 211, 238, 0.35);
+  --glow-cyan-soft: 0 0 1.6rem rgba(34, 211, 238, 0.18);
+  --glow-danger: 0 0 2rem rgba(248, 113, 113, 0.3);
+
+  /* --- Tipografía --- */
+  --f-sans: "Outfit", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* Titulares: grotesca técnica con más carácter que la de texto. */
+  --f-display: "Sora", "Outfit", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+
+  /* --- Espaciado --- */
+  --s-1: 0.4rem;
+  --s-2: 0.8rem;
+  --s-3: 1.2rem;
+  --s-4: 1.6rem;
+  --s-5: 2.4rem;
+  --s-6: 3.2rem;
+  --s-7: 4.8rem;
+  --s-8: 6.4rem;
+  --s-9: 9.6rem;
+
+  /* --- Radios --- */
+  --r-sm: 0.6rem;
+  --r-md: 1rem;
+  --r-lg: 1.6rem;
+  --r-xl: 2.4rem;
+  --r-full: 999rem;
+
+  /* --- Layout --- */
+  --w-content: 132rem;
+  --h-topbar: 9.6rem;
+
+  /* --- Transiciones --- */
+  --t-fast: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --t-base: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --t-slow: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Capas --- */
+  --z-bg: 0;
+  --z-content: 10;
+  --z-topbar: 70;
+  --z-modal: 100;
+}

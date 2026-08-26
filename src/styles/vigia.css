@@ -1,0 +1,741 @@
+/* ==========================================================================
+   LISA vigIA — Caso Ramiro Lucas Fiochi
+   Documento analizado, validación externa, patrones y casos relacionados.
+   ========================================================================== */
+
+/* --- Documento con zonas marcadas --- */
+.boleta {
+  position: relative;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background-color: #fff;
+  line-height: 0;
+}
+
+.boleta__img {
+  width: 100%;
+  height: auto;
+}
+
+/* Barrido que recorre el documento durante el análisis. */
+.boleta__scan {
+  position: absolute;
+  inset-inline: 0;
+  height: 22%;
+  background: linear-gradient(180deg, transparent, rgba(248, 113, 113, 0.3), transparent);
+  animation: scan 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.boleta__mark {
+  position: absolute;
+  border: 0.2rem solid var(--c-danger);
+  border-radius: 0.3rem;
+  background-color: rgba(248, 113, 113, 0.16);
+  animation: mark-in var(--t-base) both;
+  transition: background-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.boleta__mark:hover,
+.boleta__mark.is-active {
+  background-color: rgba(248, 113, 113, 0.32);
+  box-shadow: 0 0 0 0.3rem rgba(248, 113, 113, 0.25);
+}
+
+/* Los hallazgos sobre metadatos se distinguen en ámbar. */
+.boleta__mark--metadato {
+  border-color: var(--c-warning);
+  background-color: rgba(251, 191, 36, 0.16);
+}
+
+.boleta__mark--metadato:hover,
+.boleta__mark--metadato.is-active {
+  background-color: rgba(251, 191, 36, 0.32);
+  box-shadow: 0 0 0 0.3rem rgba(251, 191, 36, 0.25);
+}
+
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    scale: 1.15;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.boleta__tag {
+  position: absolute;
+  top: -0.3rem;
+  left: 0;
+  translate: 0 -100%;
+  padding: 0.2rem 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: #fff;
+  background-color: var(--c-danger);
+  border-radius: 0.3rem;
+}
+
+.boleta__mark--metadato .boleta__tag {
+  color: #1a1204;
+  background-color: var(--c-warning);
+}
+
+.boleta__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--c-text-soft);
+}
+
+.boleta__hint svg {
+  flex-shrink: 0;
+  margin-top: 0.3rem;
+  color: var(--c-text-mute);
+}
+
+/* --- Metadatos del archivo --- */
+.meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.meta-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3);
+  background-color: rgba(6, 13, 26, 0.5);
+  border-radius: var(--r-sm);
+}
+
+.meta-list__label {
+  font-size: 1.35rem;
+  color: var(--c-text-mute);
+}
+
+.meta-list__value {
+  font-size: 1.35rem;
+  color: var(--c-text);
+}
+
+.meta-list__value--alert {
+  color: var(--c-danger);
+  font-weight: 600;
+}
+
+.meta-conclusion {
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--c-text-soft);
+  background-color: var(--c-danger-bg);
+  border-left: 0.2rem solid var(--c-danger);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+
+/* --- Puntaje de riesgo --- */
+.panel--score {
+  padding-bottom: var(--s-4);
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.score__label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+}
+
+.score__case {
+  font-size: 1.3rem;
+  color: var(--c-text-mute);
+}
+
+.score__value {
+  font-size: 4.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.score__value span {
+  font-size: 2rem;
+  margin-left: 0.2rem;
+}
+
+.score__value--bajo { color: var(--c-success); }
+.score__value--medio { color: var(--c-warning); }
+.score__value--alto { color: var(--c-danger); }
+
+.score__bar {
+  height: 0.5rem;
+  margin-top: var(--s-3);
+  background-color: rgba(120, 170, 210, 0.12);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.score__fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-full);
+  transition: width var(--t-base);
+}
+
+.score__fill--bajo { background: linear-gradient(90deg, #34d399, #10b981); }
+.score__fill--medio { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+.score__fill--alto { background: linear-gradient(90deg, #fca5a5, #ef4444); }
+
+.score__facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 0.1rem solid var(--c-border);
+}
+
+.score__facts dt {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+}
+
+.score__facts dd {
+  font-size: 1.5rem;
+  color: var(--c-text);
+}
+
+/* --- Validación con fuentes externas --- */
+.validations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.validation {
+  padding: var(--s-4);
+  background-color: var(--c-danger-bg);
+  border: 0.1rem solid var(--c-danger-border);
+  border-radius: var(--r-md);
+  animation: field-in var(--t-base) both;
+}
+
+.validation__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.validation__source {
+  padding: 0.2rem 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-danger);
+  background-color: rgba(248, 113, 113, 0.16);
+  border-radius: var(--r-sm);
+}
+
+.validation__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-danger);
+}
+
+.validation__text {
+  margin-top: var(--s-2);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--c-text-soft);
+}
+
+.amounts {
+  display: flex;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+.amounts__item {
+  flex: 1;
+  padding: var(--s-3);
+  text-align: center;
+  background-color: rgba(6, 13, 26, 0.5);
+  border-radius: var(--r-sm);
+}
+
+.amounts__label {
+  display: block;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+}
+
+.amounts__value {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.amounts__value--alert {
+  color: var(--c-danger);
+}
+
+/* --- Patrones de cartera --- */
+.patterns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.pattern__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.pattern__head svg {
+  color: var(--c-danger);
+  flex-shrink: 0;
+}
+
+.pattern__text {
+  margin-top: var(--s-2);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: var(--c-text-soft);
+}
+
+/* Comparación del monto con el promedio de la cartera. */
+.deviation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.deviation__row {
+  display: grid;
+  grid-template-columns: 10rem 1fr 9rem;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.deviation__label {
+  font-size: 1.25rem;
+  color: var(--c-text-mute);
+}
+
+.deviation__track {
+  height: 1.2rem;
+  background-color: rgba(120, 170, 210, 0.1);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.deviation__fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-cyan-deep), var(--c-cyan));
+  border-radius: var(--r-full);
+  transform-origin: left;
+  animation: grow var(--t-slow) both;
+}
+
+.deviation__fill--alert {
+  background: linear-gradient(90deg, #7f1d1d, #ef4444);
+}
+
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.deviation__value {
+  font-size: 1.3rem;
+  text-align: right;
+  color: var(--c-text);
+}
+
+/* --- Casos relacionados --- */
+.related {
+  padding-top: var(--s-4);
+  border-top: 0.1rem solid var(--c-border);
+}
+
+.related__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-3);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.related__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.related__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3);
+  background-color: rgba(6, 13, 26, 0.5);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-sm);
+  animation: field-in var(--t-base) both;
+}
+
+.related__name {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.related__meta {
+  font-size: 1.2rem;
+  color: var(--c-text-mute);
+}
+
+.related__score {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--c-danger);
+  flex-shrink: 0;
+}
+
+/* --- Resolución del caso --- */
+.decision__check--alert {
+  color: var(--c-danger);
+  background-color: var(--c-danger-bg);
+}
+
+.modal__panel--danger {
+  border-color: var(--c-danger-border);
+  box-shadow: var(--sh-lg), 0 0 2.4rem rgba(248, 113, 113, 0.18);
+}
+
+.modal__panel--danger .modal__title {
+  color: var(--c-danger);
+}
+
+.resolution__score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding: var(--s-4);
+  background-color: var(--c-danger-bg);
+  border: 0.1rem solid var(--c-danger-border);
+  border-radius: var(--r-md);
+}
+
+.resolution__score-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-soft);
+}
+
+.resolution__score-value {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--c-danger);
+}
+
+.resolution__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+.resolution__actions li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: 1.45rem;
+  color: var(--c-text-soft);
+}
+
+.resolution__actions svg {
+  color: var(--c-danger);
+  flex-shrink: 0;
+}
+
+.resolution__saving {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 0.1rem solid var(--c-border);
+}
+
+.resolution__saving-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+}
+
+.resolution__saving-value {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--c-success);
+}
+
+/* --- Adaptación a pantallas pequeñas --- */
+@media (max-width: 860px) {
+  .score__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .deviation__row {
+    grid-template-columns: 8rem 1fr 8rem;
+  }
+
+  .boleta__tag {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==========================================================================
+   Envío del reporte a la unidad de fraude
+   ========================================================================== */
+
+.report__cta,
+.report__send {
+  width: 100%;
+  margin-top: var(--s-5);
+}
+
+/* --- Documento adjunto --- */
+.report-file {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  background-color: rgba(6, 13, 26, 0.6);
+  border: 0.1rem solid var(--c-border-strong);
+  border-radius: var(--r-md);
+}
+
+.report-file__icon {
+  display: grid;
+  place-items: center;
+  width: 4.8rem;
+  height: 5.6rem;
+  flex-shrink: 0;
+  color: var(--c-danger);
+  background-color: var(--c-danger-bg);
+  border: 0.1rem solid var(--c-danger-border);
+  border-radius: var(--r-sm);
+}
+
+.report-file__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.report-file__name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--c-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.report-file__meta {
+  font-size: 1.2rem;
+  color: var(--c-text-mute);
+}
+
+.report-file__tag {
+  padding: 0.3rem var(--s-2);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-sm);
+  flex-shrink: 0;
+}
+
+/* --- Resumen del caso --- */
+.report-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2) var(--s-4);
+  margin-top: var(--s-4);
+  padding: var(--s-4);
+  background-color: rgba(6, 13, 26, 0.4);
+  border-radius: var(--r-md);
+}
+
+.report-summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  font-size: 1.3rem;
+}
+
+.report-summary dt {
+  color: var(--c-text-mute);
+}
+
+.report-summary dd {
+  color: var(--c-text);
+  font-weight: 600;
+  text-align: right;
+}
+
+.report-summary dd.is-alert {
+  color: var(--c-danger);
+}
+
+/* --- Contenido del expediente --- */
+.report-contents {
+  margin-top: var(--s-4);
+}
+
+.report-contents__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-faint);
+  margin-bottom: var(--s-2);
+}
+
+.report-contents ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.report-contents li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 1.3rem;
+  color: var(--c-text-soft);
+}
+
+.report-contents svg {
+  color: var(--c-success);
+  flex-shrink: 0;
+}
+
+/* --- Destinatario --- */
+.report-to {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 0.1rem solid var(--c-border);
+  font-size: 1.3rem;
+  color: var(--c-text-mute);
+}
+
+.report-to svg {
+  color: var(--c-cyan);
+  flex-shrink: 0;
+}
+
+.report-to strong {
+  color: var(--c-text);
+  font-family: var(--f-mono);
+}
+
+.report-note {
+  margin-top: var(--s-3);
+  font-size: 1.2rem;
+  color: var(--c-text-faint);
+  text-align: center;
+}
+
+/* --- Confirmación de envío --- */
+.report-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-5) 0;
+  text-align: center;
+}
+
+.report-sent__icon {
+  display: grid;
+  place-items: center;
+  width: 7.2rem;
+  height: 7.2rem;
+  color: var(--c-success);
+  background-color: var(--c-success-bg);
+  border-radius: 50%;
+  animation: field-in var(--t-slow) both;
+}
+
+.report-sent__text {
+  max-width: 46ch;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+}
+
+.report-sent__to {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--f-mono);
+  font-size: 1.3rem;
+  color: var(--c-cyan);
+  background-color: rgba(34, 211, 238, 0.08);
+  border: 0.1rem solid rgba(34, 211, 238, 0.24);
+  border-radius: var(--r-full);
+}
+
+@media (max-width: 560px) {
+  .report-summary {
+    grid-template-columns: 1fr;
+  }
+}
