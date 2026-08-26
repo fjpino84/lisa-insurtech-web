@@ -994,11 +994,6 @@
   padding-top: var(--s-9);
 }
 
-/* El título de la sección de módulos va en turquesa. */
-.pillars--modules .section-head__title {
-  color: var(--c-cyan);
-}
-
 .pillars--modules .pillars__list {
   margin-top: var(--s-7);
 }

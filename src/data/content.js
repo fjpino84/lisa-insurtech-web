@@ -48,7 +48,10 @@ export const METRICS = [
 ];
 
 /** Encabeza la sección de módulos de la plataforma. */
-export const MODULES_TITLE = "Soluciones modulares";
+export const MODULES_HEAD = {
+  eyebrow: "Soluciones modulares",
+  title: "Nuestras soluciones se adaptan a sus necesidades",
+};
 
 /**
  * Módulos que componen la plataforma.

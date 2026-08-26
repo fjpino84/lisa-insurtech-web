@@ -79,8 +79,8 @@ export function SolutionsPreview({ onOpenDemo, onNavigate }) {
         h(
           "h2",
           { class: "section-head__title" },
-          "3 módulos que garantizan un producto ",
-          h("span", { class: "u-gradient-text" }, "flexible")
+          "Dos productos, un mismo ",
+          h("span", { class: "u-gradient-text" }, "motor agéntico")
         )
       ),
 

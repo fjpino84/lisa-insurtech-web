@@ -1,7 +1,7 @@
 import { h } from "../../vendor/preact.js";
 import { ModuleMark } from "../shared/ModuleMark.js";
 import { ReadingVisual, DecisionVisual, NetworkVisual } from "./ModuleVisuals.js";
-import { INTRO, PILLARS, MODULES_TITLE } from "../../data/content.js";
+import { INTRO, PILLARS, MODULES_HEAD } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
 
 /** Ilustración que acompaña a cada módulo, según su identificador. */
@@ -60,8 +60,8 @@ export function Modules() {
       h(
         "header",
         { class: "section-head" },
-        h("p", { class: "u-eyebrow" }, "Arquitectura"),
-        h("h2", { class: "section-head__title" }, MODULES_TITLE)
+        h("p", { class: "u-eyebrow" }, MODULES_HEAD.eyebrow),
+        h("h2", { class: "section-head__title" }, MODULES_HEAD.title)
       ),
 
       h(
