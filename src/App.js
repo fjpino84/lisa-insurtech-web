@@ -3,7 +3,7 @@ import { TopBar } from "./components/layout/TopBar.js";
 import { Footer } from "./components/layout/Footer.js";
 import { Hero } from "./components/home/Hero.js";
 import { Pillars, Modules } from "./components/home/Pillars.js";
-import { SolutionsPreview } from "./components/home/SolutionsPreview.js";
+import { SolutionsPreview, Closing } from "./components/home/SolutionsPreview.js";
 import { SolutionsPage } from "./components/solutions/SolutionsPage.js";
 import { AboutPage, TeamPage } from "./components/layout/Placeholder.js";
 import { Contact } from "./components/layout/Contact.js";
@@ -132,8 +132,9 @@ export function App() {
           { class: "view" },
           h(Hero, { onDemo: () => setModalOpen(true) }),
           h(Pillars, null),
-          h(SolutionsPreview, { onOpenDemo: openDemo, onNavigate: navigate }),
-          h(Modules, null)
+          h(SolutionsPreview, { onOpenDemo: openDemo }),
+          h(Modules, null),
+          h(Closing, { onNavigate: navigate })
         ),
 
       route === "somos" && h("div", { class: "view view--inner" }, h(AboutPage, null)),

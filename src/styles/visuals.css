@@ -997,3 +997,8 @@
 .pillars--modules .pillars__list {
   margin-top: var(--s-7);
 }
+
+/* El cierre de la portada, tras los módulos. */
+.closing {
+  padding-block: var(--s-8) var(--s-9);
+}

@@ -61,9 +61,7 @@ function SolutionCard({ solution, index, onOpen }) {
   );
 }
 
-export function SolutionsPreview({ onOpenDemo, onNavigate }) {
-  const [awardsRef, awardsVisible] = useReveal({ threshold: 0.15 });
-  const [ctaRef, ctaVisible] = useReveal({ threshold: 0.3 });
+export function SolutionsPreview({ onOpenDemo }) {
 
   return h(
     "section",
@@ -95,7 +93,25 @@ export function SolutionsPreview({ onOpenDemo, onNavigate }) {
             onOpen: onOpenDemo,
           })
         )
-      ),
+      )
+    )
+  );
+}
+
+/**
+ * Cierre de la portada: reconocimientos del sector y llamada a la acción.
+ * Van al final, tras haber presentado productos y módulos.
+ */
+export function Closing({ onNavigate }) {
+  const [awardsRef, awardsVisible] = useReveal({ threshold: 0.15 });
+  const [ctaRef, ctaVisible] = useReveal({ threshold: 0.3 });
+
+  return h(
+    "section",
+    { class: "closing" },
+    h(
+      "div",
+      { class: "u-container" },
 
       // --- Reconocimientos de la industria ---
       h(
