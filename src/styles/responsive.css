@@ -50,10 +50,6 @@
   .contact {
     grid-template-columns: 1fr;
   }
-
-  .ph-card--wide {
-    grid-column: span 1;
-  }
 }
 
 /* --- Móviles y tabletas en vertical --- */
