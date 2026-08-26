@@ -1,7 +1,7 @@
 import { h } from "../../vendor/preact.js";
 import { ModuleMark } from "../shared/ModuleMark.js";
 import { ReadingVisual, DecisionVisual, NetworkVisual } from "./ModuleVisuals.js";
-import { INTRO, PILLARS } from "../../data/content.js";
+import { INTRO, PILLARS, MODULES_TITLE } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
 
 /** Ilustración que acompaña a cada módulo, según su identificador. */
@@ -27,11 +27,10 @@ export function Pillars() {
 
   return h(
     "section",
-    { class: "pillars", id: "propuesta" },
+    { class: "pillars pillars--intro", id: "propuesta" },
     h(
       "div",
       { class: "u-container" },
-
       h(
         "div",
         { class: `intro ${introVisible ? "is-visible" : ""}`, ref: introRef },
@@ -39,6 +38,30 @@ export function Pillars() {
         INTRO.paragraphs.map((text, index) =>
           h("p", { key: index, class: "intro__text" }, text)
         )
+      )
+    )
+  );
+}
+
+/**
+ * Módulos de la plataforma.
+ *
+ * Van tras la presentación de las soluciones: primero se ve qué resuelve
+ * LISA y después de qué piezas se compone.
+ */
+export function Modules() {
+  return h(
+    "section",
+    { class: "pillars pillars--modules", id: "modulos" },
+    h(
+      "div",
+      { class: "u-container" },
+
+      h(
+        "header",
+        { class: "section-head" },
+        h("p", { class: "u-eyebrow" }, "Arquitectura"),
+        h("h2", { class: "section-head__title" }, MODULES_TITLE)
       ),
 
       h(

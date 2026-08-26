@@ -47,6 +47,9 @@ export const METRICS = [
   { value: "70%", label: "Liquidación Automática (STP)", icon: "spark" },
 ];
 
+/** Encabeza la sección de módulos de la plataforma. */
+export const MODULES_TITLE = "Soluciones modulares";
+
 /**
  * Módulos que componen la plataforma.
  *

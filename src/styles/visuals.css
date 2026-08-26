@@ -979,3 +979,26 @@
   }
 
 }
+
+/* ==========================================================================
+   Reparto de la portada
+   La introducción cierra sin dejar hueco doble con las soluciones, y los
+   módulos abren su propia sección.
+   ========================================================================== */
+
+.pillars--intro {
+  padding-bottom: 0;
+}
+
+.pillars--modules {
+  padding-top: var(--s-9);
+}
+
+/* El título de la sección de módulos va en turquesa. */
+.pillars--modules .section-head__title {
+  color: var(--c-cyan);
+}
+
+.pillars--modules .pillars__list {
+  margin-top: var(--s-7);
+}
