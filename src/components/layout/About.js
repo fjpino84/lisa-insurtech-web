@@ -1,57 +1,18 @@
 import { h } from "../../vendor/preact.js";
+import { Flag } from "../shared/Flag.js";
 import { ABOUT } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
 
 /**
  * Misión y presencia regional.
  *
- * El mapa es una silueta esquemática de Latinoamérica: sitúa los cuatro
- * países donde opera LISA sin pretender exactitud cartográfica.
+ * La presencia se comunica con las banderas de los países donde opera LISA
+ * y un par de cifras del equipo, en lugar de un mapa: se lee igual de rápido
+ * y se ve nítido a cualquier tamaño.
  */
-
-/** Silueta simplificada de Latinoamérica. */
-function LatamMap({ paises }) {
-  return h(
-    "div",
-    { class: "latam" },
-    h(
-      "svg",
-      { viewBox: "0 0 100 100", class: "latam__svg", role: "img", "aria-label": "Presencia de LISA en México, Perú, Chile y Argentina." },
-
-      // Contorno esquemático del continente
-      h("path", {
-        class: "latam__shape",
-        d: "M12 18 L30 14 L38 22 L34 30 L40 34 L44 44 L52 42 L60 32 L66 34 L64 44 L56 54 L54 66 L48 78 L44 92 L38 96 L34 88 L38 76 L34 62 L28 52 L22 44 L16 34 Z",
-      }),
-
-      // Países donde opera
-      paises.map((p) =>
-        h(
-          "g",
-          { key: p.id, class: "latam__place" },
-          h("circle", { class: "latam__pulse", cx: p.x, cy: p.y, r: 4 }),
-          h("circle", { class: "latam__dot", cx: p.x, cy: p.y, r: 1.8 })
-        )
-      )
-    ),
-
-    h(
-      "ul",
-      { class: "latam__list" },
-      paises.map((p) =>
-        h(
-          "li",
-          { key: p.id },
-          h("span", { class: "latam__marker" }),
-          h("span", null, p.nombre)
-        )
-      )
-    )
-  );
-}
-
 export function About() {
   const [ref, visible] = useReveal({ threshold: 0.15 });
+  const { presencia } = ABOUT;
 
   return h(
     "section",
@@ -67,15 +28,54 @@ export function About() {
 
     h(
       "article",
-      { class: "about-block about-block--map" },
+      { class: "about-block about-block--presence" },
+
       h(
         "div",
-        null,
-        h("p", { class: "u-eyebrow" }, "Presencia en LATAM"),
-        h("h2", { class: "about-block__title" }, ABOUT.presencia.title),
-        h("p", { class: "about-block__text" }, ABOUT.presencia.text)
+        { class: "presence__intro" },
+        h("p", { class: "u-eyebrow" }, presencia.eyebrow),
+        h("h2", { class: "about-block__title" }, presencia.title),
+        h("p", { class: "about-block__text" }, presencia.text)
       ),
-      h(LatamMap, { paises: ABOUT.presencia.paises })
+
+      h(
+        "div",
+        { class: "presence__panel" },
+
+        // Cifras del equipo
+        h(
+          "div",
+          { class: "presence__figures" },
+          presencia.cifras.map((c) =>
+            h(
+              "div",
+              { key: c.etiqueta, class: "figure" },
+              h("span", { class: "figure__value" }, c.valor),
+              h("span", { class: "figure__label" }, c.etiqueta)
+            )
+          ),
+          h("p", { class: "presence__note" }, presencia.nota)
+        ),
+
+        // Países donde opera
+        h(
+          "ul",
+          { class: "presence__flags" },
+          presencia.paises.map((p, i) =>
+            h(
+              "li",
+              {
+                key: p.id,
+                class: "flag",
+                style: { animationDelay: `${i * 90}ms` },
+                title: p.nombre,
+              },
+              h(Flag, { id: p.id, nombre: p.nombre }),
+              h("span", { class: "flag__name" }, p.nombre)
+            )
+          )
+        )
+      )
     )
   );
 }

@@ -181,14 +181,22 @@ export const ABOUT = {
     text: "LISA es una Insurtech creada con la misión de innovar y transformar la industria aseguradora.",
   },
   presencia: {
+    eyebrow: "Regional Presence",
     title: "Dónde estamos",
     text: "En LISA seguimos trabajando para expandir nuestra presencia en la región. Somos expertos en el mercado asegurador latinoamericano.",
-    /** Coordenadas aproximadas sobre el mapa de la sección. */
+    cifras: [
+      { valor: "+30", etiqueta: "FTE" },
+      { valor: "6", etiqueta: "países" },
+    ],
+    nota: "Equipo multicultural LATAM",
+    /** Países donde opera LISA. La bandera se dibuja en Flag.js. */
     paises: [
-      { id: "mx", nombre: "México", x: 20, y: 26 },
-      { id: "pe", nombre: "Perú", x: 36, y: 58 },
-      { id: "cl", nombre: "Chile", x: 40, y: 82 },
-      { id: "ar", nombre: "Argentina", x: 51, y: 84 },
+      { id: "cl", nombre: "Chile" },
+      { id: "ar", nombre: "Argentina" },
+      { id: "mx", nombre: "México" },
+      { id: "pe", nombre: "Perú" },
+      { id: "br", nombre: "Brasil" },
+      { id: "co", nombre: "Colombia" },
     ],
   },
 };
@@ -206,15 +214,22 @@ export const TEAM = {
     quote:
       "Empezamos con una visión clara: aplicar tecnología avanzada para impulsar el ecosistema asegurador. Hoy, nuestras soluciones de IA son utilizadas por los principales referentes del sector para optimizar procesos, mejorar la toma de decisiones y brindar una mejor experiencia a sus clientes.",
   },
-  members: [
-    { id: "loreto", nombre: "Loreto Hernández", cargo: "COO", foto: "assets/equipo/loreto.jpg" },
-    { id: "francisco", nombre: "Francisco Pino", cargo: "CCO", foto: "assets/equipo/francisco.jpg" },
-    { id: "luis", nombre: "Luis Álvarez", cargo: "CTO", foto: "assets/equipo/luis.jpg" },
-    { id: "diego", nombre: "Diego Ferrochio", cargo: "Head of Operations", foto: null },
-    { id: "juan", nombre: "Juan Guilá", cargo: "Head of Customer Success", foto: "assets/equipo/juan.jpg" },
-    { id: "rodrigo", nombre: "Rodrigo Randaro", cargo: "Head of Finance", foto: "assets/equipo/rodrigo.jpg" },
-    { id: "marie", nombre: "Marie Merle", cargo: "PMO", foto: "assets/equipo/marie.jpg" },
-    { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg" },
+  /** Cada grupo se presenta en su propia fila, por nivel de dirección. */
+  groups: [
+    [
+      { id: "loreto", nombre: "Loreto Hernández", cargo: "COO", foto: "assets/equipo/loreto.jpg" },
+      { id: "francisco", nombre: "Francisco Pino", cargo: "CCO", foto: "assets/equipo/francisco.jpg" },
+      { id: "luis", nombre: "Luis Álvarez", cargo: "CTO", foto: "assets/equipo/luis.jpg" },
+    ],
+    [
+      { id: "diego", nombre: "Diego Ferrochio", cargo: "Head of Operations", foto: "assets/equipo/diego.jpg" },
+      { id: "juan", nombre: "Juan Guilá", cargo: "Head of Customer Success", foto: "assets/equipo/juan.jpg" },
+      { id: "rodrigo", nombre: "Rodrigo Randaro", cargo: "Head of Finance", foto: "assets/equipo/rodrigo.jpg" },
+    ],
+    [
+      { id: "marie", nombre: "Marie Merle", cargo: "PMO", foto: "assets/equipo/marie.jpg" },
+      { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg" },
+    ],
   ],
 };
 

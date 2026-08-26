@@ -93,11 +93,13 @@ export function Team() {
       )
     ),
 
-    // Resto del equipo.
-    h(
-      "ul",
-      { class: "team__grid" },
-      TEAM.members.map((person, i) => h(Member, { key: person.id, person, index: i }))
+    // Resto del equipo, una fila por nivel.
+    TEAM.groups.map((grupo, g) =>
+      h(
+        "ul",
+        { key: g, class: "team__row" },
+        grupo.map((person, i) => h(Member, { key: person.id, person, index: g * 3 + i }))
+      )
     )
   );
 }
