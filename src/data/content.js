@@ -44,7 +44,7 @@ export const INTRO = {
 export const METRICS = [
   { value: "+5M", label: "Siniestros procesados", icon: "document" },
   { value: "10'", label: "Duración E2E promedio", icon: "clock" },
-  { value: "70%", label: "Liquidación Automática (STO)", icon: "spark" },
+  { value: "70%", label: "Liquidación Automática (STP)", icon: "spark" },
 ];
 
 /**
@@ -250,7 +250,7 @@ export const AWARDS = [
   { org: "Eila Awards", detail: "Chile, 2025" },
   { org: "Insurtech Round", detail: "Argentina, 2025" },
   { org: "Innlab La2", detail: "Argentina, 2024" },
-  { org: "Momentum GNO", detail: "México, 2024" },
+  { org: "Momentum GNP", detail: "México, 2024" },
 ];
 
 export const CTA_FINAL = {

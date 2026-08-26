@@ -470,26 +470,11 @@
   color: var(--c-text-mute);
 }
 
+/* Logotipo original de Zurich, en blanco sobre el fondo del sitio. */
 .zic__zurich {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--c-text);
-}
-
-.zic__zurich-mark {
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--c-bg-deep);
-  background-color: var(--c-text);
-  border-radius: 50%;
+  height: 2.2rem;
+  width: auto;
+  opacity: 0.92;
 }
 
 /* --- Reconocimientos --- */

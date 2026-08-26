@@ -122,6 +122,7 @@ const IMAGES = [
   "assets/logo/lisa-isotipo.png",
   "assets/casos/boleta-4761.png",
   "assets/premios/zic-esteban.jpg",
+  "assets/marcas/zurich.png",
   "assets/equipo/esteban.jpg",
   "assets/equipo/loreto.jpg",
   "assets/equipo/francisco.jpg",

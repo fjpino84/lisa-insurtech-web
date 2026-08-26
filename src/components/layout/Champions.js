@@ -55,7 +55,15 @@ export function Champions() {
             "p",
             { class: "zic__brand-by" },
             "by ",
-            h("span", { class: "zic__zurich" }, h("span", { class: "zic__zurich-mark" }, "Z"), "ZURICH")
+            h("img", {
+              class: "zic__zurich",
+              src: "assets/marcas/zurich.png",
+              alt: "Zurich",
+              width: 300,
+              height: 181,
+              loading: "lazy",
+              decoding: "async",
+            })
           )
         )
       ),
