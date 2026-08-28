@@ -50,7 +50,7 @@ export function ClaimsDemo({ onGoToFwa }) {
   const [showDecision, setShowDecision] = useState(false);
 
   const timers = useRef([]);
-  const [workRef, scrollToWork] = useScrollTo();
+  const [workRef, scrollToWork, scrollToPanel] = useScrollTo();
 
   const clearTimers = useCallback(() => {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -115,6 +115,9 @@ export function ClaimsDemo({ onGoToFwa }) {
     }, 1900);
   }, [schedule]);
 
+  /** Cierto cuando los paneles se apilan y hay que ir a cada uno. */
+  const apilado = () => window.matchMedia("(max-width: 900px)").matches;
+
   /** Ejecuta la animación de las etapas posteriores a la recepción. */
   const runStage = useCallback(
     (index) => {
@@ -122,6 +125,7 @@ export function ClaimsDemo({ onGoToFwa }) {
       setStage(index);
 
       if (index === 1) {
+        if (apilado()) scrollToPanel(".panel--lisai");
         EXTRACTED_FIELDS.forEach((unused, i) => {
           schedule(() => setFieldsShown(i + 1), 700 * (i + 1));
         });
@@ -129,6 +133,7 @@ export function ClaimsDemo({ onGoToFwa }) {
       }
 
       if (index === 2) {
+        if (apilado()) scrollToPanel(".panel--lisux");
         RULES.forEach((unused, i) => {
           schedule(() => setRulesDone(i + 1), 600 * (i + 1));
         });
@@ -143,7 +148,7 @@ export function ClaimsDemo({ onGoToFwa }) {
         }, 900);
       }
     },
-    [schedule]
+    [schedule, scrollToPanel]
   );
 
   const next = () => {

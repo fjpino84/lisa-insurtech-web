@@ -154,13 +154,42 @@
     font-size: 1.3rem;
   }
 
-  .demo__controls {
-    flex-direction: column;
-    align-items: stretch;
+  /* La barra de clAIms mantiene su reparto: el texto se abrevia y el botón
+     de avance queda siempre a la derecha, igual que en la de vigIA. */
+  .demo--claims .demo__controls {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
   }
 
-  .demo__buttons {
-    justify-content: flex-start;
+  .demo--claims .demo__stage-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .demo--claims .demo__stage-info strong {
+    font-size: 1.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  /* La descripción larga sobra en pantallas estrechas. */
+  .demo--claims .demo__stage-info span {
+    display: none;
+  }
+
+  .demo--claims .demo__buttons {
+    flex-shrink: 0;
+    justify-content: flex-end;
+  }
+
+  /* Fuera de la barra fija, los controles sí pueden apilarse. */
+  .demo:not(.demo--claims) .demo__controls {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .footer__inner {

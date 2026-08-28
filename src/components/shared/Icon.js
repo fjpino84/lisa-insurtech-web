@@ -33,6 +33,7 @@ const PATHS = {
   alert: "M12 4 2.5 20h19L12 4ZM12 10v4M12 17.5v.5",
   close: "M6 6l12 12M18 6 6 18",
   arrow: "M5 12h14M13 6l6 6-6 6",
+  chevronDown: "M6 9l6 6 6-6",
   play: "M8 5.5v13l11-6.5-11-6.5Z",
   menu: "M4 7h16M4 12h16M4 17h16",
   search: "M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM16 16l5 5",

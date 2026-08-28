@@ -1,4 +1,4 @@
-import { h, useEffect, useRef } from "../../vendor/preact.js";
+import { h, useEffect, useRef, useState } from "../../vendor/preact.js";
 import { Icon } from "./Icon.js";
 
 /**
@@ -10,6 +10,36 @@ import { Icon } from "./Icon.js";
 export function Modal({ open, onClose, title, tone = "cyan", icon, children, footer }) {
   const panelRef = useRef(null);
   const lastFocused = useRef(null);
+  const velo = useRef(null);
+
+  // Cuando el contenido no cabe en la ventana, se avisa de que hay más abajo.
+  const [hayMas, setHayMas] = useState(false);
+
+  // El aviso aparece mientras quede recorrido por debajo.
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const caja = velo.current;
+    if (!caja) return undefined;
+
+    const revisar = () => {
+      const restante = caja.scrollHeight - caja.scrollTop - caja.clientHeight;
+      setHayMas(restante > 24);
+    };
+
+    revisar();
+    caja.addEventListener("scroll", revisar, { passive: true });
+    window.addEventListener("resize", revisar);
+
+    // El contenido puede crecer tras el primer pintado.
+    const t = window.setTimeout(revisar, 300);
+
+    return () => {
+      caja.removeEventListener("scroll", revisar);
+      window.removeEventListener("resize", revisar);
+      window.clearTimeout(t);
+    };
+  }, [open, children]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -62,6 +92,7 @@ export function Modal({ open, onClose, title, tone = "cyan", icon, children, foo
     {
       class: "modal",
       role: "presentation",
+      ref: velo,
       onClick: (event) => {
         if (event.target === event.currentTarget) onClose();
       },
@@ -98,6 +129,21 @@ export function Modal({ open, onClose, title, tone = "cyan", icon, children, foo
       ),
       h("div", { class: "modal__body" }, children),
       footer && h("footer", { class: "modal__foot" }, footer)
-    )
+    ),
+
+    // Invita a seguir bajando cuando el contenido excede la ventana.
+    hayMas &&
+      h(
+        "button",
+        {
+          type: "button",
+          class: "modal__more",
+          "aria-label": "Ver el resto del contenido",
+          onClick: () => {
+            velo.current?.scrollBy({ top: velo.current.clientHeight * 0.8, behavior: "smooth" });
+          },
+        },
+        h(Icon, { name: "chevronDown", size: 20 })
+      )
   );
 }
