@@ -247,18 +247,18 @@ export const TEAM = {
   /** Cada grupo se presenta en su propia fila, por nivel de dirección. */
   groups: [
     [
-      { id: "loreto", nombre: "Loreto Hernández", cargo: "COO", foto: "assets/equipo/loreto.jpg" },
-      { id: "francisco", nombre: "Francisco Pino", cargo: "CCO", foto: "assets/equipo/francisco.jpg" },
-      { id: "luis", nombre: "Luis Álvarez", cargo: "CTO", foto: "assets/equipo/luis.jpg" },
+      { id: "loreto", nombre: "Loreto Hernández", cargo: "COO", foto: "assets/equipo/loreto.jpg", quote: "Creo profundamente en el poder de la inteligencia artificial cuando está conectada con necesidades reales de negocio", linkedin: "https://www.linkedin.com/in/loretohernandezk/" },
+      { id: "francisco", nombre: "Francisco Pino", cargo: "CCO", foto: "assets/equipo/francisco.jpg", quote: "LISA está provocando un cambio en la industria de seguros, implementando innovación disruptiva con IA para mejorar la relación aseguradora-asegurado y agilizar procesos de forma eficiente y transparente.", linkedin: "https://www.linkedin.com/in/pinnovacionynegocios/" },
+      { id: "luis", nombre: "Luis Álvarez", cargo: "CTO", foto: "assets/equipo/luis.jpg", quote: "LISA emplea tecnología avanzada y el potencial de la inteligencia artificial para ofrecer un servicio de excelencias a las empresas de seguros.", linkedin: "https://www.linkedin.com/in/luizoalvarez/" },
     ],
     [
-      { id: "diego", nombre: "Diego Ferrochio", cargo: "Head of Operations", foto: "assets/equipo/diego.jpg" },
-      { id: "juan", nombre: "Juan Guilá", cargo: "Head of Customer Success", foto: "assets/equipo/juan.jpg" },
-      { id: "rodrigo", nombre: "Rodrigo Randaro", cargo: "Head of Finance", foto: "assets/equipo/rodrigo.jpg" },
+      { id: "diego", nombre: "Diego Ferrochio", cargo: "Head of Operations", foto: "assets/equipo/diego.jpg", quote: "Escalar, innovar y potenciar nuestros equipos de trabajo para liderar la solución de los seguros es una meta que nos mantiene muy enfocados en LISA.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+      { id: "juan", nombre: "Juan Guilá", cargo: "Head of Customer Success", foto: "assets/equipo/juan.jpg", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+      { id: "rodrigo", nombre: "Rodrigo Randaro", cargo: "Head of Finance", foto: "assets/equipo/rodrigo.jpg", quote: "Creo en el poder del trabajo colaborativo en el diseño abierto para construir mejores resultados. Me inspira impulsar equipos multidisciplinarios, basados en la confianza, el compromiso y la autonomía de cada persona.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
     ],
     [
-      { id: "marie", nombre: "Marie Merle", cargo: "PMO", foto: "assets/equipo/marie.jpg" },
-      { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg" },
+      { id: "marie", nombre: "Marie Merle", cargo: "PMO", foto: "assets/equipo/marie.jpg", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+      { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg", quote: "En LISA buscamos ofrecer soluciones escalables y de gran valor para nuestros clientes, mediante la optimización apoyados en nuestra tecnología.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
     ],
   ],
 };
