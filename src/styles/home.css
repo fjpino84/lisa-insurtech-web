@@ -720,7 +720,7 @@
 
 /* --- Testimonios: Carrusel --- */
 .testimonials {
-  padding-block: var(--s-9);
+  padding-block: var(--s-5) var(--s-6);
 }
 
 .testimonial-carousel {
@@ -731,7 +731,7 @@
   gap: var(--s-6);
   max-width: 92rem;
   margin-inline: auto;
-  margin-top: var(--s-7);
+  margin-top: var(--s-4);
   padding: var(--s-6);
   background: var(--g-surface);
   border: 0.1rem solid var(--c-border);

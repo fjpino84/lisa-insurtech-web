@@ -899,7 +899,8 @@
 }
 
 .team__row .member {
-  width: 15rem;
+  width: 22rem;
+  height: 28rem;
 }
 
 .member {
@@ -914,6 +915,8 @@
 .member__photo {
   display: block;
   aspect-ratio: 1;
+  width: 18rem;
+  height: 18rem;
   margin-bottom: var(--s-3);
   border-radius: var(--r-lg);
   overflow: hidden;
@@ -1125,6 +1128,9 @@
 
 .member__face--front {
   transform: rotateY(0deg);
+  background: var(--g-surface);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-lg);
 }
 
 .member__face--back {
