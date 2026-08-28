@@ -63,7 +63,7 @@ function Member({ person, index }) {
                 rel: "noopener noreferrer",
                 title: "LinkedIn",
               },
-              h(Icon, { name: "link", size: 16 })
+              "in"
             )
         )
     )

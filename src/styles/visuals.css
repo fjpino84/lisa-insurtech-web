@@ -1162,7 +1162,9 @@
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
-  color: var(--c-cyan);
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
   border: 0.1rem solid var(--c-cyan);
   transition: all var(--t-base);
 }
