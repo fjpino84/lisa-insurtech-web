@@ -54,6 +54,16 @@
 
 /* --- Móviles y tabletas en vertical --- */
 @media (max-width: 860px) {
+  :root {
+    /* La barra se estrecha con el logotipo. */
+    --h-topbar: 6.4rem;
+  }
+
+  /* A este ancho, 7.2rem de logotipo resulta desproporcionado. */
+  .topbar__brand .logo--sm .logo__img {
+    height: 3.6rem;
+  }
+
   /* La barra superior colapsa en menú. */
   .topbar__nav,
   .topbar__cta {
@@ -66,8 +76,17 @@
     margin-left: auto;
   }
 
-  .topbar__mobile {
+  /* El panel solo se despliega con el menú abierto: una declaración
+     `display` incondicional anularía el atributo `hidden` que lleva su estado. */
+  .topbar__mobile:not([hidden]) {
     display: block;
+    padding: var(--s-2) var(--s-4) var(--s-3);
+  }
+
+  /* Opciones más ceñidas: el panel no debe comerse la pantalla. */
+  .topbar__mobile-link {
+    padding: var(--s-2) var(--s-3);
+    font-size: 1.5rem;
   }
 
   .topbar.is-open {
