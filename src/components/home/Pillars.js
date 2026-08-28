@@ -94,7 +94,20 @@ function PillarRow({ pillar, index }) {
         pillar.name.suffix
       ),
       h("h2", { class: "pillar__title" }, pillar.title),
-      h("p", { class: "pillar__text" }, pillar.text)
+      h("p", { class: "pillar__text" }, pillar.text),
+      pillar.metrics &&
+        h(
+          "div",
+          { class: "pillar__metrics" },
+          pillar.metrics.map((metric) =>
+            h(
+              "div",
+              { key: metric.label, class: "pillar__metric" },
+              h("span", { class: "pillar__metric-value" }, metric.value),
+              h("span", { class: "pillar__metric-label" }, metric.label)
+            )
+          )
+        )
     ),
     h(PillarVisual, { pillar })
   );

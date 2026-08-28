@@ -90,6 +90,10 @@ export const PILLARS = [
       "Validación con fuentes confiables",
       "Análisis de patrones de comportamiento",
     ],
+    metrics: [
+      { label: "Accuracy", value: "60%" },
+      { label: "Tasa de Detección", value: "2%" },
+    ],
   },
 ];
 
@@ -120,10 +124,6 @@ export const SOLUTIONS = [
       "Validación con fuentes externas y OSINT",
       "Modelos predictivos de comportamiento de cartera",
       "Controles embebidos que se ejecutan antes del pago",
-    ],
-    metrics: [
-      { label: "Accuracy", value: "60%" },
-      { label: "Tasa de Detección", value: "2%" },
     ],
     accent: "danger",
   },
