@@ -47,6 +47,9 @@ export function Modal({ open, onClose, title, tone = "cyan", icon, children, foo
     lastFocused.current = document.activeElement;
     document.body.style.overflow = "hidden";
 
+    // El modal siempre arranca arriba del todo, sin importar dónde estaba el usuario.
+    if (velo.current) velo.current.scrollTop = 0;
+
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
         event.preventDefault();
