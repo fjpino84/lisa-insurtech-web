@@ -116,10 +116,14 @@ export const SOLUTIONS = [
     description:
       "Diseñado sobre tres pilares fundamentales: un motor de análisis forense documental, validación con fuentes externas y modelos de machine learning que predicen el comportamiento de las carteras en términos de fraude. Controles de prevención de fraude embebidos en el proceso de liquidación que se ejecutan antes del pago.",
     features: [
-      "Análisis forense documental (metadatos, EXIF, tipografía)",
+      "Análisis forense documental (metadatos, LLM, duplicados, entre otros)",
       "Validación con fuentes externas y OSINT",
       "Modelos predictivos de comportamiento de cartera",
       "Controles embebidos que se ejecutan antes del pago",
+    ],
+    metrics: [
+      { label: "Accuracy", value: "60%" },
+      { label: "Tasa de Detección", value: "2%" },
     ],
     accent: "danger",
   },
@@ -236,7 +240,7 @@ export const TEAM = {
     nombre: "Esteban Izarra",
     cargo: "CEO & Cofounder",
     foto: "assets/equipo/esteban.jpg",
-    linkedin: "https://www.linkedin.com/company/lisainsurtech",
+    linkedin: "https://www.linkedin.com/in/estebanizarra",
     quote:
       "Empezamos con una visión clara: aplicar tecnología avanzada para impulsar el ecosistema asegurador. Hoy, nuestras soluciones de IA son utilizadas por los principales referentes del sector para optimizar procesos, mejorar la toma de decisiones y brindar una mejor experiencia a sus clientes.",
   },
@@ -277,6 +281,25 @@ export const AWARDS = [
   { org: "Insurtech Round", detail: "Argentina, 2025" },
   { org: "Innlab La2", detail: "Argentina, 2024" },
   { org: "Momentum GNP", detail: "México, 2024" },
+];
+
+
+export const TESTIMONIALS = [
+  {
+    author: 'Laurence Maurice',
+    title: 'CEO Zurich Insurance Latam',
+    text: 'América Latina está representada por la iniciativa de Zurich Chile, en colaboración con la empresa LISA Insurtech. Ésta tecnología ya está entregando resultados notables, con más de 1 millón de siniestros automatizados en 2025 y un enorme potencial',
+  },
+  {
+    author: 'Sebastián Dabini',
+    title: 'CEO Zurich Argentina (ex CEO Chile)',
+    text: 'Innovar en salud no es solo eficiencia y el costo de la manualidad, es también sobre crear empatía, confianza y entregar valor para los clientes. LISA Insurtech incorpora esto en sus valores, y por eso, los elegimos dos veces como ganadores en Zurich Innovation Championship 2022 y 2025',
+  },
+  {
+    author: 'Martín Moser',
+    title: 'Gerente Programa INNLAB (La Segunda Seguros)',
+    text: 'Con LISA Insurtech hicimos el segundo caso de éxito liquidando siniestros en menos de 5 minutos totalmente automatizados... ¡Imaginen lo que es para la experiencia del cliente! ¡Es espectacular!',
+  },
 ];
 
 export const CTA_FINAL = {

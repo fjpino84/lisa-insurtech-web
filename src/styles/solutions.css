@@ -1,0 +1,28 @@
+
+/* Indicadores de desempeño en la tarjeta. */
+.solution-card__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 0.1rem solid rgba(255, 255, 255, 0.08);
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-item__value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: inherit;
+}
+
+.metric-item__label {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65);
+}

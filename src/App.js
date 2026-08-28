@@ -4,6 +4,7 @@ import { Footer } from "./components/layout/Footer.js";
 import { Hero } from "./components/home/Hero.js";
 import { Pillars, Modules } from "./components/home/Pillars.js";
 import { SolutionsPreview, Closing } from "./components/home/SolutionsPreview.js";
+import { Testimonials } from "./components/home/Testimonials.js";
 import { SolutionsPage } from "./components/solutions/SolutionsPage.js";
 import { AboutPage, TeamPage } from "./components/layout/Placeholder.js";
 import { Contact } from "./components/layout/Contact.js";
@@ -134,6 +135,7 @@ export function App() {
           h(Pillars, null),
           h(SolutionsPreview, { onOpenDemo: openDemo }),
           h(Modules, null),
+          h(Testimonials, null),
           h(Closing, { onNavigate: navigate })
         ),
 

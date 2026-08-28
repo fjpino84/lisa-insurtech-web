@@ -48,6 +48,21 @@ function SolutionCard({ solution, index, onOpen }) {
       )
     ),
 
+    // Indicadores de desempeño específicos (FWA).
+    solution.metrics &&
+      h(
+        "div",
+        { class: "solution-card__metrics" },
+        solution.metrics.map((metric) =>
+          h(
+            "div",
+            { key: metric.label, class: "metric-item" },
+            h("span", { class: "metric-item__value" }, metric.value),
+            h("span", { class: "metric-item__label" }, metric.label)
+          )
+        )
+      ),
+
     h(
       "button",
       {

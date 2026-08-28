@@ -93,6 +93,19 @@ export function About() {
               h("span", { class: "flag__name" }, p.nombre)
             )
           )
+        ),
+
+        // Certificaciones
+        h(
+          "div",
+          { class: "presence__certifications" },
+          h("img", {
+            src: "assets/marcas/iso.jpg",
+            alt: "ISO Certified",
+            class: "iso-logo",
+            loading: "lazy",
+            decoding: "async",
+          })
         )
       )
     )

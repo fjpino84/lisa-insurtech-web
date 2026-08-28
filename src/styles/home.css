@@ -204,6 +204,7 @@
 .intro {
   max-width: 88rem;
   margin-inline: auto;
+  margin-bottom: var(--s-8);
   text-align: center;
   opacity: 0;
   transform: translateY(2rem);
@@ -715,4 +716,124 @@
   background-color: var(--c-danger-bg);
   border: 0.1rem solid var(--c-danger-border);
   border-radius: 50%;
+}
+
+/* --- Testimonios: Carrusel --- */
+.testimonials {
+  padding-block: var(--s-9);
+}
+
+.testimonial-carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-6);
+  max-width: 92rem;
+  margin-inline: auto;
+  margin-top: var(--s-7);
+  padding: var(--s-6);
+  background: var(--g-surface);
+  border: 0.1rem solid var(--c-border);
+  border-radius: var(--r-xl);
+  min-height: 24rem;
+}
+
+.carousel__nav {
+  display: grid;
+  place-items: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  background: rgba(34, 211, 238, 0.08);
+  border: 0.1rem solid var(--c-cyan);
+  color: var(--c-cyan);
+  transition: all var(--t-base);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.carousel__nav:hover {
+  background: var(--g-cyan);
+  color: var(--c-bg-deep);
+}
+
+.carousel__nav--prev svg {
+  transform: rotate(180deg);
+}
+
+.carousel__slide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  animation: fade-in 0.6s ease-out both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.testimonial__text {
+  font-size: clamp(1.6rem, 2vw, 1.8rem);
+  line-height: 1.8;
+  color: var(--c-text-soft);
+  font-style: italic;
+}
+
+.testimonial__author {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.testimonial__name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.testimonial__title {
+  font-size: 1.2rem;
+  color: var(--c-text-mute);
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.carousel__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: rgba(34, 211, 238, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-base);
+}
+
+.carousel__dot.is-active {
+  background: var(--c-cyan);
+  width: 2.4rem;
+  border-radius: 0.4rem;
+}
+
+.carousel__dot:hover {
+  background: var(--c-cyan);
+}
+
+@media (max-width: 900px) {
+  .testimonial-carousel {
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+    min-height: auto;
+    padding: var(--s-5);
+  }
+
+  .carousel__nav {
+    display: none;
+  }
 }

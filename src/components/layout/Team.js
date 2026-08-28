@@ -24,21 +24,49 @@ function Member({ person, index }) {
     "li",
     { class: "member", style: { transitionDelay: `${index * 70}ms` } },
     h(
-      "span",
-      { class: "member__photo" },
-      person.foto
-        ? h("img", {
-            src: person.foto,
-            alt: `Retrato de ${person.nombre}`,
-            width: 320,
-            height: 320,
-            loading: "lazy",
-            decoding: "async",
-          })
-        : h("span", { class: "member__initials" }, iniciales(person.nombre))
-    ),
-    h("p", { class: "member__name" }, person.nombre),
-    h("p", { class: "member__role" }, person.cargo)
+      "div",
+      { class: "member__card" },
+      // Frente: foto
+      h(
+        "div",
+        { class: "member__face member__face--front" },
+        h(
+          "span",
+          { class: "member__photo" },
+          person.foto
+            ? h("img", {
+                src: person.foto,
+                alt: `Retrato de ${person.nombre}`,
+                width: 320,
+                height: 320,
+                loading: "lazy",
+                decoding: "async",
+              })
+            : h("span", { class: "member__initials" }, iniciales(person.nombre))
+        ),
+        h("p", { class: "member__name" }, person.nombre),
+        h("p", { class: "member__role" }, person.cargo)
+      ),
+      // Atrás: frase + LinkedIn
+      person.quote &&
+        h(
+          "div",
+          { class: "member__face member__face--back" },
+          h("p", { class: "member__quote" }, person.quote),
+          person.linkedin &&
+            h(
+              "a",
+              {
+                class: "member__linkedin",
+                href: person.linkedin,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                title: "LinkedIn",
+              },
+              h(Icon, { name: "link", size: 16 })
+            )
+        )
+    )
   );
 }
 
