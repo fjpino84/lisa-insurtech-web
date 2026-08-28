@@ -792,3 +792,72 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(0.4rem); }
 }
+
+/* ==========================================================================
+   Ventanas en pantallas estrechas
+   Nada debe exceder el ancho disponible: el recorrido es siempre vertical,
+   nunca horizontal.
+   ========================================================================== */
+
+.modal__panel {
+  overflow-x: hidden;
+}
+
+/* Los textos largos parten de línea en lugar de ensanchar el panel. */
+.modal__panel :is(p, li, dd, dt, span, strong, a) {
+  overflow-wrap: anywhere;
+}
+
+/* Los botones crecen hacia abajo, no hacia los lados. */
+.modal__panel .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  height: auto;
+  min-height: 4.4rem;
+}
+
+@media (max-width: 700px) {
+  /* El resumen del reporte pasa a una columna: en dos, los valores largos
+     empujaban el panel más allá de la pantalla. */
+  .report-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .report-summary__row {
+    gap: var(--s-2);
+  }
+
+  /* La llamada final se reparte en varias líneas si hace falta. */
+  .handoff__btn {
+    flex-wrap: wrap;
+    padding: var(--s-4);
+    line-height: 1.4;
+  }
+
+  /* La ventana ocupa el ancho útil, sin márgenes que la estrechen. */
+  .modal {
+    padding-inline: var(--s-3);
+  }
+
+  .modal__panel {
+    width: 100%;
+  }
+}
+
+/* La cabecera acompaña al recorrido: el título no se pierde bajo el menú
+   cuando la ventana es más alta que la pantalla. */
+.modal__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: linear-gradient(160deg, var(--c-surface) 0%, var(--c-surface) 100%);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+}
+
+@media (max-width: 700px) {
+  .modal__title {
+    font-size: 1.9rem;
+    line-height: 1.25;
+  }
+}

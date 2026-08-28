@@ -150,7 +150,7 @@ export const DECISION = {
    * se compone de dos mitades para poder destacar sólo la primera.
    */
   handoff: {
-    text: "Ya conociste cómo LISA Claims es capaz de liquidar siniestros de forma 100% automatizada. Ahora prepárate para conocer cómo LISA vigIA.",
+    text: "Ya conociste cómo LISA Claims es capaz de liquidar siniestros de forma 100% automatizada. Ahora prepárate para conocer cómo con LISA vigIA.",
     actionStrong: "Hacemos visible",
     actionSoft: "el fraude invisible",
   },
