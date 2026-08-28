@@ -99,13 +99,21 @@ export function About() {
         h(
           "div",
           { class: "presence__certifications" },
-          h("img", {
-            src: "assets/marcas/iso.jpg",
-            alt: "ISO Certified",
-            class: "iso-logo",
-            loading: "lazy",
-            decoding: "async",
-          })
+          h(
+            "article",
+            { class: "certification-card" },
+            h("div", { class: "certification-card__content" },
+              h("h3", { class: "certification-card__title" }, "Tu información, respaldada por estándares internacionales"),
+              h("p", { class: "certification-card__subtitle" }, "Certificación ISO/IEC 27001:2022")
+            ),
+            h("img", {
+              src: "assets/marcas/iso.jpg",
+              alt: "ISO Certified SGS",
+              class: "certification-card__logo",
+              loading: "lazy",
+              decoding: "async",
+            })
+          )
         )
       )
     )

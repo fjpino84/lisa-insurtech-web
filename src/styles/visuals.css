@@ -1094,15 +1094,54 @@
   justify-content: center;
 }
 
-.iso-logo {
-  height: 6rem;
+/* --- Tarjeta de certificación --- */
+.certification-card {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  padding: var(--s-5);
+  background: rgba(34, 211, 238, 0.05);
+  border: 0.1rem solid rgba(34, 211, 238, 0.2);
+  border-radius: var(--r-lg);
+}
+
+.certification-card__content {
+  flex: 1;
+}
+
+.certification-card__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: var(--s-2);
+}
+
+.certification-card__subtitle {
+  font-size: 1.1rem;
+  color: var(--c-text-mute);
+}
+
+.certification-card__logo {
+  height: 8rem;
   width: auto;
-  opacity: 0.85;
+  flex-shrink: 0;
+  opacity: 0.9;
   transition: opacity var(--t-base);
 }
 
-.iso-logo:hover {
+.certification-card__logo:hover {
   opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .certification-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .certification-card__logo {
+    height: 6rem;
+  }
 }
 
 /* --- Flip card del equipo --- */
