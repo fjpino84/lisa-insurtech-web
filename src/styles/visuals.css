@@ -978,9 +978,26 @@
 
 @media (max-width: 640px) {
   .team__row .member {
-    width: 13rem;
+    width: 16rem;
+    height: 20rem;
   }
 
+  .member__photo {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .member__name {
+    font-size: 1.2rem;
+  }
+
+  .member__role {
+    font-size: 1rem;
+  }
+
+  .member__quote {
+    font-size: 1.1rem;
+  }
 }
 
 /* ==========================================================================
