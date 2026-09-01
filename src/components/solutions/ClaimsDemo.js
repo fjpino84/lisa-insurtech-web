@@ -1,5 +1,6 @@
 import { h, useState, useEffect, useRef, useCallback } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
+import { AudioPlayer } from "../shared/AudioPlayer.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
 import {
@@ -37,6 +38,7 @@ export function ClaimsDemo({ onGoToFwa }) {
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
+  const narrationAudioRef = useRef(null);
 
   // Recepción: documentos recibidos, validados y receta aportada.
   const [docsIn, setDocsIn] = useState(0);
@@ -86,6 +88,13 @@ export function ClaimsDemo({ onGoToFwa }) {
     setStarted(true);
     setStage(0);
     scrollToWork();
+
+    // Reproduce audio de explicación (0:42 - 1:18)
+    if (narrationAudioRef.current) {
+      narrationAudioRef.current.currentTime = 42;
+      narrationAudioRef.current.playbackRate = 1.2;
+      narrationAudioRef.current.play();
+    }
 
     PROVIDED.forEach((unused, i) => {
       schedule(() => setDocsIn(i + 1), 500 * (i + 1));
@@ -201,6 +210,20 @@ export function ClaimsDemo({ onGoToFwa }) {
         )
       )
     ),
+
+    // ---------- Audio de bienvenida ----------
+    !started &&
+      h(
+        "div",
+        { style: { marginBottom: "var(--s-5)" } },
+        h(AudioPlayer, {
+          src: "assets/voz/narrador.mp3",
+          startTime: "0:12",
+          endTime: "0:42",
+          label: "Escuchar: Al abrir landing de LISA Claims",
+          speed: 1.2,
+        })
+      ),
 
     // ---------- Controles ----------
     h(
@@ -530,7 +553,14 @@ export function ClaimsDemo({ onGoToFwa }) {
           h(Icon, { name: "arrow", size: 18 })
         )
       )
-    )
+    ),
+
+    // Audio de narración para reproducir al iniciar simulación
+    h("audio", {
+      ref: narrationAudioRef,
+      src: "assets/voz/narrador.mp3",
+      preload: "metadata",
+    })
   );
 }
 
