@@ -1,5 +1,6 @@
 import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
+import { AudioPlayer } from "../shared/AudioPlayer.js";
 import { NeuralField } from "../shared/NeuralField.js";
 import { HERO, METRICS } from "../../data/content.js";
 import { useReveal, useCountUp } from "../../hooks/useReveal.js";
@@ -101,6 +102,18 @@ export function Hero({ onDemo }) {
             active: metricsVisible,
           })
         )
+      ),
+
+      h(
+        "div",
+        { style: { marginTop: "var(--s-6)" } },
+        h(AudioPlayer, {
+          src: "assets/voz/narrador.mp3",
+          startTime: "0:00",
+          endTime: "0:11",
+          label: "Escuchar: Al abrir el home",
+          speed: 1.2,
+        })
       )
     ),
 

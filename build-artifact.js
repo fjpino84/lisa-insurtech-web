@@ -64,6 +64,7 @@ const MODULES = [
   "src/hooks/useReveal.js",
   "src/hooks/useScrollTo.js",
   "src/components/shared/Icon.js",
+  "src/components/shared/AudioPlayer.js",
   "src/components/shared/SolutionName.js",
   "src/components/shared/ModuleMark.js",
   "src/components/shared/Flag.js",
@@ -110,6 +111,10 @@ const MIME_IMAGEN = {
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
+  ".mp3": "audio/mpeg",
+  ".wav": "audio/wav",
+  ".m4a": "audio/mp4",
+  ".ogg": "audio/ogg",
 };
 
 const dataUri = (file) => {
@@ -125,6 +130,7 @@ const IMAGES = [
   "assets/premios/zic-esteban.jpg",
   "assets/marcas/zurich.png",
   "assets/marcas/iso.jpg",
+  "assets/voz/narrador.mp3",
   "assets/equipo/esteban.jpg",
   "assets/equipo/loreto.jpg",
   "assets/equipo/francisco.jpg",
