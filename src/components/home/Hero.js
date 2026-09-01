@@ -113,6 +113,7 @@ export function Hero({ onDemo }) {
           endTime: "0:11",
           label: "Escuchar: Al abrir el home",
           speed: 1.2,
+          autoplay: true,
         })
       )
     ),

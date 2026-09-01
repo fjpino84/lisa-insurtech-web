@@ -1,22 +1,33 @@
 import { h, useRef, useState, useEffect } from "../../vendor/preact.js";
 import { Icon } from "./Icon.js";
 
+/** Convierte "m:ss" a segundos */
+const parseTime = (timeStr) => {
+  if (!timeStr) return 0;
+  const parts = timeStr.split(":");
+  return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+};
+
 /**
  * Reproductor de audio con segmentos de tiempo.
  * Permite reproducir un fragmento específico (startTime - endTime) de un archivo.
- * Soporta velocidad de reproducción (playbackRate).
+ * Soporta velocidad de reproducción (playbackRate) y autoplay.
  */
-export function AudioPlayer({ src, startTime, endTime, label = "Escuchar", speed = 1.2 }) {
+export function AudioPlayer({ src, startTime, endTime, label = "Escuchar", speed = 1.2, autoplay = false }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
 
-  // Convierte "m:ss" a segundos
-  const parseTime = (timeStr) => {
-    if (!timeStr) return 0;
-    const parts = timeStr.split(":");
-    return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-  };
+  // Autoplay al montar el componente
+  useEffect(() => {
+    if (autoplay && audioRef.current) {
+      const start = parseTime(startTime);
+      audioRef.current.currentTime = start;
+      audioRef.current.playbackRate = speed;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [autoplay]);
 
   const start = parseTime(startTime);
   const end = parseTime(endTime);

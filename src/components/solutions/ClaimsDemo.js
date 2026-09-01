@@ -222,6 +222,7 @@ export function ClaimsDemo({ onGoToFwa }) {
           endTime: "0:42",
           label: "Escuchar: Al abrir landing de LISA Claims",
           speed: 1.2,
+          autoplay: true,
         })
       ),
 
