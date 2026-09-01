@@ -130,7 +130,6 @@ const IMAGES = [
   "assets/premios/zic-esteban.jpg",
   "assets/marcas/zurich.png",
   "assets/marcas/iso.jpg",
-  "assets/voz/narrador.mp3",
   "assets/equipo/esteban.jpg",
   "assets/equipo/loreto.jpg",
   "assets/equipo/francisco.jpg",
