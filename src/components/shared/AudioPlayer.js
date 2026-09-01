@@ -18,16 +18,25 @@ export function AudioPlayer({ src, startTime, endTime, label = "Escuchar", speed
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
 
-  // Autoplay al montar el componente
+  // Autoplay al montar el componente (intenta reproducir, pero respeta política de navegador)
   useEffect(() => {
     if (autoplay && audioRef.current) {
       const start = parseTime(startTime);
       audioRef.current.currentTime = start;
       audioRef.current.playbackRate = speed;
-      audioRef.current.play();
-      setIsPlaying(true);
+
+      // Intenta reproducir, pero captura rechazo si el navegador lo bloquea
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => {
+            // Navegador bloqueó autoplay - es normal, usuario debe hacer click
+            setIsPlaying(false);
+          });
+      }
     }
-  }, [autoplay]);
+  }, [autoplay, speed, startTime, endTime]);
 
   const start = parseTime(startTime);
   const end = parseTime(endTime);
