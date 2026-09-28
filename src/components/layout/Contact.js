@@ -1,6 +1,6 @@
 import { h, useState } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
-import { CONTACT } from "../../data/content.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Formulario de contacto "Hablemos".
@@ -18,12 +18,7 @@ const INITIAL = {
   mensaje: "",
 };
 
-const INTERESTS = [
-  { value: "claims", label: "LISA Claims · Liquidación de siniestros" },
-  { value: "fwa", label: "LISA vigIA · Prevención de fraude" },
-  { value: "ambos", label: "Ambas soluciones" },
-  { value: "otro", label: "Otra consulta" },
-];
+// INTERESTS se genera dinámicamente desde las traducciones
 
 /** Valida los campos y devuelve un objeto de errores. */
 function validate(values) {
@@ -50,7 +45,8 @@ function validate(values) {
   return errors;
 }
 
-export function Contact() {
+export function Contact({ language }) {
+  const t = useTranslations(language);
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
@@ -128,17 +124,17 @@ export function Contact() {
         "div",
         { class: "contact-success" },
         h("span", { class: "contact-success__icon" }, h(Icon, { name: "check", size: 34 })),
-        h("h2", { class: "contact-success__title" }, "Mensaje recibido"),
+        h("h2", { class: "contact-success__title" }, t.contact.success_title),
         h(
           "p",
           { class: "contact-success__text" },
-          `Gracias, ${values.nombre.split(" ")[0]}. Nuestro equipo se pondrá en contacto con usted a la brevedad.`
+          `${language === "es" ? "Gracias, " : "Thank you, "}${values.nombre.split(" ")[0]}. ${language === "es" ? "Nuestro equipo se pondrá en contacto con usted a la brevedad." : "Our team will be in touch with you shortly."}`
         ),
         h(
           "button",
           { type: "button", class: "btn btn--outline", onClick: reset },
           h(Icon, { name: "refresh", size: 15 }),
-          h("span", null, "Enviar otra consulta")
+          h("span", null, t.contact.send_another)
         )
       )
     );
@@ -150,17 +146,17 @@ export function Contact() {
     h(
       "header",
       { class: "page__head" },
-      h("p", { class: "u-eyebrow" }, "Hablemos"),
+      h("p", { class: "u-eyebrow" }, t.contact.form_label),
       h(
         "h1",
         { class: "page__title" },
-        "Redefina sus procesos ",
-        h("span", { class: "u-gradient-text" }, "con LISA")
+        language === "es" ? "Redefina sus procesos " : "Redefine your processes ",
+        h("span", { class: "u-gradient-text" }, language === "es" ? "con LISA" : "with LISA")
       ),
       h(
         "p",
         { class: "page__lead" },
-        "Cuéntenos sobre su operación y le mostraremos cómo la automatización agéntica puede transformarla."
+        language === "es" ? "Cuéntenos sobre su operación y le mostraremos cómo la automatización agéntica puede transformarla." : "Tell us about your operation and we'll show you how agentic automation can transform it."
       )
     ),
 
@@ -173,20 +169,20 @@ export function Contact() {
         h(
           "div",
           { class: "contact__row" },
-          field("nombre", "Nombre y apellidos", "text", { autocomplete: "name" }),
-          field("empresa", "Compañía", "text", { autocomplete: "organization" })
+          field("nombre", t.contact.name, "text", { autocomplete: "name" }),
+          field("empresa", t.contact.company, "text", { autocomplete: "organization" })
         ),
         h(
           "div",
           { class: "contact__row" },
-          field("email", "Correo corporativo", "email", { autocomplete: "email" }),
-          field("telefono", "Teléfono (opcional)", "tel", { autocomplete: "tel" })
+          field("email", t.contact.email, "email", { autocomplete: "email" }),
+          field("telefono", `${t.contact.phone} (${language === "es" ? "opcional" : "optional"})`, "tel", { autocomplete: "tel" })
         ),
 
         h(
           "p",
           { class: "field-group" },
-          h("label", { class: "field-group__label", for: "campo-interes" }, "Solución de interés"),
+          h("label", { class: "field-group__label", for: "campo-interes" }, t.contact.interest),
           h(
             "select",
             {
@@ -195,20 +191,20 @@ export function Contact() {
               value: values.interes,
               onChange: update("interes"),
             },
-            INTERESTS.map((option) =>
+            t.contact.interests.map((option) =>
               h("option", { key: option.value, value: option.value }, option.label)
             )
           )
         ),
 
-        field("mensaje", "¿En qué podemos ayudarle?", "textarea", { rows: 5 }),
+        field("mensaje", language === "es" ? "¿En qué podemos ayudarle?" : "How can we help you?", "textarea", { rows: 5 }),
 
         status === "error" &&
           h(
             "p",
             { class: "contact__banner", role: "alert" },
             h(Icon, { name: "alert", size: 16 }),
-            h("span", null, "Revise los campos marcados antes de enviar.")
+            h("span", null, t.contact.error_banner)
           ),
 
         h(
@@ -224,7 +220,7 @@ export function Contact() {
             status === "sending"
               ? h("span", { class: "spinner" })
               : h(Icon, { name: "send", size: 17 }),
-            h("span", null, status === "sending" ? "Enviando…" : "Enviar mensaje")
+            h("span", null, status === "sending" ? t.contact.sending : t.contact.send_message)
           )
         )
       ),
@@ -232,7 +228,7 @@ export function Contact() {
       h(
         "aside",
         { class: "contact__aside" },
-        h("h2", { class: "contact__aside-title" }, "¿Prefiere escribirnos?"),
+        h("h2", { class: "contact__aside-title" }, t.contact.write_us),
         h(
           "ul",
           { class: "contact__channels" },
@@ -243,11 +239,11 @@ export function Contact() {
             h(
               "div",
               null,
-              h("p", { class: "contact__channel-label" }, "Correo"),
+              h("p", { class: "contact__channel-label" }, t.contact.email_label),
               h(
                 "a",
-                { class: "contact__channel-value", href: `mailto:${CONTACT.email}` },
-                CONTACT.email
+                { class: "contact__channel-value", href: `mailto:${t.contact.email_addr}` },
+                t.contact.email_addr
               )
             )
           ),
@@ -258,16 +254,16 @@ export function Contact() {
             h(
               "div",
               null,
-              h("p", { class: "contact__channel-label" }, "WhatsApp"),
+              h("p", { class: "contact__channel-label" }, t.contact.whatsapp_label),
               h(
                 "a",
                 {
                   class: "contact__channel-value",
-                  href: CONTACT.whatsappLink,
+                  href: t.contact.whatsappLink,
                   target: "_blank",
                   rel: "noopener noreferrer",
                 },
-                CONTACT.whatsapp
+                t.contact.whatsapp
               )
             )
           ),
@@ -278,8 +274,8 @@ export function Contact() {
             h(
               "div",
               null,
-              h("p", { class: "contact__channel-label" }, "Presencia"),
-              h("p", { class: "contact__channel-value" }, "México · Perú · Chile · Argentina")
+              h("p", { class: "contact__channel-label" }, t.contact.presence),
+              h("p", { class: "contact__channel-value" }, t.contact.presence_text)
             )
           ),
           h(
@@ -289,16 +285,16 @@ export function Contact() {
             h(
               "div",
               null,
-              h("p", { class: "contact__channel-label" }, "LinkedIn"),
+              h("p", { class: "contact__channel-label" }, t.contact.linkedin_label),
               h(
                 "a",
                 {
                   class: "contact__channel-value",
-                  href: CONTACT.linkedin,
+                  href: t.contact.linkedin,
                   target: "_blank",
                   rel: "noopener noreferrer",
                 },
-                "LISA Insurtech"
+                t.contact.linkedin_text
               )
             )
           )
@@ -306,7 +302,7 @@ export function Contact() {
         h(
           "p",
           { class: "contact__disclaimer" },
-          "Este formulario es una demostración: los datos no se envían a ningún servidor."
+          t.contact.disclaimer
         )
       )
     )
