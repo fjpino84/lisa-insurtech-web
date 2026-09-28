@@ -1,8 +1,8 @@
 import { h } from "../../vendor/preact.js";
 import { Flag } from "../shared/Flag.js";
 import { Icon } from "../shared/Icon.js";
-import { ABOUT } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Misión y presencia regional.
@@ -11,9 +11,10 @@ import { useReveal } from "../../hooks/useReveal.js";
  * y un par de cifras del equipo, en lugar de un mapa: se lee igual de rápido
  * y se ve nítido a cualquier tamaño.
  */
-export function About() {
+export function About({ language }) {
+  const t = useTranslations(language);
   const [ref, visible] = useReveal({ threshold: 0.15 });
-  const { presencia } = ABOUT;
+  const { presencia } = t.about;
 
   return h(
     "section",
@@ -23,9 +24,9 @@ export function About() {
     h(
       "article",
       { class: "about-block" },
-      h("p", { class: "u-eyebrow" }, "Quiénes somos"),
-      h("h2", { class: "about-block__title" }, ABOUT.resena.title),
-      ABOUT.resena.paragraphs.map((texto, i) =>
+      h("p", { class: "u-eyebrow" }, language === "es" ? "Quiénes somos" : "Who we are"),
+      h("h2", { class: "about-block__title" }, t.about.resena.title),
+      t.about.resena.paragraphs.map((texto, i) =>
         h("p", { key: i, class: "about-block__text" }, texto)
       )
     ),
@@ -34,7 +35,7 @@ export function About() {
     h(
       "div",
       { class: "purpose" },
-      ABOUT.proposito.map((p) =>
+      t.about.proposito.map((p) =>
         h(
           "article",
           { key: p.id, class: `purpose__card purpose__card--${p.id}` },
@@ -103,8 +104,8 @@ export function About() {
             "article",
             { class: "certification-card" },
             h("div", { class: "certification-card__content" },
-              h("h3", { class: "certification-card__title" }, "Tu información, respaldada por estándares internacionales"),
-              h("p", { class: "certification-card__subtitle" }, "Certificación ISO/IEC 27001:2022")
+              h("h3", { class: "certification-card__title" }, t.about.certification),
+              h("p", { class: "certification-card__subtitle" }, t.about.certification_subtitle)
             ),
             h("img", {
               src: "assets/marcas/iso.jpg",
