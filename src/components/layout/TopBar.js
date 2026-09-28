@@ -7,7 +7,7 @@ import { NAV_ITEMS } from "../../data/content.js";
  * Barra superior de la página de llegada.
  * Se vuelve opaca al hacer scroll y colapsa en menú en móvil.
  */
-export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu }) {
+export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, language, onLanguageChange }) {
   const items = NAV_ITEMS.filter((item) => item.id !== "hablemos");
 
   // Fuera del inicio no hay hero a pantalla completa: el menú se muestra
@@ -70,9 +70,10 @@ export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu }
           {
             type: "button",
             class: "topbar__language",
-            title: "English version",
+            title: language === "es" ? "English version" : "Versión en español",
+            onClick: onLanguageChange,
           },
-          h("span", { class: "topbar__language-flag" }, "🇬🇧")
+          h("span", { class: "topbar__language-flag" }, language === "es" ? "🇬🇧" : "🇪🇸")
         ),
         h(
           "button",

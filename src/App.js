@@ -26,9 +26,18 @@ export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem("lisa_language") || "es";
+  });
   // Opción del menú resaltada; puede diferir de la ruta cuando una sección
   // vive dentro de la portada, como la presentación de soluciones.
   const [menuActive, setMenuActive] = useState(readHash);
+
+  // Guardar idioma en localStorage cuando cambia
+  useEffect(() => {
+    localStorage.setItem("lisa_language", language);
+    document.documentElement.lang = language;
+  }, [language]);
 
   /**
    * Navega a una sección y sincroniza el hash.
@@ -121,6 +130,8 @@ export function App() {
       scrolled,
       menuOpen,
       onToggleMenu: () => setMenuOpen((v) => !v),
+      language,
+      onLanguageChange: () => setLanguage((l) => (l === "es" ? "en" : "es")),
     }),
 
     h(
