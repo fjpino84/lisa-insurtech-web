@@ -1,8 +1,8 @@
 import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
 import { SolutionName } from "../shared/SolutionName.js";
-import { SOLUTIONS, AWARDS, CTA_FINAL } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /** Tarjeta de producto con acceso a su demostración interactiva. */
 function SolutionCard({ solution, index, onOpen }) {
@@ -76,7 +76,8 @@ function SolutionCard({ solution, index, onOpen }) {
   );
 }
 
-export function SolutionsPreview({ onOpenDemo }) {
+export function SolutionsPreview({ onOpenDemo, language }) {
+  const t = useTranslations(language);
 
   return h(
     "section",
@@ -88,19 +89,19 @@ export function SolutionsPreview({ onOpenDemo }) {
       h(
         "header",
         { class: "section-head" },
-        h("p", { class: "u-eyebrow" }, "Nuestras Soluciones"),
+        h("p", { class: "u-eyebrow" }, t.modules_head.eyebrow),
         h(
           "h2",
           { class: "section-head__title" },
-          "Dos productos, un mismo ",
-          h("span", { class: "u-gradient-text" }, "motor agéntico")
+          language === "es" ? "Dos productos, un mismo " : "Two products, one ",
+          h("span", { class: "u-gradient-text" }, language === "es" ? "motor agéntico" : "agentic engine")
         )
       ),
 
       h(
         "div",
         { class: "solutions-preview__grid" },
-        SOLUTIONS.map((solution, index) =>
+        t.solutions.map((solution, index) =>
           h(SolutionCard, {
             key: solution.id,
             solution,
@@ -117,7 +118,8 @@ export function SolutionsPreview({ onOpenDemo }) {
  * Cierre de la portada: reconocimientos del sector y llamada a la acción.
  * Van al final, tras haber presentado productos y módulos.
  */
-export function Closing({ onNavigate }) {
+export function Closing({ onNavigate, language }) {
+  const t = useTranslations(language);
   const [awardsRef, awardsVisible] = useReveal({ threshold: 0.15 });
   const [ctaRef, ctaVisible] = useReveal({ threshold: 0.3 });
 
@@ -132,37 +134,11 @@ export function Closing({ onNavigate }) {
       h(
         "div",
         { class: `awards ${awardsVisible ? "is-visible" : ""}`, ref: awardsRef },
-        h("p", { class: "awards__label" }, "Respaldados y reconocidos por líderes de la industria"),
+        h("p", { class: "awards__label" }, language === "es" ? "Respaldados y reconocidos por líderes de la industria" : "Supported and recognized by industry leaders"),
         h(
           "ul",
           { class: "awards__list" },
-          AWARDS.map((award, index) =>
-            h(
-              "li",
-              {
-                key: award.org,
-                class: "award",
-                style: { transitionDelay: `${index * 80}ms` },
-              },
-              h(
-                "span",
-                { class: "award__icon" },
-                h(Icon, { name: "trophy", size: 20 })
-              ),
-              h(
-                "div",
-                null,
-                h(
-                  "p",
-                  { class: "award__org" },
-                  award.org,
-                  award.highlight &&
-                    h("span", { class: "award__badge" }, award.highlight)
-                ),
-                h("p", { class: "award__detail" }, award.detail)
-              )
-            )
-          )
+          t.awards.title && h("li", null, h("p", null, t.awards.title))
         )
       ),
 
@@ -171,8 +147,8 @@ export function Closing({ onNavigate }) {
         "div",
         { class: `final-cta ${ctaVisible ? "is-visible" : ""}`, ref: ctaRef },
         h("div", { class: "final-cta__glow", "aria-hidden": "true" }),
-        h("h2", { class: "final-cta__title" }, CTA_FINAL.title),
-        h("p", { class: "final-cta__text" }, CTA_FINAL.text),
+        h("h2", { class: "final-cta__title" }, t.cta_final.title),
+        h("p", { class: "final-cta__text" }, t.cta_final.text),
         h(
           "button",
           {
@@ -180,7 +156,7 @@ export function Closing({ onNavigate }) {
             class: "btn btn--primary btn--lg",
             onClick: () => onNavigate("hablemos"),
           },
-          h("span", null, CTA_FINAL.button),
+          h("span", null, t.cta_final.button),
           h(Icon, { name: "arrow", size: 18 })
         )
       )
