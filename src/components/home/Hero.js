@@ -1,8 +1,8 @@
 import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
 import { NeuralField } from "../shared/NeuralField.js";
-import { HERO, METRICS } from "../../data/content.js";
 import { useReveal, useCountUp } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /** Separa un indicador en prefijo, número y sufijo para poder animarlo. */
 function parseMetric(raw) {
@@ -40,7 +40,8 @@ function MetricCard({ metric, index, active }) {
   );
 }
 
-export function Hero({ onDemo }) {
+export function Hero({ onDemo, language }) {
+  const t = useTranslations(language);
   const [metricsRef, metricsVisible] = useReveal({ threshold: 0.3 });
 
   return h(
@@ -53,13 +54,13 @@ export function Hero({ onDemo }) {
     h(
       "div",
       { class: "hero__inner u-container" },
-      h("p", { class: "u-eyebrow hero__eyebrow" }, HERO.eyebrow),
+      h("p", { class: "u-eyebrow hero__eyebrow" }, t.hero.eyebrow),
 
       // Solo las palabras marcadas como acento llevan color.
       h(
         "h1",
         { class: "hero__title" },
-        [HERO.titleLine1, HERO.titleLine2].map((line, index) =>
+        [t.hero.titleLine1, t.hero.titleLine2].map((line, index) =>
           h(
             "span",
             { key: index, class: "hero__line" },
@@ -72,7 +73,7 @@ export function Hero({ onDemo }) {
         )
       ),
 
-      h("p", { class: "hero__subtitle" }, HERO.subtitle),
+      h("p", { class: "hero__subtitle" }, t.hero.subtitle),
 
       h(
         "div",
@@ -85,7 +86,7 @@ export function Hero({ onDemo }) {
             class: "btn btn--primary btn--lg",
             onClick: onDemo,
           },
-          h("span", null, HERO.ctaPrimary),
+          h("span", null, t.hero.ctaPrimary),
           h(Icon, { name: "arrow", size: 18 })
         )
       ),
@@ -93,7 +94,7 @@ export function Hero({ onDemo }) {
       h(
         "ul",
         { class: "hero__metrics", ref: metricsRef },
-        METRICS.map((metric, index) =>
+        t.metrics.map((metric, index) =>
           h(MetricCard, {
             key: metric.label,
             metric,
