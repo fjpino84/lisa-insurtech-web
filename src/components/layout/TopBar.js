@@ -63,14 +63,27 @@ export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu }
       ),
 
       h(
-        "button",
-        {
-          type: "button",
-          class: "topbar__cta",
-          onClick: (event) => go(event, "hablemos"),
-        },
-        h("span", null, "Hablemos"),
-        h(Icon, { name: "chat", size: 16 })
+        "div",
+        { class: "topbar__controls" },
+        h(
+          "button",
+          {
+            type: "button",
+            class: "topbar__language",
+            title: "English version",
+          },
+          h("span", { class: "topbar__language-flag" }, "🇬🇧")
+        ),
+        h(
+          "button",
+          {
+            type: "button",
+            class: "topbar__cta",
+            onClick: (event) => go(event, "hablemos"),
+          },
+          h("span", null, "Hablemos"),
+          h(Icon, { name: "chat", size: 16 })
+        )
       ),
 
       h(

@@ -151,6 +151,35 @@
   border-radius: var(--r-full);
 }
 
+.topbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.topbar__language {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: transparent;
+  border: 0.1rem solid rgba(34, 211, 238, 0.3);
+  cursor: pointer;
+  transition: all var(--t-base);
+}
+
+.topbar__language:hover {
+  border-color: var(--c-cyan);
+  background: rgba(34, 211, 238, 0.1);
+}
+
+.topbar__language-flag {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
 .topbar__cta {
   display: inline-flex;
   align-items: center;
