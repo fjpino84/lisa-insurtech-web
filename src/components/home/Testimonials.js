@@ -1,17 +1,19 @@
 import { h, useState, useRef, useEffect } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
-import { TESTIMONIALS } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Carrusel de testimonios.
  */
-export function Testimonials() {
+export function Testimonials({ language }) {
+  const translations = useTranslations(language);
   const [ref, visible] = useReveal({ threshold: 0.15 });
   const [current, setCurrent] = useState(0);
   const autoplayRef = useRef(null);
 
-  const t = TESTIMONIALS[current];
+  const testimonials = translations.testimonials || [];
+  const t = testimonials[current];
 
   // Autoplay cada 8 segundos.
   useEffect(() => {
@@ -25,12 +27,12 @@ export function Testimonials() {
   }, [visible]);
 
   const prev = () => {
-    setCurrent((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    setCurrent((i) => (i - 1 + testimonials.length) % testimonials.length);
     window.clearInterval(autoplayRef.current);
   };
 
   const next = () => {
-    setCurrent((i) => (i + 1) % TESTIMONIALS.length);
+    setCurrent((i) => (i + 1) % testimonials.length);
     window.clearInterval(autoplayRef.current);
   };
 
@@ -44,8 +46,8 @@ export function Testimonials() {
       h(
         "header",
         { class: "section-head" },
-        h("p", { class: "u-eyebrow" }, "Lo que dicen de nosotros"),
-        h("h2", { class: "section-head__title" }, "Testimonios del sector")
+        h("p", { class: "u-eyebrow" }, language === "es" ? "Lo que dicen de nosotros" : "What they say about us"),
+        h("h2", { class: "section-head__title" }, language === "es" ? "Testimonios del sector" : "Industry Testimonials")
       ),
 
       h(
@@ -94,7 +96,7 @@ export function Testimonials() {
       h(
         "div",
         { class: "carousel__dots" },
-        TESTIMONIALS.map((_, i) =>
+        testimonials.map((_, i) =>
           h(
             "button",
             {
@@ -102,7 +104,7 @@ export function Testimonials() {
               key: i,
               class: `carousel__dot ${i === current ? "is-active" : ""}`,
               onClick: () => setCurrent(i),
-              "aria-label": `Ir al testimonio ${i + 1}`,
+              "aria-label": `${language === "es" ? "Ir al testimonio" : "Go to testimonial"} ${i + 1}`,
               "aria-current": i === current ? "true" : undefined,
             }
           )
