@@ -1,7 +1,7 @@
 import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
-import { TEAM } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Sección "Equipo".
@@ -70,8 +70,36 @@ function Member({ person, index }) {
   );
 }
 
-export function Team() {
+export function Team({ language }) {
+  const t = useTranslations(language);
   const [ref, visible] = useReveal({ threshold: 0.1 });
+  // Importar TEAM de content.js para obtener la data del equipo
+  const TEAM = {
+    lead: {
+      id: "esteban",
+      nombre: "Esteban Izarra",
+      cargo: "CEO & Cofounder",
+      foto: "assets/equipo/esteban.jpg",
+      linkedin: "https://www.linkedin.com/in/estebanizarra",
+      quote: "Empezamos con una visión clara: aplicar tecnología avanzada para impulsar el ecosistema asegurador. Hoy, nuestras soluciones de IA son utilizadas por los principales referentes del sector para optimizar procesos, mejorar la toma de decisiones y brindar una mejor experiencia a sus clientes.",
+    },
+    groups: [
+      [
+        { id: "loreto", nombre: "Loreto Hernández", cargo: "COO", foto: "assets/equipo/loreto.jpg", quote: "Creo profundamente en el poder de la inteligencia artificial cuando está conectada con necesidades reales de negocio", linkedin: "https://www.linkedin.com/in/loretohernandezk/" },
+        { id: "francisco", nombre: "Francisco Pino", cargo: "CCO", foto: "assets/equipo/francisco.jpg", quote: "LISA está provocando un cambio en la industria de seguros, implementando innovación disruptiva con IA para mejorar la relación aseguradora-asegurado y agilizar procesos de forma eficiente y transparente.", linkedin: "https://www.linkedin.com/in/pinnovacionynegocios/" },
+        { id: "luis", nombre: "Luis Álvarez", cargo: "CTO", foto: "assets/equipo/luis.jpg", quote: "LISA emplea tecnología avanzada y el potencial de la inteligencia artificial para ofrecer un servicio de excelencias a las empresas de seguros.", linkedin: "https://www.linkedin.com/in/luizoalvarez/" },
+      ],
+      [
+        { id: "diego", nombre: "Diego Ferrochio", cargo: "Head of Operations", foto: "assets/equipo/diego.jpg", quote: "Escalar, innovar y potenciar nuestros equipos de trabajo para liderar la solución de los seguros es una meta que nos mantiene muy enfocados en LISA.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+        { id: "juan", nombre: "Juan Guilá", cargo: "Head of Customer Success", foto: "assets/equipo/juan.jpg", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+        { id: "rodrigo", nombre: "Rodrigo Randaro", cargo: "Head of Finance", foto: "assets/equipo/rodrigo.jpg", quote: "Creo en el poder del trabajo colaborativo en el diseño abierto para construir mejores resultados. Me inspira impulsar equipos multidisciplinarios, basados en la confianza, el compromiso y la autonomía de cada persona.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+      ],
+      [
+        { id: "marie", nombre: "Marie Merle", cargo: "PMO", foto: "assets/equipo/marie.jpg", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+        { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg", quote: "En LISA buscamos ofrecer soluciones escalables y de gran valor para nuestros clientes, mediante la optimización apoyados en nuestra tecnología.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
+      ],
+    ],
+  };
   const { lead } = TEAM;
 
   return h(
@@ -81,9 +109,9 @@ export function Team() {
     h(
       "header",
       { class: "team__head" },
-      h("p", { class: "u-eyebrow" }, "Equipo"),
-      h("h1", { class: "team__title" }, "El equipo detrás de LISA"),
-      h("p", { class: "team__intro" }, TEAM.intro)
+      h("p", { class: "u-eyebrow" }, t.team.eyebrow),
+      h("h1", { class: "team__title" }, t.team.title),
+      h("p", { class: "team__intro" }, t.team.intro)
     ),
 
     // Fundador, con su testimonio.
