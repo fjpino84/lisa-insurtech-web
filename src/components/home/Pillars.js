@@ -1,8 +1,8 @@
 import { h } from "../../vendor/preact.js";
 import { ModuleMark } from "../shared/ModuleMark.js";
 import { ReadingVisual, DecisionVisual, NetworkVisual } from "./ModuleVisuals.js";
-import { INTRO, PILLARS, MODULES_HEAD } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /** Ilustración que acompaña a cada módulo, según su identificador. */
 const VISUALS = {
@@ -22,7 +22,8 @@ function PillarVisual({ pillar }) {
   );
 }
 
-export function Pillars() {
+export function Pillars({ language }) {
+  const t = useTranslations(language);
   const [introRef, introVisible] = useReveal();
 
   return h(
@@ -34,8 +35,8 @@ export function Pillars() {
       h(
         "div",
         { class: `intro ${introVisible ? "is-visible" : ""}`, ref: introRef },
-        h("h2", { class: "intro__title" }, INTRO.title),
-        INTRO.paragraphs.map((text, index) =>
+        h("h2", { class: "intro__title" }, t.intro.title),
+        t.intro.paragraphs.map((text, index) =>
           h("p", { key: index, class: "intro__text" }, text)
         )
       )
@@ -49,7 +50,9 @@ export function Pillars() {
  * Van tras la presentación de las soluciones: primero se ve qué resuelve
  * LISA y después de qué piezas se compone.
  */
-export function Modules() {
+export function Modules({ language }) {
+  const t = useTranslations(language);
+
   return h(
     "section",
     { class: "pillars pillars--modules", id: "modulos" },
@@ -60,14 +63,14 @@ export function Modules() {
       h(
         "header",
         { class: "section-head" },
-        h("p", { class: "u-eyebrow" }, MODULES_HEAD.eyebrow),
-        h("h2", { class: "section-head__title" }, MODULES_HEAD.title)
+        h("p", { class: "u-eyebrow" }, t.modules_head.eyebrow),
+        h("h2", { class: "section-head__title" }, t.modules_head.title)
       ),
 
       h(
         "div",
         { class: "pillars__list" },
-        PILLARS.map((pillar, index) => h(PillarRow, { key: pillar.id, pillar, index }))
+        t.pillars.map((pillar, index) => h(PillarRow, { key: pillar.id, pillar, index }))
       )
     )
   );
