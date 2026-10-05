@@ -142,22 +142,22 @@ export function App() {
         h(
           "div",
           { class: "view" },
-          h(Hero, { onDemo: () => setModalOpen(true) }),
-          h(Pillars, null),
-          h(SolutionsPreview, { onOpenDemo: openDemo }),
-          h(Modules, null),
-          h(Testimonials, null),
-          h(Closing, { onNavigate: navigate })
+          h(Hero, { onDemo: () => setModalOpen(true), language }),
+          h(Pillars, { language }),
+          h(SolutionsPreview, { onOpenDemo: openDemo, language }),
+          h(Modules, { language }),
+          h(Testimonials, { language }),
+          h(Closing, { onNavigate: navigate, language })
         ),
 
-      route === "somos" && h("div", { class: "view view--inner" }, h(AboutPage, null)),
+      route === "somos" && h("div", { class: "view view--inner" }, h(AboutPage, { language })),
 
       route === "soluciones" &&
-        h("div", { class: "view view--inner" }, h(SolutionsPage, { initial: demoTarget })),
+        h("div", { class: "view view--inner" }, h(SolutionsPage, { initial: demoTarget, language })),
 
-      route === "equipo" && h("div", { class: "view view--inner" }, h(TeamPage, null)),
+      route === "equipo" && h("div", { class: "view view--inner" }, h(TeamPage, { language })),
 
-      route === "hablemos" && h("div", { class: "view view--inner" }, h(Contact, null))
+      route === "hablemos" && h("div", { class: "view view--inner" }, h(Contact, { language }))
     ),
 
     h(Footer, { onNavigate: navigate }),
