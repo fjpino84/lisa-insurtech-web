@@ -103,7 +103,13 @@ export const TRANSLATIONS = {
         accent: "danger",
       },
     ],
+    solutions_head: {
+      text: "Dos productos, un mismo ",
+      accent: "motor agéntico",
+    },
+    solution_cta: "Probar demostración",
     awards: {
+      label: "Respaldados y reconocidos por líderes de la industria",
       title: "¡Somos campeones X2!",
       photoAlt: "Representante de LISA sosteniendo el galardón del Zurich Innovation Championship.",
       year2022: "2022",
@@ -216,6 +222,15 @@ export const TRANSLATIONS = {
       sending: "Enviando…",
       send_message: "Enviar mensaje",
       send_another: "Enviar otra consulta",
+      validation: {
+        nombre_required: "Indique su nombre.",
+        email_required: "Indique un correo de contacto.",
+        email_invalid: "El formato del correo no es válido.",
+        empresa_required: "Indique la compañía.",
+        mensaje_required: "Cuéntenos brevemente su necesidad (mínimo 12 caracteres).",
+        thank_you: "Gracias",
+        team_contact: "Nuestro equipo se pondrá en contacto con usted a la brevedad.",
+      },
     },
   },
   en: {
@@ -316,7 +331,13 @@ export const TRANSLATIONS = {
         accent: "danger",
       },
     ],
+    solutions_head: {
+      text: "Two products, one ",
+      accent: "agentic engine",
+    },
+    solution_cta: "Try demo",
     awards: {
+      label: "Supported and recognized by industry leaders",
       title: "We are champions X2!",
       photoAlt: "LISA representative holding the Zurich Innovation Championship award.",
       year2022: "2022",
@@ -429,6 +450,15 @@ export const TRANSLATIONS = {
       sending: "Sending…",
       send_message: "Send message",
       send_another: "Send another inquiry",
+      validation: {
+        nombre_required: "Please provide your name.",
+        email_required: "Please provide a contact email.",
+        email_invalid: "The email format is not valid.",
+        empresa_required: "Please indicate your company.",
+        mensaje_required: "Please briefly tell us your need (minimum 12 characters).",
+        thank_you: "Thank you",
+        team_contact: "Our team will be in touch with you shortly.",
+      },
     },
   },
 };

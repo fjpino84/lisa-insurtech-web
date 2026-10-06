@@ -21,25 +21,25 @@ const INITIAL = {
 // INTERESTS se genera dinámicamente desde las traducciones
 
 /** Valida los campos y devuelve un objeto de errores. */
-function validate(values) {
+function validate(values, t) {
   const errors = {};
 
   if (!values.nombre.trim()) {
-    errors.nombre = "Indique su nombre.";
+    errors.nombre = t.contact.validation.nombre_required;
   }
 
   if (!values.email.trim()) {
-    errors.email = "Indique un correo de contacto.";
+    errors.email = t.contact.validation.email_required;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email.trim())) {
-    errors.email = "El formato del correo no es válido.";
+    errors.email = t.contact.validation.email_invalid;
   }
 
   if (!values.empresa.trim()) {
-    errors.empresa = "Indique la compañía.";
+    errors.empresa = t.contact.validation.empresa_required;
   }
 
   if (values.mensaje.trim().length < 12) {
-    errors.mensaje = "Cuéntenos brevemente su necesidad (mínimo 12 caracteres).";
+    errors.mensaje = t.contact.validation.mensaje_required;
   }
 
   return errors;
@@ -66,7 +66,7 @@ export function Contact({ language }) {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    const found = validate(values);
+    const found = validate(values, t);
     setErrors(found);
 
     if (Object.keys(found).length > 0) {
@@ -128,7 +128,7 @@ export function Contact({ language }) {
         h(
           "p",
           { class: "contact-success__text" },
-          `${language === "es" ? "Gracias, " : "Thank you, "}${values.nombre.split(" ")[0]}. ${language === "es" ? "Nuestro equipo se pondrá en contacto con usted a la brevedad." : "Our team will be in touch with you shortly."}`
+          `${t.contact.validation.thank_you}, ${values.nombre.split(" ")[0]}. ${t.contact.validation.team_contact}`
         ),
         h(
           "button",

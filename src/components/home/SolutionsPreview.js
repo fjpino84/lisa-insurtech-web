@@ -5,7 +5,7 @@ import { useReveal } from "../../hooks/useReveal.js";
 import { useTranslations } from "../../data/i18n.js";
 
 /** Tarjeta de producto con acceso a su demostración interactiva. */
-function SolutionCard({ solution, index, onOpen }) {
+function SolutionCard({ solution, index, onOpen, t }) {
   const [ref, visible] = useReveal({ threshold: 0.2 });
 
   return h(
@@ -70,7 +70,7 @@ function SolutionCard({ solution, index, onOpen }) {
         class: "btn btn--outline solution-card__cta",
         onClick: () => onOpen(solution.id),
       },
-      h("span", null, "Probar demostración"),
+      h("span", null, t.solution_cta),
       h(Icon, { name: "arrow", size: 16 })
     )
   );
@@ -93,8 +93,8 @@ export function SolutionsPreview({ onOpenDemo, language }) {
         h(
           "h2",
           { class: "section-head__title" },
-          language === "es" ? "Dos productos, un mismo " : "Two products, one ",
-          h("span", { class: "u-gradient-text" }, language === "es" ? "motor agéntico" : "agentic engine")
+          t.solutions_head.text,
+          h("span", { class: "u-gradient-text" }, t.solutions_head.accent)
         )
       ),
 
@@ -107,6 +107,7 @@ export function SolutionsPreview({ onOpenDemo, language }) {
             solution,
             index,
             onOpen: onOpenDemo,
+            t,
           })
         )
       )
@@ -134,7 +135,7 @@ export function Closing({ onNavigate, language }) {
       h(
         "div",
         { class: `awards ${awardsVisible ? "is-visible" : ""}`, ref: awardsRef },
-        h("p", { class: "awards__label" }, language === "es" ? "Respaldados y reconocidos por líderes de la industria" : "Supported and recognized by industry leaders"),
+        h("p", { class: "awards__label" }, t.awards.label),
         h(
           "ul",
           { class: "awards__list" },
