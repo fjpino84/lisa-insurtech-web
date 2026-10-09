@@ -10,7 +10,11 @@ import { useTranslations } from "../../data/i18n.js";
  */
 export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, language, onLanguageChange }) {
   const t = useTranslations(language);
-  const items = NAV_ITEMS.filter((item) => item.id !== "hablemos");
+  const navLabels = t.nav;
+  const items = NAV_ITEMS.filter((item) => item.id !== "hablemos").map((item) => ({
+    ...item,
+    label: navLabels[item.id],
+  }));
 
   // Fuera del inicio no hay hero a pantalla completa: el menú se muestra
   // opaco desde el principio para que el contenido no se vea por detrás.
@@ -121,7 +125,7 @@ export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, 
                 onClick: (event) => go(event, item.id),
               },
               h(Icon, { name: item.icon, size: 18 }),
-              h("span", null, item.label)
+              h("span", null, navLabels[item.id] || item.label)
             )
           )
         )
