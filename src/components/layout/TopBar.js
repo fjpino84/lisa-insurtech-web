@@ -2,12 +2,14 @@ import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
 import { Logo } from "../shared/Logo.js";
 import { NAV_ITEMS } from "../../data/content.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Barra superior de la página de llegada.
  * Se vuelve opaca al hacer scroll y colapsa en menú en móvil.
  */
 export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, language, onLanguageChange }) {
+  const t = useTranslations(language);
   const items = NAV_ITEMS.filter((item) => item.id !== "hablemos");
 
   // Fuera del inicio no hay hero a pantalla completa: el menú se muestra
@@ -82,7 +84,7 @@ export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, 
             class: "topbar__cta",
             onClick: (event) => go(event, "hablemos"),
           },
-          h("span", null, "Hablemos"),
+          h("span", null, t.nav.hablemos),
           h(Icon, { name: "chat", size: 16 })
         )
       ),
