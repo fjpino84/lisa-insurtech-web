@@ -5,19 +5,21 @@ import { FwaDemo } from "./FwaDemo.js";
 import { DemoHeader } from "./DemoHeader.js";
 import { SolutionName } from "../shared/SolutionName.js";
 import { SOLUTIONS } from "../../data/content.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Sección Soluciones: presenta los dos productos y sus mockups interactivos.
  * El producto activo se puede fijar desde fuera mediante `initial`.
  */
-export function SolutionsPage({ initial = "claims" }) {
+export function SolutionsPage({ initial = "claims", language }) {
+  const t = useTranslations(language);
   const [active, setActive] = useState(initial);
 
   useEffect(() => {
     setActive(initial);
   }, [initial]);
 
-  const solution = SOLUTIONS.find((s) => s.id === active);
+  const solution = t.solutions.find((s) => s.id === active);
 
   /** Cambia de producto y lleva la vista al inicio de la demostración. */
   const select = useCallback((id) => {
@@ -62,7 +64,7 @@ export function SolutionsPage({ initial = "claims" }) {
           h(Icon, { name: "lock", size: 12 }),
           active === "claims" ? "app.lisa.la/claims/HM-8942" : "app.lisa.la/vigia/INV-2024-8832"
         ),
-        h("span", { class: "demo-frame__label" }, "Entorno de demostración")
+        h("span", { class: "demo-frame__label" }, language === "es" ? "Entorno de demostración" : "Demo environment")
       ),
       active === "claims"
         ? h(ClaimsDemo, { onGoToFwa: () => select("fwa") })
