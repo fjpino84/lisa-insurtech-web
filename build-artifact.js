@@ -160,14 +160,23 @@ if (/assets\/(logo|casos|premios)\//.test(app)) {
 
 /* --- 6. Ensamblar el documento --- */
 const html = [
+  "<!DOCTYPE html>",
+  "<html lang=\"es\">",
+  "<head>",
+  '<meta charset="UTF-8">',
+  '<meta name="viewport" content="width=device-width, initial-scale=1">',
   "<title>LISA Insurtech</title>",
   '<link rel="preconnect" href="https://fonts.googleapis.com">',
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">',
   `<style>\n${css}\n</style>`,
+  "</head>",
+  '<body data-mode="landing">',
   '<a class="skip-link" href="#contenido">Saltar al contenido</a>',
   '<div id="app"></div>',
   `<script>\n${vendor}\n${app}\nrender(h(App), document.getElementById("app"));\n</` + "script>",
+  "</body>",
+  "</html>",
 ].join("\n");
 
 fs.writeFileSync(OUT, html);
