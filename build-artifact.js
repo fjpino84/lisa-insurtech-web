@@ -59,6 +59,7 @@ const vendor =
 /* --- 3. Módulos de la aplicación, en orden de dependencia --- */
 const MODULES = [
   "src/data/content.js",
+  "src/data/i18n.js",
   "src/data/claimsDemo.js",
   "src/data/fwaDemo.js",
   "src/hooks/useReveal.js",
