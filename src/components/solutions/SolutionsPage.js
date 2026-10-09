@@ -67,8 +67,8 @@ export function SolutionsPage({ initial = "claims", language }) {
         h("span", { class: "demo-frame__label" }, language === "es" ? "Entorno de demostración" : "Demo environment")
       ),
       active === "claims"
-        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa") })
-        : h(FwaDemo, null)
+        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa"), language })
+        : h(FwaDemo, { language })
     ),
 
     h(

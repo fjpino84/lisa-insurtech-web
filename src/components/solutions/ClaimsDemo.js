@@ -3,16 +3,13 @@ import { Icon } from "../shared/Icon.js";
 import { AudioPlayer } from "../shared/AudioPlayer.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
+import { useTranslations } from "../../data/i18n.js";
 import {
   CLAIM,
-  CASE_STATUS,
   STAGES,
   DOCUMENTS,
-  MISSING_DOC,
   EXTRACTED_FIELDS,
   RULES,
-  RULES_READY,
-  DECISION,
 } from "../../data/claimsDemo.js";
 
 /**
@@ -26,15 +23,16 @@ import {
 /** Documentos que llegan con el expediente. */
 const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
 
-/** Estado de validación de cada documento. */
-const ESTADOS = {
-  espera: { label: "En espera", icon: "clock", tone: "espera" },
-  recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
-  validado: { label: "Validado", icon: "check", tone: "validado" },
-  pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
-};
+export function ClaimsDemo({ onGoToFwa, language = "es" }) {
+  const t = useTranslations(language);
 
-export function ClaimsDemo({ onGoToFwa }) {
+  /** Estado de validación de cada documento. */
+  const ESTADOS = {
+    espera: { label: t.claims_demo.docStates.espera, icon: "clock", tone: "espera" },
+    recibido: { label: t.claims_demo.docStates.recibido, icon: "upload", tone: "recibido" },
+    validado: { label: t.claims_demo.docStates.validado, icon: "check", tone: "validado" },
+    pendiente: { label: t.claims_demo.docStates.pendiente, icon: "alert", tone: "pendiente" },
+  };
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -183,6 +181,21 @@ export function ClaimsDemo({ onGoToFwa }) {
     return "espera";
   };
 
+  // Asignar etapas localizadas
+  const stageLabels = [
+    { id: "recepcion", label: t.claims_demo.stages.recepcion },
+    { id: "lisai", label: t.claims_demo.stages.lisai },
+    { id: "lisux", label: t.claims_demo.stages.lisux },
+    { id: "decision", label: t.claims_demo.stages.decision },
+  ];
+
+  const stageInfo = [
+    { title: t.claims_demo.stageInfo.recepcion.title, description: t.claims_demo.stageInfo.recepcion.description, icon: "upload" },
+    { title: t.claims_demo.stageInfo.lisai.title, description: t.claims_demo.stageInfo.lisai.description, icon: "chip" },
+    { title: t.claims_demo.stageInfo.lisux.title, description: t.claims_demo.stageInfo.lisux.description, icon: "rules" },
+    { title: t.claims_demo.stageInfo.decision.title, description: t.claims_demo.stageInfo.decision.description, icon: "gavel" },
+  ];
+
   return h(
     "div",
     { class: "demo demo--claims" },
@@ -191,7 +204,7 @@ export function ClaimsDemo({ onGoToFwa }) {
     h(
       "ol",
       { class: "pipeline", ref: workRef },
-      STAGES.map((s, i) =>
+      stageLabels.map((s, i) =>
         h(
           "li",
           {
@@ -203,10 +216,10 @@ export function ClaimsDemo({ onGoToFwa }) {
           h(
             "span",
             { class: "pipeline__marker" },
-            h(Icon, { name: i < stage || finished ? "check" : s.icon, size: 20 })
+            h(Icon, { name: i < stage || finished ? "check" : stageInfo[i].icon, size: 20 })
           ),
           h("span", { class: "pipeline__label" }, s.label),
-          i < STAGES.length - 1 && h("span", { class: "pipeline__track" })
+          i < stageLabels.length - 1 && h("span", { class: "pipeline__track" })
         )
       )
     ),
@@ -218,9 +231,9 @@ export function ClaimsDemo({ onGoToFwa }) {
         { style: { marginBottom: "var(--s-5)" } },
         h(AudioPlayer, {
           src: "assets/voz/narrador.mp3",
-          startTime: "0:12",
-          endTime: "0:42",
-          label: "Escuchar: Al abrir landing de LISA Claims",
+          startTime: t.claims_demo.audioStart,
+          endTime: t.claims_demo.audioEnd,
+          label: t.claims_demo.narration,
           speed: 1.2,
           autoplay: true,
         })
@@ -233,8 +246,8 @@ export function ClaimsDemo({ onGoToFwa }) {
       h(
         "p",
         { class: "demo__stage-info" },
-        h("strong", null, STAGES[stage].title),
-        h("span", null, STAGES[stage].description)
+        h("strong", null, stageInfo[stage].title),
+        h("span", null, stageInfo[stage].description)
       ),
       h(
         "div",
@@ -244,13 +257,13 @@ export function ClaimsDemo({ onGoToFwa }) {
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: runReception },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, "Iniciar simulación")
+            h("span", null, t.claims_demo.startButton)
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: next },
-            h("span", null, "Siguiente etapa"),
+            h("span", null, t.claims_demo.nextButton),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -258,7 +271,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner" }),
-            "Procesando…"
+            t.claims_demo.processing
           ),
         // El reinicio solo se ofrece al terminar todo el proceso.
         finished &&
@@ -266,7 +279,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, "Reiniciar")
+            h("span", null, t.claims_demo.restartButton)
           )
       )
     ),
@@ -283,8 +296,8 @@ export function ClaimsDemo({ onGoToFwa }) {
         h(
           "header",
           { class: "panel__head" },
-          h("h4", { class: "panel__title" }, "Documentos obligatorios"),
-          h("span", { class: "panel__count" }, `${allValidated} archivos`)
+          h("h4", { class: "panel__title" }, t.claims_demo.documentLabel),
+          h("span", { class: "panel__count" }, `${allValidated} ${t.claims_demo.documentsCount}`)
         ),
         h(
           "ul",
@@ -323,7 +336,7 @@ export function ClaimsDemo({ onGoToFwa }) {
                   "span",
                   { class: "doc__action" },
                   h(Icon, { name: "upload", size: 15 }),
-                  h("span", null, "Subir")
+                  h("span", null, t.claims_demo.docAction)
                 ),
             ];
 
@@ -337,7 +350,7 @@ export function ClaimsDemo({ onGoToFwa }) {
                       type: "button",
                       class: "doc__button",
                       onClick: () => setAskUpload(true),
-                      "aria-label": `Subir ${doc.label}`,
+                      "aria-label": `${t.claims_demo.docAction} ${doc.label}`,
                     },
                     contenido
                   )
@@ -365,20 +378,20 @@ export function ClaimsDemo({ onGoToFwa }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, "LISai · Extracción cognitiva"),
+                h("h4", { class: "panel__title" }, t.claims_demo.lisaiTitle),
                 h(
                   "p",
                   { class: "panel__sub" },
                   stage >= 1
-                    ? `Analizando documento ${Math.min(fieldsShown + 1, DOCUMENTS.length)} de ${DOCUMENTS.length}`
-                    : "En espera de recepción"
+                    ? `${t.claims_demo.lisaiAnalyzing} ${Math.min(fieldsShown + 1, DOCUMENTS.length)} ${t.claims_demo.lisaiOf} ${DOCUMENTS.length}`
+                    : t.claims_demo.lisaiEmpty
                 )
               )
             ),
             h(
               "span",
               { class: `chip ${finished ? "chip--done" : "chip--model"}` },
-              finished ? `${CASE_STATUS.creado} ${CLAIM.numeroCaso}` : CASE_STATUS.pendiente
+              finished ? `${t.claims_demo.caseNumber} ${CLAIM.numeroCaso}` : t.claims_demo.caseStatusPending
             )
           ),
 
@@ -386,7 +399,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             ? h(
                 "p",
                 { class: "panel__empty" },
-                "El agente comenzará la extracción cuando los documentos estén validados."
+                t.claims_demo.lisaiEmpty
               )
             : h(
                 "div",
@@ -435,12 +448,12 @@ export function ClaimsDemo({ onGoToFwa }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "rules", size: 20 })),
-              h("h4", { class: "panel__title" }, "LISux · Motor de reglas")
+              h("h4", { class: "panel__title" }, t.claims_demo.lisaxTitle)
             ),
             h(
               "span",
               { class: "chip" },
-              stage >= 2 ? `${rulesDone}/${RULES.length} evaluadas` : "En espera de LISai"
+              stage >= 2 ? `${rulesDone}/${RULES.length} ${t.claims_demo.lisaxRules}` : t.claims_demo.lisaxEmpty
             )
           ),
           h(
@@ -473,7 +486,7 @@ export function ClaimsDemo({ onGoToFwa }) {
               "p",
               { class: "rules__ready" },
               h(Icon, { name: "check", size: 16 }),
-              h("span", null, RULES_READY)
+              h("span", null, t.claims_demo.rulesReady)
             )
         )
       )
@@ -485,11 +498,11 @@ export function ClaimsDemo({ onGoToFwa }) {
       {
         open: askUpload,
         onClose: () => setAskUpload(false),
-        title: MISSING_DOC.title,
+        title: t.claims_demo.missingDocTitle,
         tone: "warning",
         icon: "alert",
       },
-      h("p", null, MISSING_DOC.text),
+      h("p", null, t.claims_demo.missingDocText),
       h(
         "div",
         { class: "upload" },
@@ -502,8 +515,8 @@ export function ClaimsDemo({ onGoToFwa }) {
             onClick: uploadReceta,
           },
           h("span", { class: "upload__icon" }, h(Icon, { name: "upload", size: 28 })),
-          h("span", { class: "upload__action" }, MISSING_DOC.action),
-          h("span", { class: "upload__note" }, MISSING_DOC.note)
+          h("span", { class: "upload__action" }, t.claims_demo.missingDocAction),
+          h("span", { class: "upload__note" }, t.claims_demo.missingDocNote)
         )
       )
     ),
@@ -514,19 +527,23 @@ export function ClaimsDemo({ onGoToFwa }) {
       {
         open: showDecision,
         onClose: () => setShowDecision(false),
-        title: DECISION.title,
+        title: t.claims_demo.decisionTitle,
         tone: "success",
       },
       h(
         "p",
         { class: "decision__lead" },
         h("span", { class: "decision__check" }, h(Icon, { name: "check", size: 18 })),
-        h("span", null, DECISION.summary)
+        h("span", null, t.claims_demo.decisionSummary)
       ),
       h(
         "ul",
         { class: "decision__breakdown" },
-        DECISION.breakdown.map((row) =>
+        [
+          { label: t.claims_demo.decisionBilled, value: "$12,450.00" },
+          { label: t.claims_demo.decisionDeductible, value: "− $2,200.00" },
+          { label: t.claims_demo.decisionAmount, value: "$10,250.00", total: true },
+        ].map((row) =>
           h(
             "li",
             { key: row.label, class: row.total ? "is-total" : "" },
@@ -538,7 +555,7 @@ export function ClaimsDemo({ onGoToFwa }) {
       h(
         "div",
         { class: "handoff" },
-        h("p", { class: "handoff__text" }, DECISION.handoff.text),
+        h("p", { class: "handoff__text" }, t.claims_demo.handoffText),
         h(
           "button",
           {
@@ -549,8 +566,8 @@ export function ClaimsDemo({ onGoToFwa }) {
               if (onGoToFwa) onGoToFwa();
             },
           },
-          h("span", { class: "handoff__strong" }, DECISION.handoff.actionStrong),
-          h("span", { class: "handoff__soft" }, DECISION.handoff.actionSoft),
+          h("span", { class: "handoff__strong" }, t.claims_demo.handoffStrong),
+          h("span", { class: "handoff__soft" }, t.claims_demo.handoffSoft),
           h(Icon, { name: "arrow", size: 18 })
         )
       )
