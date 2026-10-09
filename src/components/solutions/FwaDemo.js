@@ -2,7 +2,6 @@ import { h, useState, useEffect, useRef, useCallback } from "../../vendor/preact
 import { Icon } from "../shared/Icon.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
-import { useTranslations } from "../../data/i18n.js";
 import { DeviationChart, CoalitionChart } from "./PatternCharts.js";
 import {
   CASE,
@@ -32,8 +31,7 @@ const PHASE_SCORE = [0, 62, 88, 98, 98];
 /** Formatea un importe en pesos chilenos. */
 const money = (value) => `$${value.toLocaleString("es-CL")}`;
 
-export function FwaDemo({ language = "es" }) {
-  const t = useTranslations(language);
+export function FwaDemo() {
   const [phase, setPhase] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -236,12 +234,12 @@ export function FwaDemo({ language = "es" }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, t.fwa_demo.documentTitle),
-                h("p", { class: "panel__sub" }, `${t.fwa_demo.provider}: ${CASE.prestador}`)
+                h("h4", { class: "panel__title" }, CASE.documento),
+                h("p", { class: "panel__sub" }, `Prestador: ${CASE.prestador}`)
               )
             ),
             marksShown > 0 &&
-              h("span", { class: "chip chip--danger" }, `${marksShown} ${t.fwa_demo.findings}`)
+              h("span", { class: "chip chip--danger" }, `${marksShown} hallazgos`)
           ),
 
           // Documento con las zonas marcadas
@@ -283,7 +281,7 @@ export function FwaDemo({ language = "es" }) {
               "p",
               { class: "boleta__hint" },
               h(Icon, { name: "eye", size: 14 }),
-              h("span", null, mark ? mark.detalle : t.fwa_demo.clickDetail)
+              h("span", null, mark ? mark.detalle : "Pulse sobre una zona marcada para ver el detalle.")
             )
         ),
 
@@ -299,7 +297,7 @@ export function FwaDemo({ language = "es" }) {
                 "div",
                 { class: "panel__head-left" },
                 h("span", { class: "panel__icon panel__icon--danger" }, h(Icon, { name: "file", size: 20 })),
-                h("h4", { class: "panel__title" }, t.fwa_demo.metadata)
+                h("h4", { class: "panel__title" }, "Metadatos del archivo")
               )
             ),
             h(
@@ -308,23 +306,23 @@ export function FwaDemo({ language = "es" }) {
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.creation),
+                h("span", { class: "meta-list__label" }, "Creación"),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.creacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.modification),
+                h("span", { class: "meta-list__label" }, "Última modificación"),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.modificacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.software),
+                h("span", { class: "meta-list__label" }, "Software"),
                 h("span", { class: "meta-list__value meta-list__value--alert" }, METADATA.software)
               )
             ),
-            h("p", { class: "meta-conclusion" }, t.fwa_demo.metadataConclusion)
+            h("p", { class: "meta-conclusion" }, METADATA.conclusion)
           )
       ),
 
@@ -343,8 +341,8 @@ export function FwaDemo({ language = "es" }) {
             h(
               "div",
               null,
-              h("p", { class: "score__label" }, t.fwa_demo.riskScore),
-              h("p", { class: "score__case u-mono" }, `${t.fwa_demo.case} ${CASE.id}`)
+              h("p", { class: "score__label" }, "Puntaje de riesgo"),
+              h("p", { class: "score__case u-mono" }, `Siniestro ${CASE.id}`)
             ),
             h(
               "p",
@@ -361,10 +359,10 @@ export function FwaDemo({ language = "es" }) {
           h(
             "dl",
             { class: "score__facts" },
-            h("div", null, h("dt", null, t.fwa_demo.beneficiary), h("dd", null, CASE.subject)),
-            h("div", null, h("dt", null, t.fwa_demo.rut), h("dd", { class: "u-mono" }, CASE.rut)),
-            h("div", null, h("dt", null, t.fwa_demo.benefit), h("dd", null, CASE.prestacion)),
-            h("div", null, h("dt", null, t.fwa_demo.amount), h("dd", { class: "u-mono" }, money(CASE.monto)))
+            h("div", null, h("dt", null, "Beneficiario"), h("dd", null, CASE.subject)),
+            h("div", null, h("dt", null, "RUT"), h("dd", { class: "u-mono" }, CASE.rut)),
+            h("div", null, h("dt", null, "Prestación"), h("dd", null, CASE.prestacion)),
+            h("div", null, h("dt", null, "Monto"), h("dd", { class: "u-mono" }, money(CASE.monto)))
           )
         ),
 
@@ -379,11 +377,11 @@ export function FwaDemo({ language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "search", size: 20 })),
-              h("h4", { class: "panel__title" }, t.fwa_demo.forensicFindings)
+              h("h4", { class: "panel__title" }, "Hallazgos forenses")
             )
           ),
           signalsShown === 0
-            ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyAnalysis)
+            ? h("p", { class: "panel__empty" }, "Inicie el análisis para inspeccionar el documento.")
             : h(
                 "ul",
                 { class: "signals" },
@@ -414,11 +412,11 @@ export function FwaDemo({ language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "globe", size: 20 })),
-              h("h4", { class: "panel__title" }, t.fwa_demo.externalValidation)
+              h("h4", { class: "panel__title" }, "Validación externa")
             )
           ),
           phase < 1
-            ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyValidation)
+            ? h("p", { class: "panel__empty" }, "Pendiente de la fase de fuentes externas.")
             : h(
                 "ul",
                 { class: "validations" },
@@ -440,13 +438,13 @@ export function FwaDemo({ language = "es" }) {
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, t.fwa_demo.declared),
+                          h("span", { class: "amounts__label" }, "Declarado"),
                           h("span", { class: "amounts__value amounts__value--alert u-mono" }, money(v.montoDeclarado))
                         ),
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, t.fwa_demo.realSii),
+                          h("span", { class: "amounts__label" }, "Real (SII)"),
                           h("span", { class: "amounts__value u-mono" }, money(v.montoReal))
                         )
                       )
@@ -469,11 +467,11 @@ export function FwaDemo({ language = "es" }) {
           "div",
           { class: "panel__head-left" },
           h("span", { class: "panel__icon" }, h(Icon, { name: "brain", size: 20 })),
-          h("h4", { class: "panel__title" }, t.fwa_demo.patterns)
+          h("h4", { class: "panel__title" }, "Patrones de comportamiento")
         )
       ),
       phase < 2
-        ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyPatterns)
+        ? h("p", { class: "panel__empty" }, "Pendiente de la fase de patrones.")
         : h(
             "div",
             { class: "patterns" },
@@ -515,7 +513,7 @@ export function FwaDemo({ language = "es" }) {
               h(
                 "p",
                 { class: "related__head" },
-                h("span", null, t.fwa_demo.relatedCases),
+                h("span", null, "Casos relacionados"),
                 h("span", { class: "chip chip--danger" }, PROVIDER.nombre)
               ),
               h(
@@ -548,37 +546,22 @@ export function FwaDemo({ language = "es" }) {
       "div",
       { class: "deck" },
 
-      // Localizar labels de fases
-      const phaseLabels = [
-        t.fwa_demo.phases.forensic,
-        t.fwa_demo.phases.external,
-        t.fwa_demo.phases.patterns,
-        t.fwa_demo.phases.resolution,
-      ];
-
-      const phaseInfo = [
-        { title: t.fwa_demo.phaseInfo.forensic },
-        { title: t.fwa_demo.phaseInfo.external },
-        { title: t.fwa_demo.phaseInfo.patterns },
-        { title: t.fwa_demo.phaseInfo.resolution },
-      ];
-
       // Recorrido por fases
       h(
         "ol",
         { class: "deck__steps", "aria-label": "Fases del análisis" },
-        phaseLabels.map((label, i) =>
+        PHASES.map((p, i) =>
           h(
             "li",
             {
-              key: i,
+              key: p.id,
               class: `deck__step ${i < phase || finished ? "is-done" : ""} ${
                 i === phase && started ? "is-current" : ""
               }`,
-              title: label,
+              title: p.label,
             },
             h("span", { class: "deck__dot" }),
-            i < phaseLabels.length - 1 &&
+            i < PHASES.length - 1 &&
               h("span", { class: `deck__line ${i < phase || finished ? "is-done" : ""}` })
           )
         )
@@ -588,11 +571,11 @@ export function FwaDemo({ language = "es" }) {
       h(
         "div",
         { class: "deck__phase" },
-        h("p", { class: "deck__phase-name" }, phaseInfo[phase].title),
+        h("p", { class: "deck__phase-name" }, PHASES[phase].title),
         h(
           "p",
           { class: "deck__phase-hint" },
-          started ? `${t.fwa_demo.phaseOf} ${phase + 1} ${t.fwa_demo.phaseOf === "Phase" ? "of" : "de"} ${phaseLabels.length}` : t.fwa_demo.phaseReady
+          started ? `Fase ${phase + 1} de ${PHASES.length}` : "Listo para comenzar"
         )
       ),
 
@@ -600,7 +583,7 @@ export function FwaDemo({ language = "es" }) {
       h(
         "div",
         { class: "deck__score" },
-        h("span", { class: "deck__score-label" }, t.fwa_demo.riskLevel),
+        h("span", { class: "deck__score-label" }, "Riesgo"),
         h("span", { class: `deck__score-value deck__score-value--${riskLevel} u-mono` }, `${score}%`)
       ),
 
@@ -613,13 +596,13 @@ export function FwaDemo({ language = "es" }) {
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: start },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, t.fwa_demo.startButton)
+            h("span", null, "Iniciar análisis")
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: next },
-            h("span", null, t.fwa_demo.nextButton),
+            h("span", null, "Siguiente fase"),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -627,14 +610,14 @@ export function FwaDemo({ language = "es" }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner spinner--danger" }),
-            t.fwa_demo.processing
+            "Analizando…"
           ),
         finished &&
           h(
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, t.fwa_demo.restartButton)
+            h("span", null, "Reiniciar")
           )
       )
     ),
@@ -645,25 +628,25 @@ export function FwaDemo({ language = "es" }) {
       {
         open: showResolution,
         onClose: () => setShowResolution(false),
-        title: t.fwa_demo.resolutionTitle,
+        title: RESOLUTION.title,
         tone: "danger",
       },
       h(
         "p",
         { class: "decision__lead" },
         h("span", { class: "decision__check decision__check--alert" }, h(Icon, { name: "alert", size: 18 })),
-        h("span", null, t.fwa_demo.resolutionSummary)
+        h("span", null, RESOLUTION.summary)
       ),
       h(
         "div",
         { class: "resolution__score" },
-        h("span", { class: "resolution__score-label" }, t.fwa_demo.riskScore),
+        h("span", { class: "resolution__score-label" }, "Puntaje de riesgo"),
         h("span", { class: "resolution__score-value u-mono" }, `${RESOLUTION.score}%`)
       ),
       h(
         "ul",
         { class: "resolution__actions" },
-        t.fwa_demo.resolutionActions.map((action) =>
+        RESOLUTION.actions.map((action) =>
           h(
             "li",
             { key: action },
@@ -691,7 +674,7 @@ export function FwaDemo({ language = "es" }) {
           },
         },
         h(Icon, { name: "send", size: 17 }),
-        h("span", null, t.fwa_demo.reportAction)
+        h("span", null, REPORT.action)
       )
     ),
 
@@ -704,7 +687,7 @@ export function FwaDemo({ language = "es" }) {
           setShowReport(false);
           setReportSent(false);
         },
-        title: reportSent ? t.fwa_demo.reportSentTitle : t.fwa_demo.reportTitle,
+        title: reportSent ? REPORT.sentTitle : REPORT.title,
         tone: reportSent ? "success" : "danger",
         icon: reportSent ? "check" : "send",
       },
@@ -713,12 +696,12 @@ export function FwaDemo({ language = "es" }) {
             "div",
             { class: "report-sent" },
             h("span", { class: "report-sent__icon" }, h(Icon, { name: "check", size: 34 })),
-            h("p", { class: "report-sent__text" }, t.fwa_demo.reportSentText),
+            h("p", { class: "report-sent__text" }, REPORT.sentText),
             h(
               "p",
               { class: "report-sent__to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, t.fwa_demo.reportDestino)
+              h("span", null, REPORT.destino)
             )
           )
         : h(
@@ -733,24 +716,24 @@ export function FwaDemo({ language = "es" }) {
               h(
                 "div",
                 { class: "report-file__info" },
-                h("p", { class: "report-file__name" }, t.fwa_demo.reportFileName),
+                h("p", { class: "report-file__name" }, REPORT.file.name),
                 h(
                   "p",
                   { class: "report-file__meta" },
-                  `PDF · ${REPORT.file.pages} ${language === "es" ? "páginas" : "pages"} · ${REPORT.file.size}`
+                  `PDF · ${REPORT.file.pages} páginas · ${REPORT.file.size}`
                 )
               ),
-              h("span", { class: "report-file__tag" }, language === "es" ? "Adjunto" : "Attached")
+              h("span", { class: "report-file__tag" }, "Adjunto")
             ),
 
             // Resumen del caso
             h(
               "dl",
               { class: "report-summary" },
-              t.fwa_demo.reportSummary.map((row) =>
+              REPORT.resumen.map((row) =>
                 h(
                   "div",
-                  { key: row.label, class: row.alert ? "is-alert" : "" },
+                  { key: row.label, class: "report-summary__row" },
                   h("dt", null, row.label),
                   h("dd", { class: row.alert ? "is-alert" : "" }, row.value)
                 )
@@ -761,11 +744,11 @@ export function FwaDemo({ language = "es" }) {
             h(
               "div",
               { class: "report-contents" },
-              h("p", { class: "report-contents__title" }, t.fwa_demo.reportContents),
+              h("p", { class: "report-contents__title" }, "El reporte incluye"),
               h(
                 "ul",
                 null,
-                t.fwa_demo.reportAttachments.map((item) =>
+                REPORT.adjuntos.map((item) =>
                   h(
                     "li",
                     { key: item },
@@ -780,8 +763,8 @@ export function FwaDemo({ language = "es" }) {
               "p",
               { class: "report-to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, t.fwa_demo.reportRecipient),
-              h("strong", null, t.fwa_demo.reportDestino)
+              h("span", null, "Destinatario: "),
+              h("strong", null, REPORT.destino)
             ),
 
             h(
@@ -796,10 +779,10 @@ export function FwaDemo({ language = "es" }) {
               sending
                 ? h("span", { class: "spinner spinner--danger" })
                 : h(Icon, { name: "send", size: 17 }),
-              h("span", null, sending ? t.fwa_demo.reportSending : t.fwa_demo.reportSend)
+              h("span", null, sending ? REPORT.sending : REPORT.send)
             ),
 
-            h("p", { class: "report-note" }, t.fwa_demo.reportNote)
+            h("p", { class: "report-note" }, REPORT.note)
           )
     )
   );

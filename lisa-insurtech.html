@@ -6911,8 +6911,7 @@ const FOOTER = {
 /* ==== src/data/i18n.js ==== */
 /**
  * Internacionalización completa - Español / English
- */
-const TRANSLATIONS = {
+ */const TRANSLATIONS = {
   es: {
     nav: {
       inicio: "Inicio",
@@ -7173,153 +7172,6 @@ const TRANSLATIONS = {
         team_contact: "Nuestro equipo se pondrá en contacto con usted a la brevedad.",
       },
     },
-    claims_demo: {
-      docStates: {
-        espera: "En espera",
-        recibido: "Recibido",
-        validado: "Validado",
-        pendiente: "Pendiente",
-      },
-      stages: {
-        recepcion: "Recepción",
-        lisai: "LISai (Agente)",
-        lisux: "LISux (Reglas)",
-        decision: "Decisión",
-      },
-      stageInfo: {
-        recepcion: {
-          title: "Recepción de documentos",
-          description: "LISA recibe el expediente por correo, API o portal. Cada archivo se clasifica automáticamente por tipo documental.",
-        },
-        lisai: {
-          title: "Extracción cognitiva",
-          description: "El agente LISai lee cada documento, extrae los campos mandatorios y asigna un nivel de confianza a cada dato.",
-        },
-        lisux: {
-          title: "Motor de reglas de negocio",
-          description: "LISux ejecuta las reglas configuradas para la compañía: cobertura, deducible, preexistencias y topes.",
-        },
-        decision: {
-          title: "Decisión de liquidación",
-          description: "El sistema emite una resolución trazable con el detalle de cada regla aplicada y su resultado.",
-        },
-      },
-      documentLabel: "Documentos obligatorios",
-      documentsCount: "archivos",
-      startButton: "Iniciar simulación",
-      nextButton: "Siguiente etapa",
-      processing: "Procesando…",
-      restartButton: "Reiniciar",
-      narration: "Escuchar: Al abrir landing de LISA Claims",
-      documents: {
-        hospital: "Factura del hospital",
-        laboratory: "Resultados de laboratorio",
-        prescription: "Receta médica",
-      },
-      docAction: "Subir",
-      missingDocTitle: "Falta un documento obligatorio",
-      missingDocText: "No hemos encontrado la receta médica dentro de los documentos validados. Para poder continuar con el proceso, por favor suba la receta aquí.",
-      missingDocAction: "Subir receta médica",
-      missingDocNote: "Formatos admitidos: JPG, PNG o PDF. Máximo 10 MB.",
-      lisaiTitle: "LISai · Extracción cognitiva",
-      lisaiEmpty: "El agente comenzará la extracción cuando los documentos estén validados.",
-      lisaiAnalyzing: "Analizando documento",
-      lisaiOf: "de",
-      lisaxTitle: "LISux · Motor de reglas",
-      lisaxEmpty: "En espera de LISai",
-      lisaxRules: "evaluadas",
-      rulesReady: "Siniestro listo para pago",
-      decisionTitle: "Liquidación aprobada, reservas ajustadas",
-      decisionSummary: "LISux aprobó la liquidación tras validar la totalidad de las reglas de negocio configuradas para la compañía. Las reservas técnicas quedaron ajustadas de forma automática.",
-      decisionBilled: "Monto facturado",
-      decisionDeductible: "Deducible aplicado",
-      decisionAmount: "Monto a liquidar",
-      handoffText: "Ya conociste cómo LISA Claims es capaz de liquidar siniestros de forma 100% automatizada. Ahora prepárate para conocer cómo con LISA vigIA.",
-      handoffStrong: "Hacemos visible",
-      handoffSoft: "el fraude invisible",
-      caseNumber: "N° de Caso",
-      caseStatusPending: "Caso Pendiente",
-      audioStart: "0:12",
-      audioEnd: "0:42",
-    },
-    fwa_demo: {
-      startButton: "Iniciar análisis",
-      nextButton: "Siguiente fase",
-      processing: "Analizando…",
-      restartButton: "Reiniciar",
-      documentTitle: "Boleta de Honorarios N° 4761",
-      provider: "Prestador",
-      findings: "hallazgos",
-      forensicFindings: "Hallazgos forenses",
-      emptyAnalysis: "Inicie el análisis para inspeccionar el documento.",
-      clickDetail: "Pulse sobre una zona marcada para ver el detalle.",
-      metadata: "Metadatos del archivo",
-      creation: "Creación",
-      modification: "Última modificación",
-      software: "Software",
-      metadataConclusion: "El rastro digital no miente: el archivo fue creado originalmente en 2021, pero registra ediciones realizadas en Canva durante 2024 para alterar su validez.",
-      riskScore: "Puntaje de riesgo",
-      case: "Siniestro",
-      beneficiary: "Beneficiario",
-      rut: "RUT",
-      benefit: "Prestación",
-      amount: "Monto",
-      externalValidation: "Validación externa",
-      emptyValidation: "Pendiente de la fase de fuentes externas.",
-      source: "Fuente",
-      declared: "Declarado",
-      realSii: "Real (SII)",
-      patterns: "Patrones de comportamiento",
-      emptyPatterns: "Pendiente de la fase de patrones.",
-      riskLevel: "Riesgo",
-      phases: {
-        forensic: "Forense documental",
-        external: "Fuentes externas",
-        patterns: "Patrones",
-        resolution: "Resolución",
-      },
-      phaseInfo: {
-        forensic: "Motor de análisis forense documental",
-        external: "Validación con fuentes externas",
-        patterns: "Modelos de comportamiento de cartera",
-        resolution: "Recomendación del sistema",
-      },
-      phaseReady: "Listo para comenzar",
-      phaseOf: "Fase",
-      relatedCases: "Casos relacionados",
-      resolutionTitle: "Pago bloqueado · Derivar a investigación",
-      resolutionSummary: "vigIA consolidó evidencia forense, fiscal y de comportamiento antes del pago. La combinación de un documento adulterado, la inexistencia de la boleta en el SII y la coalición con el prestador sitúa el caso en el nivel crítico de la cartera.",
-      resolutionActions: [
-        "Retención preventiva del pago",
-        "Derivación automática a la unidad de investigación",
-        "Revisión de los 4 casos relacionados del mismo prestador",
-      ],
-      reportAction: "Enviar reporte al equipo de fraude",
-      reportTitle: "Enviar reporte al equipo de fraude",
-      reportSentTitle: "Reporte enviado",
-      reportSentText: "El expediente completo se remitió a la unidad de investigación. El pago queda retenido hasta que concluya el análisis.",
-      reportFileName: "INV-2024-8832_Fiochi_Reporte.pdf",
-      reportDestino: "unidad.fraude@lisa.la",
-      reportSummary: [
-        { label: "Caso", value: "77940303" },
-        { label: "Beneficiario", value: "Ramiro Lucas Fiochi" },
-        { label: "Puntaje de riesgo", value: "98%" },
-        { label: "Monto retenido", value: "$905.000" },
-        { label: "Hallazgos", value: "7 señales de alto riesgo" },
-        { label: "Casos vinculados", value: "4 del mismo prestador" },
-      ],
-      reportContents: "El reporte incluye",
-      reportAttachments: [
-        "Boleta de honorarios N° 4761 con marcas forenses",
-        "Informe de metadatos del archivo",
-        "Contraste con registro del SII",
-        "Red de coalición y casos relacionados",
-      ],
-      reportSend: "Enviar reporte",
-      reportSending: "Enviando…",
-      reportNote: "Envío simulado: ningún dato sale de este navegador.",
-      reportRecipient: "Destinatario:",
-    },
   },
   en: {
     nav: {
@@ -7579,156 +7431,8 @@ const TRANSLATIONS = {
         team_contact: "Our team will be in touch with you shortly.",
       },
     },
-    claims_demo: {
-      docStates: {
-        espera: "Pending",
-        recibido: "Received",
-        validado: "Validated",
-        pendiente: "Required",
-      },
-      stages: {
-        recepcion: "Reception",
-        lisai: "LISai (Agent)",
-        lisux: "LISux (Rules)",
-        decision: "Decision",
-      },
-      stageInfo: {
-        recepcion: {
-          title: "Document reception",
-          description: "LISA receives the file through email, API or portal. Each file is automatically classified by document type.",
-        },
-        lisai: {
-          title: "Cognitive extraction",
-          description: "The LISai agent reads each document, extracts the mandatory fields and assigns a confidence level to each piece of data.",
-        },
-        lisux: {
-          title: "Business rules engine",
-          description: "LISux executes the rules configured for the company: coverage, deductible, pre-existing conditions and limits.",
-        },
-        decision: {
-          title: "Settlement decision",
-          description: "The system issues a traceable resolution with the detail of each rule applied and its result.",
-        },
-      },
-      documentLabel: "Required documents",
-      documentsCount: "files",
-      startButton: "Start simulation",
-      nextButton: "Next stage",
-      processing: "Processing…",
-      restartButton: "Restart",
-      narration: "Listen: When opening LISA Claims landing",
-      documents: {
-        hospital: "Hospital invoice",
-        laboratory: "Laboratory results",
-        prescription: "Medical prescription",
-      },
-      docAction: "Upload",
-      missingDocTitle: "Missing required document",
-      missingDocText: "We have not found the medical prescription among the validated documents. To continue the process, please upload the prescription here.",
-      missingDocAction: "Upload medical prescription",
-      missingDocNote: "Accepted formats: JPG, PNG or PDF. Maximum 10 MB.",
-      lisaiTitle: "LISai · Cognitive extraction",
-      lisaiEmpty: "The agent will begin extraction when documents are validated.",
-      lisaiAnalyzing: "Analyzing document",
-      lisaiOf: "of",
-      lisaxTitle: "LISux · Rules engine",
-      lisaxEmpty: "Waiting for LISai",
-      lisaxRules: "evaluated",
-      rulesReady: "Claim ready for payment",
-      decisionTitle: "Settlement approved, reserves adjusted",
-      decisionSummary: "LISux approved the settlement after validating all business rules configured for the company. Technical reserves were adjusted automatically.",
-      decisionBilled: "Billed amount",
-      decisionDeductible: "Applied deductible",
-      decisionAmount: "Amount to settle",
-      handoffText: "You've seen how LISA Claims can settle claims 100% automatically. Now get ready to learn how with LISA vigIA.",
-      handoffStrong: "We make visible",
-      handoffSoft: "the invisible fraud",
-      caseNumber: "Case No.",
-      caseStatusPending: "Pending Case",
-      audioStart: "0:12",
-      audioEnd: "0:42",
-    },
-    fwa_demo: {
-      startButton: "Start analysis",
-      nextButton: "Next phase",
-      processing: "Analyzing…",
-      restartButton: "Restart",
-      documentTitle: "Invoice N° 4761",
-      provider: "Provider",
-      findings: "findings",
-      forensicFindings: "Forensic findings",
-      emptyAnalysis: "Start the analysis to inspect the document.",
-      clickDetail: "Click on a marked area to see details.",
-      metadata: "File metadata",
-      creation: "Creation",
-      modification: "Last modified",
-      software: "Software",
-      metadataConclusion: "The digital trail doesn't lie: the file was originally created in 2021, but shows edits made in Canva during 2024 to alter its validity.",
-      riskScore: "Risk score",
-      case: "Case",
-      beneficiary: "Beneficiary",
-      rut: "ID",
-      benefit: "Benefit",
-      amount: "Amount",
-      externalValidation: "External validation",
-      emptyValidation: "Pending the external sources phase.",
-      source: "Source",
-      declared: "Declared",
-      realSii: "Real (SII)",
-      patterns: "Behavior patterns",
-      emptyPatterns: "Pending the patterns phase.",
-      riskLevel: "Risk",
-      phases: {
-        forensic: "Document forensic analysis",
-        external: "External sources",
-        patterns: "Patterns",
-        resolution: "Resolution",
-      },
-      phaseInfo: {
-        forensic: "Document forensic analysis engine",
-        external: "Validation with external sources",
-        patterns: "Portfolio behavior models",
-        resolution: "System recommendation",
-      },
-      phaseReady: "Ready to start",
-      phaseOf: "Phase",
-      relatedCases: "Related cases",
-      resolutionTitle: "Payment blocked · Refer for investigation",
-      resolutionSummary: "vigIA consolidated forensic, fiscal and behavior evidence before payment. The combination of an altered document, the non-existence of the invoice in the SII, and the coalition with the provider places the case in the critical level of the portfolio.",
-      resolutionActions: [
-        "Preventive payment retention",
-        "Automatic referral to the investigation unit",
-        "Review of the 4 related cases from the same provider",
-      ],
-      reportAction: "Send report to fraud team",
-      reportTitle: "Send report to fraud team",
-      reportSentTitle: "Report sent",
-      reportSentText: "The complete file was sent to the investigation unit. Payment is retained until the analysis is complete.",
-      reportFileName: "INV-2024-8832_Fiochi_Report.pdf",
-      reportDestino: "fraud.unit@lisa.la",
-      reportSummary: [
-        { label: "Case", value: "77940303" },
-        { label: "Beneficiary", value: "Ramiro Lucas Fiochi" },
-        { label: "Risk score", value: "98%" },
-        { label: "Retained amount", value: "$905,000" },
-        { label: "Findings", value: "7 high-risk signals" },
-        { label: "Related cases", value: "4 from the same provider" },
-      ],
-      reportContents: "The report includes",
-      reportAttachments: [
-        "Invoice N° 4761 with forensic marks",
-        "File metadata report",
-        "Contrast with SII records",
-        "Coalition network and related cases",
-      ],
-      reportSend: "Send report",
-      reportSending: "Sending…",
-      reportNote: "Simulated submission: no data leaves this browser.",
-      reportRecipient: "Recipient:",
-    },
   },
-};
-function useTranslations(lang = "es") {
+};function useTranslations(lang = "es") {
   return TRANSLATIONS[lang] || TRANSLATIONS.es;
 }
 
@@ -11306,12 +11010,6 @@ function CoalitionChart() {
 
 /* ==== src/components/solutions/ClaimsDemo.js ==== */
 
-
-
-
-
-
-
 /**
  * Mockup interactivo de LISA Claims sobre un siniestro de Gastos Médicos.
  *
@@ -11322,16 +11020,14 @@ function CoalitionChart() {
 
 /** Documentos que llegan con el expediente. */
 const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
-function ClaimsDemo({ onGoToFwa, language = "es" }) {
-  const t = useTranslations(language);
 
-  /** Estado de validación de cada documento. */
-  const ESTADOS = {
-    espera: { label: t.claims_demo.docStates.espera, icon: "clock", tone: "espera" },
-    recibido: { label: t.claims_demo.docStates.recibido, icon: "upload", tone: "recibido" },
-    validado: { label: t.claims_demo.docStates.validado, icon: "check", tone: "validado" },
-    pendiente: { label: t.claims_demo.docStates.pendiente, icon: "alert", tone: "pendiente" },
-  };
+/** Estado de validación de cada documento. */
+const ESTADOS = {
+  espera: { label: "En espera", icon: "clock", tone: "espera" },
+  recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
+  validado: { label: "Validado", icon: "check", tone: "validado" },
+  pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
+};function ClaimsDemo({ onGoToFwa }) {
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -11480,21 +11176,6 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
     return "espera";
   };
 
-  // Asignar etapas localizadas
-  const stageLabels = [
-    { id: "recepcion", label: t.claims_demo.stages.recepcion },
-    { id: "lisai", label: t.claims_demo.stages.lisai },
-    { id: "lisux", label: t.claims_demo.stages.lisux },
-    { id: "decision", label: t.claims_demo.stages.decision },
-  ];
-
-  const stageInfo = [
-    { title: t.claims_demo.stageInfo.recepcion.title, description: t.claims_demo.stageInfo.recepcion.description, icon: "upload" },
-    { title: t.claims_demo.stageInfo.lisai.title, description: t.claims_demo.stageInfo.lisai.description, icon: "chip" },
-    { title: t.claims_demo.stageInfo.lisux.title, description: t.claims_demo.stageInfo.lisux.description, icon: "rules" },
-    { title: t.claims_demo.stageInfo.decision.title, description: t.claims_demo.stageInfo.decision.description, icon: "gavel" },
-  ];
-
   return h(
     "div",
     { class: "demo demo--claims" },
@@ -11503,7 +11184,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
     h(
       "ol",
       { class: "pipeline", ref: workRef },
-      stageLabels.map((s, i) =>
+      STAGES.map((s, i) =>
         h(
           "li",
           {
@@ -11515,10 +11196,10 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
           h(
             "span",
             { class: "pipeline__marker" },
-            h(Icon, { name: i < stage || finished ? "check" : stageInfo[i].icon, size: 20 })
+            h(Icon, { name: i < stage || finished ? "check" : s.icon, size: 20 })
           ),
           h("span", { class: "pipeline__label" }, s.label),
-          i < stageLabels.length - 1 && h("span", { class: "pipeline__track" })
+          i < STAGES.length - 1 && h("span", { class: "pipeline__track" })
         )
       )
     ),
@@ -11530,9 +11211,9 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
         { style: { marginBottom: "var(--s-5)" } },
         h(AudioPlayer, {
           src: "assets/voz/narrador.mp3",
-          startTime: t.claims_demo.audioStart,
-          endTime: t.claims_demo.audioEnd,
-          label: t.claims_demo.narration,
+          startTime: "0:12",
+          endTime: "0:42",
+          label: "Escuchar: Al abrir landing de LISA Claims",
           speed: 1.2,
           autoplay: true,
         })
@@ -11545,8 +11226,8 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
       h(
         "p",
         { class: "demo__stage-info" },
-        h("strong", null, stageInfo[stage].title),
-        h("span", null, stageInfo[stage].description)
+        h("strong", null, STAGES[stage].title),
+        h("span", null, STAGES[stage].description)
       ),
       h(
         "div",
@@ -11556,13 +11237,13 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: runReception },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, t.claims_demo.startButton)
+            h("span", null, "Iniciar simulación")
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: next },
-            h("span", null, t.claims_demo.nextButton),
+            h("span", null, "Siguiente etapa"),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -11570,7 +11251,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner" }),
-            t.claims_demo.processing
+            "Procesando…"
           ),
         // El reinicio solo se ofrece al terminar todo el proceso.
         finished &&
@@ -11578,7 +11259,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, t.claims_demo.restartButton)
+            h("span", null, "Reiniciar")
           )
       )
     ),
@@ -11595,8 +11276,8 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
         h(
           "header",
           { class: "panel__head" },
-          h("h4", { class: "panel__title" }, t.claims_demo.documentLabel),
-          h("span", { class: "panel__count" }, `${allValidated} ${t.claims_demo.documentsCount}`)
+          h("h4", { class: "panel__title" }, "Documentos obligatorios"),
+          h("span", { class: "panel__count" }, `${allValidated} archivos`)
         ),
         h(
           "ul",
@@ -11635,7 +11316,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
                   "span",
                   { class: "doc__action" },
                   h(Icon, { name: "upload", size: 15 }),
-                  h("span", null, t.claims_demo.docAction)
+                  h("span", null, "Subir")
                 ),
             ];
 
@@ -11649,7 +11330,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
                       type: "button",
                       class: "doc__button",
                       onClick: () => setAskUpload(true),
-                      "aria-label": `${t.claims_demo.docAction} ${doc.label}`,
+                      "aria-label": `Subir ${doc.label}`,
                     },
                     contenido
                   )
@@ -11677,20 +11358,20 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, t.claims_demo.lisaiTitle),
+                h("h4", { class: "panel__title" }, "LISai · Extracción cognitiva"),
                 h(
                   "p",
                   { class: "panel__sub" },
                   stage >= 1
-                    ? `${t.claims_demo.lisaiAnalyzing} ${Math.min(fieldsShown + 1, DOCUMENTS.length)} ${t.claims_demo.lisaiOf} ${DOCUMENTS.length}`
-                    : t.claims_demo.lisaiEmpty
+                    ? `Analizando documento ${Math.min(fieldsShown + 1, DOCUMENTS.length)} de ${DOCUMENTS.length}`
+                    : "En espera de recepción"
                 )
               )
             ),
             h(
               "span",
               { class: `chip ${finished ? "chip--done" : "chip--model"}` },
-              finished ? `${t.claims_demo.caseNumber} ${CLAIM.numeroCaso}` : t.claims_demo.caseStatusPending
+              finished ? `${CASE_STATUS.creado} ${CLAIM.numeroCaso}` : CASE_STATUS.pendiente
             )
           ),
 
@@ -11698,7 +11379,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
             ? h(
                 "p",
                 { class: "panel__empty" },
-                t.claims_demo.lisaiEmpty
+                "El agente comenzará la extracción cuando los documentos estén validados."
               )
             : h(
                 "div",
@@ -11747,12 +11428,12 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "rules", size: 20 })),
-              h("h4", { class: "panel__title" }, t.claims_demo.lisaxTitle)
+              h("h4", { class: "panel__title" }, "LISux · Motor de reglas")
             ),
             h(
               "span",
               { class: "chip" },
-              stage >= 2 ? `${rulesDone}/${RULES.length} ${t.claims_demo.lisaxRules}` : t.claims_demo.lisaxEmpty
+              stage >= 2 ? `${rulesDone}/${RULES.length} evaluadas` : "En espera de LISai"
             )
           ),
           h(
@@ -11785,7 +11466,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
               "p",
               { class: "rules__ready" },
               h(Icon, { name: "check", size: 16 }),
-              h("span", null, t.claims_demo.rulesReady)
+              h("span", null, RULES_READY)
             )
         )
       )
@@ -11797,11 +11478,11 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
       {
         open: askUpload,
         onClose: () => setAskUpload(false),
-        title: t.claims_demo.missingDocTitle,
+        title: MISSING_DOC.title,
         tone: "warning",
         icon: "alert",
       },
-      h("p", null, t.claims_demo.missingDocText),
+      h("p", null, MISSING_DOC.text),
       h(
         "div",
         { class: "upload" },
@@ -11814,8 +11495,8 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
             onClick: uploadReceta,
           },
           h("span", { class: "upload__icon" }, h(Icon, { name: "upload", size: 28 })),
-          h("span", { class: "upload__action" }, t.claims_demo.missingDocAction),
-          h("span", { class: "upload__note" }, t.claims_demo.missingDocNote)
+          h("span", { class: "upload__action" }, MISSING_DOC.action),
+          h("span", { class: "upload__note" }, MISSING_DOC.note)
         )
       )
     ),
@@ -11826,23 +11507,19 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
       {
         open: showDecision,
         onClose: () => setShowDecision(false),
-        title: t.claims_demo.decisionTitle,
+        title: DECISION.title,
         tone: "success",
       },
       h(
         "p",
         { class: "decision__lead" },
         h("span", { class: "decision__check" }, h(Icon, { name: "check", size: 18 })),
-        h("span", null, t.claims_demo.decisionSummary)
+        h("span", null, DECISION.summary)
       ),
       h(
         "ul",
         { class: "decision__breakdown" },
-        [
-          { label: t.claims_demo.decisionBilled, value: "$12,450.00" },
-          { label: t.claims_demo.decisionDeductible, value: "− $2,200.00" },
-          { label: t.claims_demo.decisionAmount, value: "$10,250.00", total: true },
-        ].map((row) =>
+        DECISION.breakdown.map((row) =>
           h(
             "li",
             { key: row.label, class: row.total ? "is-total" : "" },
@@ -11854,7 +11531,7 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
       h(
         "div",
         { class: "handoff" },
-        h("p", { class: "handoff__text" }, t.claims_demo.handoffText),
+        h("p", { class: "handoff__text" }, DECISION.handoff.text),
         h(
           "button",
           {
@@ -11865,8 +11542,8 @@ function ClaimsDemo({ onGoToFwa, language = "es" }) {
               if (onGoToFwa) onGoToFwa();
             },
           },
-          h("span", { class: "handoff__strong" }, t.claims_demo.handoffStrong),
-          h("span", { class: "handoff__soft" }, t.claims_demo.handoffSoft),
+          h("span", { class: "handoff__strong" }, DECISION.handoff.actionStrong),
+          h("span", { class: "handoff__soft" }, DECISION.handoff.actionSoft),
           h(Icon, { name: "arrow", size: 18 })
         )
       )
@@ -11905,12 +11582,6 @@ function DocPreview({ doc, active }) {
 
 /* ==== src/components/solutions/FwaDemo.js ==== */
 
-
-
-
-
-
-
 /**
  * Mockup interactivo de LISA vigIA sobre el caso Ramiro Lucas Fiochi.
  *
@@ -11923,9 +11594,7 @@ function DocPreview({ doc, active }) {
 const PHASE_SCORE = [0, 62, 88, 98, 98];
 
 /** Formatea un importe en pesos chilenos. */
-const money = (value) => `$${value.toLocaleString("es-CL")}`;
-function FwaDemo({ language = "es" }) {
-  const t = useTranslations(language);
+const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo() {
   const [phase, setPhase] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -12128,12 +11797,12 @@ function FwaDemo({ language = "es" }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, t.fwa_demo.documentTitle),
-                h("p", { class: "panel__sub" }, `${t.fwa_demo.provider}: ${CASE.prestador}`)
+                h("h4", { class: "panel__title" }, CASE.documento),
+                h("p", { class: "panel__sub" }, `Prestador: ${CASE.prestador}`)
               )
             ),
             marksShown > 0 &&
-              h("span", { class: "chip chip--danger" }, `${marksShown} ${t.fwa_demo.findings}`)
+              h("span", { class: "chip chip--danger" }, `${marksShown} hallazgos`)
           ),
 
           // Documento con las zonas marcadas
@@ -12175,7 +11844,7 @@ function FwaDemo({ language = "es" }) {
               "p",
               { class: "boleta__hint" },
               h(Icon, { name: "eye", size: 14 }),
-              h("span", null, mark ? mark.detalle : t.fwa_demo.clickDetail)
+              h("span", null, mark ? mark.detalle : "Pulse sobre una zona marcada para ver el detalle.")
             )
         ),
 
@@ -12191,7 +11860,7 @@ function FwaDemo({ language = "es" }) {
                 "div",
                 { class: "panel__head-left" },
                 h("span", { class: "panel__icon panel__icon--danger" }, h(Icon, { name: "file", size: 20 })),
-                h("h4", { class: "panel__title" }, t.fwa_demo.metadata)
+                h("h4", { class: "panel__title" }, "Metadatos del archivo")
               )
             ),
             h(
@@ -12200,23 +11869,23 @@ function FwaDemo({ language = "es" }) {
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.creation),
+                h("span", { class: "meta-list__label" }, "Creación"),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.creacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.modification),
+                h("span", { class: "meta-list__label" }, "Última modificación"),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.modificacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, t.fwa_demo.software),
+                h("span", { class: "meta-list__label" }, "Software"),
                 h("span", { class: "meta-list__value meta-list__value--alert" }, METADATA.software)
               )
             ),
-            h("p", { class: "meta-conclusion" }, t.fwa_demo.metadataConclusion)
+            h("p", { class: "meta-conclusion" }, METADATA.conclusion)
           )
       ),
 
@@ -12235,8 +11904,8 @@ function FwaDemo({ language = "es" }) {
             h(
               "div",
               null,
-              h("p", { class: "score__label" }, t.fwa_demo.riskScore),
-              h("p", { class: "score__case u-mono" }, `${t.fwa_demo.case} ${CASE.id}`)
+              h("p", { class: "score__label" }, "Puntaje de riesgo"),
+              h("p", { class: "score__case u-mono" }, `Siniestro ${CASE.id}`)
             ),
             h(
               "p",
@@ -12253,10 +11922,10 @@ function FwaDemo({ language = "es" }) {
           h(
             "dl",
             { class: "score__facts" },
-            h("div", null, h("dt", null, t.fwa_demo.beneficiary), h("dd", null, CASE.subject)),
-            h("div", null, h("dt", null, t.fwa_demo.rut), h("dd", { class: "u-mono" }, CASE.rut)),
-            h("div", null, h("dt", null, t.fwa_demo.benefit), h("dd", null, CASE.prestacion)),
-            h("div", null, h("dt", null, t.fwa_demo.amount), h("dd", { class: "u-mono" }, money(CASE.monto)))
+            h("div", null, h("dt", null, "Beneficiario"), h("dd", null, CASE.subject)),
+            h("div", null, h("dt", null, "RUT"), h("dd", { class: "u-mono" }, CASE.rut)),
+            h("div", null, h("dt", null, "Prestación"), h("dd", null, CASE.prestacion)),
+            h("div", null, h("dt", null, "Monto"), h("dd", { class: "u-mono" }, money(CASE.monto)))
           )
         ),
 
@@ -12271,11 +11940,11 @@ function FwaDemo({ language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "search", size: 20 })),
-              h("h4", { class: "panel__title" }, t.fwa_demo.forensicFindings)
+              h("h4", { class: "panel__title" }, "Hallazgos forenses")
             )
           ),
           signalsShown === 0
-            ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyAnalysis)
+            ? h("p", { class: "panel__empty" }, "Inicie el análisis para inspeccionar el documento.")
             : h(
                 "ul",
                 { class: "signals" },
@@ -12306,11 +11975,11 @@ function FwaDemo({ language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "globe", size: 20 })),
-              h("h4", { class: "panel__title" }, t.fwa_demo.externalValidation)
+              h("h4", { class: "panel__title" }, "Validación externa")
             )
           ),
           phase < 1
-            ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyValidation)
+            ? h("p", { class: "panel__empty" }, "Pendiente de la fase de fuentes externas.")
             : h(
                 "ul",
                 { class: "validations" },
@@ -12332,13 +12001,13 @@ function FwaDemo({ language = "es" }) {
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, t.fwa_demo.declared),
+                          h("span", { class: "amounts__label" }, "Declarado"),
                           h("span", { class: "amounts__value amounts__value--alert u-mono" }, money(v.montoDeclarado))
                         ),
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, t.fwa_demo.realSii),
+                          h("span", { class: "amounts__label" }, "Real (SII)"),
                           h("span", { class: "amounts__value u-mono" }, money(v.montoReal))
                         )
                       )
@@ -12361,11 +12030,11 @@ function FwaDemo({ language = "es" }) {
           "div",
           { class: "panel__head-left" },
           h("span", { class: "panel__icon" }, h(Icon, { name: "brain", size: 20 })),
-          h("h4", { class: "panel__title" }, t.fwa_demo.patterns)
+          h("h4", { class: "panel__title" }, "Patrones de comportamiento")
         )
       ),
       phase < 2
-        ? h("p", { class: "panel__empty" }, t.fwa_demo.emptyPatterns)
+        ? h("p", { class: "panel__empty" }, "Pendiente de la fase de patrones.")
         : h(
             "div",
             { class: "patterns" },
@@ -12407,7 +12076,7 @@ function FwaDemo({ language = "es" }) {
               h(
                 "p",
                 { class: "related__head" },
-                h("span", null, t.fwa_demo.relatedCases),
+                h("span", null, "Casos relacionados"),
                 h("span", { class: "chip chip--danger" }, PROVIDER.nombre)
               ),
               h(
@@ -12440,37 +12109,22 @@ function FwaDemo({ language = "es" }) {
       "div",
       { class: "deck" },
 
-      // Localizar labels de fases
-      const phaseLabels = [
-        t.fwa_demo.phases.forensic,
-        t.fwa_demo.phases.external,
-        t.fwa_demo.phases.patterns,
-        t.fwa_demo.phases.resolution,
-      ];
-
-      const phaseInfo = [
-        { title: t.fwa_demo.phaseInfo.forensic },
-        { title: t.fwa_demo.phaseInfo.external },
-        { title: t.fwa_demo.phaseInfo.patterns },
-        { title: t.fwa_demo.phaseInfo.resolution },
-      ];
-
       // Recorrido por fases
       h(
         "ol",
         { class: "deck__steps", "aria-label": "Fases del análisis" },
-        phaseLabels.map((label, i) =>
+        PHASES.map((p, i) =>
           h(
             "li",
             {
-              key: i,
+              key: p.id,
               class: `deck__step ${i < phase || finished ? "is-done" : ""} ${
                 i === phase && started ? "is-current" : ""
               }`,
-              title: label,
+              title: p.label,
             },
             h("span", { class: "deck__dot" }),
-            i < phaseLabels.length - 1 &&
+            i < PHASES.length - 1 &&
               h("span", { class: `deck__line ${i < phase || finished ? "is-done" : ""}` })
           )
         )
@@ -12480,11 +12134,11 @@ function FwaDemo({ language = "es" }) {
       h(
         "div",
         { class: "deck__phase" },
-        h("p", { class: "deck__phase-name" }, phaseInfo[phase].title),
+        h("p", { class: "deck__phase-name" }, PHASES[phase].title),
         h(
           "p",
           { class: "deck__phase-hint" },
-          started ? `${t.fwa_demo.phaseOf} ${phase + 1} ${t.fwa_demo.phaseOf === "Phase" ? "of" : "de"} ${phaseLabels.length}` : t.fwa_demo.phaseReady
+          started ? `Fase ${phase + 1} de ${PHASES.length}` : "Listo para comenzar"
         )
       ),
 
@@ -12492,7 +12146,7 @@ function FwaDemo({ language = "es" }) {
       h(
         "div",
         { class: "deck__score" },
-        h("span", { class: "deck__score-label" }, t.fwa_demo.riskLevel),
+        h("span", { class: "deck__score-label" }, "Riesgo"),
         h("span", { class: `deck__score-value deck__score-value--${riskLevel} u-mono` }, `${score}%`)
       ),
 
@@ -12505,13 +12159,13 @@ function FwaDemo({ language = "es" }) {
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: start },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, t.fwa_demo.startButton)
+            h("span", null, "Iniciar análisis")
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: next },
-            h("span", null, t.fwa_demo.nextButton),
+            h("span", null, "Siguiente fase"),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -12519,14 +12173,14 @@ function FwaDemo({ language = "es" }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner spinner--danger" }),
-            t.fwa_demo.processing
+            "Analizando…"
           ),
         finished &&
           h(
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, t.fwa_demo.restartButton)
+            h("span", null, "Reiniciar")
           )
       )
     ),
@@ -12537,25 +12191,25 @@ function FwaDemo({ language = "es" }) {
       {
         open: showResolution,
         onClose: () => setShowResolution(false),
-        title: t.fwa_demo.resolutionTitle,
+        title: RESOLUTION.title,
         tone: "danger",
       },
       h(
         "p",
         { class: "decision__lead" },
         h("span", { class: "decision__check decision__check--alert" }, h(Icon, { name: "alert", size: 18 })),
-        h("span", null, t.fwa_demo.resolutionSummary)
+        h("span", null, RESOLUTION.summary)
       ),
       h(
         "div",
         { class: "resolution__score" },
-        h("span", { class: "resolution__score-label" }, t.fwa_demo.riskScore),
+        h("span", { class: "resolution__score-label" }, "Puntaje de riesgo"),
         h("span", { class: "resolution__score-value u-mono" }, `${RESOLUTION.score}%`)
       ),
       h(
         "ul",
         { class: "resolution__actions" },
-        t.fwa_demo.resolutionActions.map((action) =>
+        RESOLUTION.actions.map((action) =>
           h(
             "li",
             { key: action },
@@ -12583,7 +12237,7 @@ function FwaDemo({ language = "es" }) {
           },
         },
         h(Icon, { name: "send", size: 17 }),
-        h("span", null, t.fwa_demo.reportAction)
+        h("span", null, REPORT.action)
       )
     ),
 
@@ -12596,7 +12250,7 @@ function FwaDemo({ language = "es" }) {
           setShowReport(false);
           setReportSent(false);
         },
-        title: reportSent ? t.fwa_demo.reportSentTitle : t.fwa_demo.reportTitle,
+        title: reportSent ? REPORT.sentTitle : REPORT.title,
         tone: reportSent ? "success" : "danger",
         icon: reportSent ? "check" : "send",
       },
@@ -12605,12 +12259,12 @@ function FwaDemo({ language = "es" }) {
             "div",
             { class: "report-sent" },
             h("span", { class: "report-sent__icon" }, h(Icon, { name: "check", size: 34 })),
-            h("p", { class: "report-sent__text" }, t.fwa_demo.reportSentText),
+            h("p", { class: "report-sent__text" }, REPORT.sentText),
             h(
               "p",
               { class: "report-sent__to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, t.fwa_demo.reportDestino)
+              h("span", null, REPORT.destino)
             )
           )
         : h(
@@ -12625,24 +12279,24 @@ function FwaDemo({ language = "es" }) {
               h(
                 "div",
                 { class: "report-file__info" },
-                h("p", { class: "report-file__name" }, t.fwa_demo.reportFileName),
+                h("p", { class: "report-file__name" }, REPORT.file.name),
                 h(
                   "p",
                   { class: "report-file__meta" },
-                  `PDF · ${REPORT.file.pages} ${language === "es" ? "páginas" : "pages"} · ${REPORT.file.size}`
+                  `PDF · ${REPORT.file.pages} páginas · ${REPORT.file.size}`
                 )
               ),
-              h("span", { class: "report-file__tag" }, language === "es" ? "Adjunto" : "Attached")
+              h("span", { class: "report-file__tag" }, "Adjunto")
             ),
 
             // Resumen del caso
             h(
               "dl",
               { class: "report-summary" },
-              t.fwa_demo.reportSummary.map((row) =>
+              REPORT.resumen.map((row) =>
                 h(
                   "div",
-                  { key: row.label, class: row.alert ? "is-alert" : "" },
+                  { key: row.label, class: "report-summary__row" },
                   h("dt", null, row.label),
                   h("dd", { class: row.alert ? "is-alert" : "" }, row.value)
                 )
@@ -12653,11 +12307,11 @@ function FwaDemo({ language = "es" }) {
             h(
               "div",
               { class: "report-contents" },
-              h("p", { class: "report-contents__title" }, t.fwa_demo.reportContents),
+              h("p", { class: "report-contents__title" }, "El reporte incluye"),
               h(
                 "ul",
                 null,
-                t.fwa_demo.reportAttachments.map((item) =>
+                REPORT.adjuntos.map((item) =>
                   h(
                     "li",
                     { key: item },
@@ -12672,8 +12326,8 @@ function FwaDemo({ language = "es" }) {
               "p",
               { class: "report-to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, t.fwa_demo.reportRecipient),
-              h("strong", null, t.fwa_demo.reportDestino)
+              h("span", null, "Destinatario: "),
+              h("strong", null, REPORT.destino)
             ),
 
             h(
@@ -12688,10 +12342,10 @@ function FwaDemo({ language = "es" }) {
               sending
                 ? h("span", { class: "spinner spinner--danger" })
                 : h(Icon, { name: "send", size: 17 }),
-              h("span", null, sending ? t.fwa_demo.reportSending : t.fwa_demo.reportSend)
+              h("span", null, sending ? REPORT.sending : REPORT.send)
             ),
 
-            h("p", { class: "report-note" }, t.fwa_demo.reportNote)
+            h("p", { class: "report-note" }, REPORT.note)
           )
     )
   );
@@ -12700,18 +12354,10 @@ function FwaDemo({ language = "es" }) {
 
 /* ==== src/components/solutions/SolutionsPage.js ==== */
 
-
-
-
-
-
-
-
 /**
  * Sección Soluciones: presenta los dos productos y sus mockups interactivos.
  * El producto activo se puede fijar desde fuera mediante `initial`.
- */
-function SolutionsPage({ initial = "claims", language }) {
+ */function SolutionsPage({ initial = "claims", language }) {
   const t = useTranslations(language);
   const [active, setActive] = useState(initial);
 
@@ -12767,8 +12413,8 @@ function SolutionsPage({ initial = "claims", language }) {
         h("span", { class: "demo-frame__label" }, language === "es" ? "Entorno de demostración" : "Demo environment")
       ),
       active === "claims"
-        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa"), language })
-        : h(FwaDemo, { language })
+        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa") })
+        : h(FwaDemo, null)
     ),
 
     h(

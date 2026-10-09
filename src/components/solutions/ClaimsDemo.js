@@ -3,13 +3,16 @@ import { Icon } from "../shared/Icon.js";
 import { AudioPlayer } from "../shared/AudioPlayer.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
-import { useTranslations } from "../../data/i18n.js";
 import {
   CLAIM,
+  CASE_STATUS,
   STAGES,
   DOCUMENTS,
+  MISSING_DOC,
   EXTRACTED_FIELDS,
   RULES,
+  RULES_READY,
+  DECISION,
 } from "../../data/claimsDemo.js";
 
 /**
@@ -23,16 +26,15 @@ import {
 /** Documentos que llegan con el expediente. */
 const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
 
-export function ClaimsDemo({ onGoToFwa, language = "es" }) {
-  const t = useTranslations(language);
+/** Estado de validación de cada documento. */
+const ESTADOS = {
+  espera: { label: "En espera", icon: "clock", tone: "espera" },
+  recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
+  validado: { label: "Validado", icon: "check", tone: "validado" },
+  pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
+};
 
-  /** Estado de validación de cada documento. */
-  const ESTADOS = {
-    espera: { label: t.claims_demo.docStates.espera, icon: "clock", tone: "espera" },
-    recibido: { label: t.claims_demo.docStates.recibido, icon: "upload", tone: "recibido" },
-    validado: { label: t.claims_demo.docStates.validado, icon: "check", tone: "validado" },
-    pendiente: { label: t.claims_demo.docStates.pendiente, icon: "alert", tone: "pendiente" },
-  };
+export function ClaimsDemo({ onGoToFwa }) {
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -181,21 +183,6 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
     return "espera";
   };
 
-  // Asignar etapas localizadas
-  const stageLabels = [
-    { id: "recepcion", label: t.claims_demo.stages.recepcion },
-    { id: "lisai", label: t.claims_demo.stages.lisai },
-    { id: "lisux", label: t.claims_demo.stages.lisux },
-    { id: "decision", label: t.claims_demo.stages.decision },
-  ];
-
-  const stageInfo = [
-    { title: t.claims_demo.stageInfo.recepcion.title, description: t.claims_demo.stageInfo.recepcion.description, icon: "upload" },
-    { title: t.claims_demo.stageInfo.lisai.title, description: t.claims_demo.stageInfo.lisai.description, icon: "chip" },
-    { title: t.claims_demo.stageInfo.lisux.title, description: t.claims_demo.stageInfo.lisux.description, icon: "rules" },
-    { title: t.claims_demo.stageInfo.decision.title, description: t.claims_demo.stageInfo.decision.description, icon: "gavel" },
-  ];
-
   return h(
     "div",
     { class: "demo demo--claims" },
@@ -204,7 +191,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
     h(
       "ol",
       { class: "pipeline", ref: workRef },
-      stageLabels.map((s, i) =>
+      STAGES.map((s, i) =>
         h(
           "li",
           {
@@ -216,10 +203,10 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
           h(
             "span",
             { class: "pipeline__marker" },
-            h(Icon, { name: i < stage || finished ? "check" : stageInfo[i].icon, size: 20 })
+            h(Icon, { name: i < stage || finished ? "check" : s.icon, size: 20 })
           ),
           h("span", { class: "pipeline__label" }, s.label),
-          i < stageLabels.length - 1 && h("span", { class: "pipeline__track" })
+          i < STAGES.length - 1 && h("span", { class: "pipeline__track" })
         )
       )
     ),
@@ -231,9 +218,9 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
         { style: { marginBottom: "var(--s-5)" } },
         h(AudioPlayer, {
           src: "assets/voz/narrador.mp3",
-          startTime: t.claims_demo.audioStart,
-          endTime: t.claims_demo.audioEnd,
-          label: t.claims_demo.narration,
+          startTime: "0:12",
+          endTime: "0:42",
+          label: "Escuchar: Al abrir landing de LISA Claims",
           speed: 1.2,
           autoplay: true,
         })
@@ -246,8 +233,8 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
       h(
         "p",
         { class: "demo__stage-info" },
-        h("strong", null, stageInfo[stage].title),
-        h("span", null, stageInfo[stage].description)
+        h("strong", null, STAGES[stage].title),
+        h("span", null, STAGES[stage].description)
       ),
       h(
         "div",
@@ -257,13 +244,13 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: runReception },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, t.claims_demo.startButton)
+            h("span", null, "Iniciar simulación")
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: next },
-            h("span", null, t.claims_demo.nextButton),
+            h("span", null, "Siguiente etapa"),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -271,7 +258,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner" }),
-            t.claims_demo.processing
+            "Procesando…"
           ),
         // El reinicio solo se ofrece al terminar todo el proceso.
         finished &&
@@ -279,7 +266,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, t.claims_demo.restartButton)
+            h("span", null, "Reiniciar")
           )
       )
     ),
@@ -296,8 +283,8 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
         h(
           "header",
           { class: "panel__head" },
-          h("h4", { class: "panel__title" }, t.claims_demo.documentLabel),
-          h("span", { class: "panel__count" }, `${allValidated} ${t.claims_demo.documentsCount}`)
+          h("h4", { class: "panel__title" }, "Documentos obligatorios"),
+          h("span", { class: "panel__count" }, `${allValidated} archivos`)
         ),
         h(
           "ul",
@@ -336,7 +323,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
                   "span",
                   { class: "doc__action" },
                   h(Icon, { name: "upload", size: 15 }),
-                  h("span", null, t.claims_demo.docAction)
+                  h("span", null, "Subir")
                 ),
             ];
 
@@ -350,7 +337,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
                       type: "button",
                       class: "doc__button",
                       onClick: () => setAskUpload(true),
-                      "aria-label": `${t.claims_demo.docAction} ${doc.label}`,
+                      "aria-label": `Subir ${doc.label}`,
                     },
                     contenido
                   )
@@ -378,20 +365,20 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, t.claims_demo.lisaiTitle),
+                h("h4", { class: "panel__title" }, "LISai · Extracción cognitiva"),
                 h(
                   "p",
                   { class: "panel__sub" },
                   stage >= 1
-                    ? `${t.claims_demo.lisaiAnalyzing} ${Math.min(fieldsShown + 1, DOCUMENTS.length)} ${t.claims_demo.lisaiOf} ${DOCUMENTS.length}`
-                    : t.claims_demo.lisaiEmpty
+                    ? `Analizando documento ${Math.min(fieldsShown + 1, DOCUMENTS.length)} de ${DOCUMENTS.length}`
+                    : "En espera de recepción"
                 )
               )
             ),
             h(
               "span",
               { class: `chip ${finished ? "chip--done" : "chip--model"}` },
-              finished ? `${t.claims_demo.caseNumber} ${CLAIM.numeroCaso}` : t.claims_demo.caseStatusPending
+              finished ? `${CASE_STATUS.creado} ${CLAIM.numeroCaso}` : CASE_STATUS.pendiente
             )
           ),
 
@@ -399,7 +386,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
             ? h(
                 "p",
                 { class: "panel__empty" },
-                t.claims_demo.lisaiEmpty
+                "El agente comenzará la extracción cuando los documentos estén validados."
               )
             : h(
                 "div",
@@ -448,12 +435,12 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "rules", size: 20 })),
-              h("h4", { class: "panel__title" }, t.claims_demo.lisaxTitle)
+              h("h4", { class: "panel__title" }, "LISux · Motor de reglas")
             ),
             h(
               "span",
               { class: "chip" },
-              stage >= 2 ? `${rulesDone}/${RULES.length} ${t.claims_demo.lisaxRules}` : t.claims_demo.lisaxEmpty
+              stage >= 2 ? `${rulesDone}/${RULES.length} evaluadas` : "En espera de LISai"
             )
           ),
           h(
@@ -486,7 +473,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
               "p",
               { class: "rules__ready" },
               h(Icon, { name: "check", size: 16 }),
-              h("span", null, t.claims_demo.rulesReady)
+              h("span", null, RULES_READY)
             )
         )
       )
@@ -498,11 +485,11 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
       {
         open: askUpload,
         onClose: () => setAskUpload(false),
-        title: t.claims_demo.missingDocTitle,
+        title: MISSING_DOC.title,
         tone: "warning",
         icon: "alert",
       },
-      h("p", null, t.claims_demo.missingDocText),
+      h("p", null, MISSING_DOC.text),
       h(
         "div",
         { class: "upload" },
@@ -515,8 +502,8 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
             onClick: uploadReceta,
           },
           h("span", { class: "upload__icon" }, h(Icon, { name: "upload", size: 28 })),
-          h("span", { class: "upload__action" }, t.claims_demo.missingDocAction),
-          h("span", { class: "upload__note" }, t.claims_demo.missingDocNote)
+          h("span", { class: "upload__action" }, MISSING_DOC.action),
+          h("span", { class: "upload__note" }, MISSING_DOC.note)
         )
       )
     ),
@@ -527,23 +514,19 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
       {
         open: showDecision,
         onClose: () => setShowDecision(false),
-        title: t.claims_demo.decisionTitle,
+        title: DECISION.title,
         tone: "success",
       },
       h(
         "p",
         { class: "decision__lead" },
         h("span", { class: "decision__check" }, h(Icon, { name: "check", size: 18 })),
-        h("span", null, t.claims_demo.decisionSummary)
+        h("span", null, DECISION.summary)
       ),
       h(
         "ul",
         { class: "decision__breakdown" },
-        [
-          { label: t.claims_demo.decisionBilled, value: "$12,450.00" },
-          { label: t.claims_demo.decisionDeductible, value: "− $2,200.00" },
-          { label: t.claims_demo.decisionAmount, value: "$10,250.00", total: true },
-        ].map((row) =>
+        DECISION.breakdown.map((row) =>
           h(
             "li",
             { key: row.label, class: row.total ? "is-total" : "" },
@@ -555,7 +538,7 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
       h(
         "div",
         { class: "handoff" },
-        h("p", { class: "handoff__text" }, t.claims_demo.handoffText),
+        h("p", { class: "handoff__text" }, DECISION.handoff.text),
         h(
           "button",
           {
@@ -566,8 +549,8 @@ export function ClaimsDemo({ onGoToFwa, language = "es" }) {
               if (onGoToFwa) onGoToFwa();
             },
           },
-          h("span", { class: "handoff__strong" }, t.claims_demo.handoffStrong),
-          h("span", { class: "handoff__soft" }, t.claims_demo.handoffSoft),
+          h("span", { class: "handoff__strong" }, DECISION.handoff.actionStrong),
+          h("span", { class: "handoff__soft" }, DECISION.handoff.actionSoft),
           h(Icon, { name: "arrow", size: 18 })
         )
       )
