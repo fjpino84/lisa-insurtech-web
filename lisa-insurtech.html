@@ -9414,19 +9414,19 @@ function Team({ language }) {
  */
 
 /** Sección "Somos LISA". */
-function AboutPage() {
+function AboutPage({ language }) {
   return h(
     "div",
     { class: "about" },
     h(Champions, null),
-    h(About, null),
+    h(About, { language }),
     h(Values, null)
   );
 }
 
 /** Sección "Equipo". */
-function TeamPage() {
-  return h("div", { class: "about" }, h(Team, null));
+function TeamPage({ language }) {
+  return h("div", { class: "about" }, h(Team, { language }));
 }
 
 

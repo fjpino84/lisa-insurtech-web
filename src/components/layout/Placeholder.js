@@ -12,17 +12,17 @@ import { Team } from "./Team.js";
  */
 
 /** Sección "Somos LISA". */
-export function AboutPage() {
+export function AboutPage({ language }) {
   return h(
     "div",
     { class: "about" },
     h(Champions, null),
-    h(About, null),
+    h(About, { language }),
     h(Values, null)
   );
 }
 
 /** Sección "Equipo". */
-export function TeamPage() {
-  return h("div", { class: "about" }, h(Team, null));
+export function TeamPage({ language }) {
+  return h("div", { class: "about" }, h(Team, { language }));
 }
