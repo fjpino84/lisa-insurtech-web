@@ -7123,6 +7123,12 @@ const TRANSLATIONS = {
       text: "Conversemos sobre cómo la automatización agéntica puede transformar su operación de siniestros.",
       button: "Redefine tus procesos con LISA",
     },
+    demo: {
+      title: "Demostración interactiva",
+      intro: "Va a entrar en un entorno de demostración donde podrá recorrer, paso a paso, cómo nuestros agentes procesan un siniestro real de Gastos Médicos y cómo detectamos un caso de fraude antes del pago.",
+      prompt: "Elige la solución que quieres conocer:",
+      note: "Todos los datos son simulados y no corresponden a personas ni siniestros reales.",
+    },
     contact: {
       form_label: "Hablemos",
       name: "Nombre",
@@ -7375,6 +7381,12 @@ const TRANSLATIONS = {
       title: "Ready for the next step",
       text: "Let's talk about how agentic automation can transform your claims operation.",
       button: "Redefine your processes with LISA",
+    },
+    demo: {
+      title: "Interactive Demo",
+      intro: "You are about to enter a demonstration environment where you can walk through, step by step, how our agents process a real Medical Expenses claim and how we detect fraud cases before payment.",
+      prompt: "Choose the solution you want to learn about:",
+      note: "All data is simulated and does not correspond to real persons or claims.",
     },
     contact: {
       form_label: "Contact us",
@@ -12482,6 +12494,7 @@ function SolutionsPage({ initial = "claims", language }) {
 
 
 
+
 /** Secciones válidas del sitio. */
 const ROUTES = ["inicio", "somos", "soluciones", "equipo", "hablemos"];
 
@@ -12499,6 +12512,7 @@ function App() {
   const [language, setLanguage] = useState(() => {
     return localStorage.getItem("lisa_language") || "es";
   });
+  const t = useTranslations(language);
   // Opción del menú resaltada; puede diferir de la ruta cuando una sección
   // vive dentro de la portada, como la presentación de soluciones.
   const [menuActive, setMenuActive] = useState(readHash);
@@ -12638,15 +12652,15 @@ function App() {
       {
         open: modalOpen,
         onClose: () => setModalOpen(false),
-        title: "Demostración interactiva",
+        title: t.demo.title,
       },
       h(
         "p",
         null,
-        "Va a entrar en un entorno de demostración donde podrá recorrer, paso a paso, cómo nuestros agentes procesan un siniestro real de Gastos Médicos y cómo detectamos un caso de fraude antes del pago."
+        t.demo.intro
       ),
 
-      h("p", { class: "modal__prompt" }, "Elige la solución que quieres conocer:"),
+      h("p", { class: "modal__prompt" }, t.demo.prompt),
 
       // Cada opción entra directamente en su demostración.
       h(
@@ -12704,7 +12718,7 @@ function App() {
       h(
         "p",
         { class: "modal__note" },
-        "Todos los datos son simulados y no corresponden a personas ni siniestros reales."
+        t.demo.note
       )
     )
   );

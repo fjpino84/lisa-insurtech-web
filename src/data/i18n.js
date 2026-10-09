@@ -213,6 +213,12 @@ export const TRANSLATIONS = {
       text: "Conversemos sobre cómo la automatización agéntica puede transformar su operación de siniestros.",
       button: "Redefine tus procesos con LISA",
     },
+    demo: {
+      title: "Demostración interactiva",
+      intro: "Va a entrar en un entorno de demostración donde podrá recorrer, paso a paso, cómo nuestros agentes procesan un siniestro real de Gastos Médicos y cómo detectamos un caso de fraude antes del pago.",
+      prompt: "Elige la solución que quieres conocer:",
+      note: "Todos los datos son simulados y no corresponden a personas ni siniestros reales.",
+    },
     contact: {
       form_label: "Hablemos",
       name: "Nombre",
@@ -465,6 +471,12 @@ export const TRANSLATIONS = {
       title: "Ready for the next step",
       text: "Let's talk about how agentic automation can transform your claims operation.",
       button: "Redefine your processes with LISA",
+    },
+    demo: {
+      title: "Interactive Demo",
+      intro: "You are about to enter a demonstration environment where you can walk through, step by step, how our agents process a real Medical Expenses claim and how we detect fraud cases before payment.",
+      prompt: "Choose the solution you want to learn about:",
+      note: "All data is simulated and does not correspond to real persons or claims.",
     },
     contact: {
       form_label: "Contact us",

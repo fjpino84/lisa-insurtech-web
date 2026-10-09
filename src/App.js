@@ -10,6 +10,7 @@ import { AboutPage, TeamPage } from "./components/layout/Placeholder.js";
 import { Contact } from "./components/layout/Contact.js";
 import { Modal } from "./components/shared/Modal.js";
 import { Icon } from "./components/shared/Icon.js";
+import { useTranslations } from "./data/i18n.js";
 
 /** Secciones válidas del sitio. */
 const ROUTES = ["inicio", "somos", "soluciones", "equipo", "hablemos"];
@@ -29,6 +30,7 @@ export function App() {
   const [language, setLanguage] = useState(() => {
     return localStorage.getItem("lisa_language") || "es";
   });
+  const t = useTranslations(language);
   // Opción del menú resaltada; puede diferir de la ruta cuando una sección
   // vive dentro de la portada, como la presentación de soluciones.
   const [menuActive, setMenuActive] = useState(readHash);
@@ -168,15 +170,15 @@ export function App() {
       {
         open: modalOpen,
         onClose: () => setModalOpen(false),
-        title: "Demostración interactiva",
+        title: t.demo.title,
       },
       h(
         "p",
         null,
-        "Va a entrar en un entorno de demostración donde podrá recorrer, paso a paso, cómo nuestros agentes procesan un siniestro real de Gastos Médicos y cómo detectamos un caso de fraude antes del pago."
+        t.demo.intro
       ),
 
-      h("p", { class: "modal__prompt" }, "Elige la solución que quieres conocer:"),
+      h("p", { class: "modal__prompt" }, t.demo.prompt),
 
       // Cada opción entra directamente en su demostración.
       h(
@@ -234,7 +236,7 @@ export function App() {
       h(
         "p",
         { class: "modal__note" },
-        "Todos los datos son simulados y no corresponden a personas ni siniestros reales."
+        t.demo.note
       )
     )
   );
