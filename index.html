@@ -6911,8 +6911,7 @@ const FOOTER = {
 /* ==== src/data/i18n.js ==== */
 /**
  * Internacionalización completa - Español / English
- */
-const TRANSLATIONS = {
+ */const TRANSLATIONS = {
   es: {
     nav: {
       inicio: "Inicio",
@@ -7727,8 +7726,7 @@ const TRANSLATIONS = {
       reportRecipient: "Recipient:",
     },
   },
-};
-function useTranslations(lang = "es") {
+};function useTranslations(lang = "es") {
   return TRANSLATIONS[lang] || TRANSLATIONS.es;
 }
 
@@ -11306,12 +11304,6 @@ function CoalitionChart() {
 
 /* ==== src/components/solutions/ClaimsDemo.js ==== */
 
-
-
-
-
-
-
 /**
  * Mockup interactivo de LISA Claims sobre un siniestro de Gastos Médicos.
  *
@@ -11321,8 +11313,7 @@ function CoalitionChart() {
  */
 
 /** Documentos que llegan con el expediente. */
-const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
-function ClaimsDemo({ onGoToFwa, language = "es" }) {
+const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);function ClaimsDemo({ onGoToFwa, language = "es" }) {
   const t = useTranslations(language);
 
   /** Estado de validación de cada documento. */
@@ -11905,12 +11896,6 @@ function DocPreview({ doc, active }) {
 
 /* ==== src/components/solutions/FwaDemo.js ==== */
 
-
-
-
-
-
-
 /**
  * Mockup interactivo de LISA vigIA sobre el caso Ramiro Lucas Fiochi.
  *
@@ -11923,8 +11908,7 @@ function DocPreview({ doc, active }) {
 const PHASE_SCORE = [0, 62, 88, 98, 98];
 
 /** Formatea un importe en pesos chilenos. */
-const money = (value) => `$${value.toLocaleString("es-CL")}`;
-function FwaDemo({ language = "es" }) {
+const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo({ language = "es" }) {
   const t = useTranslations(language);
   const [phase, setPhase] = useState(0);
   const [running, setRunning] = useState(false);
@@ -12700,18 +12684,10 @@ function FwaDemo({ language = "es" }) {
 
 /* ==== src/components/solutions/SolutionsPage.js ==== */
 
-
-
-
-
-
-
-
 /**
  * Sección Soluciones: presenta los dos productos y sus mockups interactivos.
  * El producto activo se puede fijar desde fuera mediante `initial`.
- */
-function SolutionsPage({ initial = "claims", language }) {
+ */function SolutionsPage({ initial = "claims", language }) {
   const t = useTranslations(language);
   const [active, setActive] = useState(initial);
 
