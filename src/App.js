@@ -150,14 +150,14 @@ export function App() {
           h(Closing, { onNavigate: navigate, language })
         ),
 
-      route === "somos" && h("div", { class: "view view--inner" }, h(AboutPage, { language })),
+      route === "somos" && h("div", { class: "view view--inner", key: `somos-${language}` }, h(AboutPage, { language })),
 
       route === "soluciones" &&
-        h("div", { class: "view view--inner" }, h(SolutionsPage, { initial: demoTarget, language })),
+        h("div", { class: "view view--inner", key: `soluciones-${language}` }, h(SolutionsPage, { initial: demoTarget, language })),
 
-      route === "equipo" && h("div", { class: "view view--inner" }, h(TeamPage, { language })),
+      route === "equipo" && h("div", { class: "view view--inner", key: `equipo-${language}` }, h(TeamPage, { language })),
 
-      route === "hablemos" && h("div", { class: "view view--inner" }, h(Contact, { language }))
+      route === "hablemos" && h("div", { class: "view view--inner", key: `hablemos-${language}` }, h(Contact, { language }))
     ),
 
     h(Footer, { onNavigate: navigate }),
