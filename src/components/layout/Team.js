@@ -19,7 +19,8 @@ function iniciales(nombre) {
     .join("");
 }
 
-function Member({ person, index }) {
+function Member({ person, index, t }) {
+  const memberData = t.team.members[person.id];
   return h(
     "li",
     { class: "member", style: { transitionDelay: `${index * 70}ms` } },
@@ -45,14 +46,14 @@ function Member({ person, index }) {
             : h("span", { class: "member__initials" }, iniciales(person.nombre))
         ),
         h("p", { class: "member__name" }, person.nombre),
-        h("p", { class: "member__role" }, person.cargo)
+        h("p", { class: "member__role" }, memberData?.cargo || person.cargo)
       ),
       // Atrás: frase + LinkedIn
-      person.quote &&
+      memberData?.quote &&
         h(
           "div",
           { class: "member__face member__face--back" },
-          h("p", { class: "member__quote" }, person.quote),
+          h("p", { class: "member__quote" }, memberData.quote),
           person.linkedin &&
             h(
               "a",
@@ -115,46 +116,49 @@ export function Team({ language }) {
     ),
 
     // Fundador, con su testimonio.
-    h(
-      "article",
-      { class: "lead-card" },
-      h(
-        "span",
-        { class: "lead-card__photo" },
-        h("img", {
-          src: lead.foto,
-          alt: `Retrato de ${lead.nombre}`,
-          width: 320,
-          height: 320,
-          decoding: "async",
-        })
-      ),
-      h(
-        "div",
-        { class: "lead-card__body" },
-        h("p", { class: "lead-card__name" }, lead.nombre),
-        h("p", { class: "lead-card__role" }, lead.cargo),
-        h("blockquote", { class: "lead-card__quote" }, lead.quote),
+    (() => {
+      const leadData = t.team.members[lead.id];
+      return h(
+        "article",
+        { class: "lead-card" },
         h(
-          "a",
-          {
-            class: "lead-card__link",
-            href: lead.linkedin,
-            target: "_blank",
-            rel: "noopener noreferrer",
-          },
-          h(Icon, { name: "link", size: 15 }),
-          h("span", null, "LinkedIn")
+          "span",
+          { class: "lead-card__photo" },
+          h("img", {
+            src: lead.foto,
+            alt: `Retrato de ${lead.nombre}`,
+            width: 320,
+            height: 320,
+            decoding: "async",
+          })
+        ),
+        h(
+          "div",
+          { class: "lead-card__body" },
+          h("p", { class: "lead-card__name" }, lead.nombre),
+          h("p", { class: "lead-card__role" }, leadData?.cargo || lead.cargo),
+          h("blockquote", { class: "lead-card__quote" }, leadData?.quote || lead.quote),
+          h(
+            "a",
+            {
+              class: "lead-card__link",
+              href: lead.linkedin,
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+            h(Icon, { name: "link", size: 15 }),
+            h("span", null, "LinkedIn")
+          )
         )
-      )
-    ),
+      );
+    })(),
 
     // Resto del equipo, una fila por nivel.
     TEAM.groups.map((grupo, g) =>
       h(
         "ul",
         { key: g, class: "team__row" },
-        grupo.map((person, i) => h(Member, { key: person.id, person, index: g * 3 + i }))
+        grupo.map((person, i) => h(Member, { key: person.id, person, index: g * 3 + i, t }))
       )
     )
   );

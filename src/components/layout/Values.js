@@ -2,6 +2,7 @@ import { h } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
 import { VALUES } from "../../data/content.js";
 import { useReveal } from "../../hooks/useReveal.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Valores del equipo.
@@ -9,7 +10,8 @@ import { useReveal } from "../../hooks/useReveal.js";
  * El titular se mantiene a la izquierda mientras la lista ocupa el resto del
  * ancho, de modo que los cinco valores se lean de un vistazo.
  */
-export function Values() {
+export function Values({ language }) {
+  const t = useTranslations(language);
   const [ref, visible] = useReveal({ threshold: 0.15 });
 
   return h(
@@ -22,7 +24,7 @@ export function Values() {
       h(
         "h2",
         { class: "values__title" },
-        VALUES.title.map((line, i) =>
+        t.values.title.map((line, i) =>
           h("span", { key: i, class: "values__title-line" }, line)
         )
       )
@@ -31,7 +33,7 @@ export function Values() {
     h(
       "ul",
       { class: "values__list" },
-      VALUES.items.map((item, i) =>
+      t.values.items.map((item, i) =>
         h(
           "li",
           {

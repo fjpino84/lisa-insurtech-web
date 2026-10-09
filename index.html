@@ -7075,10 +7075,31 @@ const TRANSLATIONS = {
       certification: "Tu información, respaldada por estándares internacionales",
       certification_subtitle: "Certificación ISO/IEC 27001:2022",
     },
+    values: {
+      title: ["Nuestros", "valores"],
+      items: [
+        { id: "accountability", name: "Accountability", text: "Cumplimos nuestro compromiso de manera confiable." },
+        { id: "ease", name: "Facilidad de uso", text: "Intuitivo, accesible y fácil de adoptar: un concepto que hace un uso eficaz de la tecnología." },
+        { id: "precision", name: "Precisión", text: "Ejecutamos con exactitud y calidad, para obtener resultados confiables." },
+        { id: "innovation", name: "Innovación", text: "Aplicamos lo último en tecnología para mejorar nuestros productos." },
+        { id: "speed", name: "Rapidez", text: "Resolvemos de manera ágil y eficiente." },
+      ],
+    },
     team: {
       eyebrow: "Equipo",
       title: "El equipo detrás de LISA",
       intro: "Nuestro equipo combina años de experiencia en seguros con un profundo conocimiento en tecnología de última generación y ciberseguridad. Hablamos el idioma de la industria. Somos un equipo multicultural y multidisciplinario ubicado en varios países de la región, dando una mayor cobertura a nuestros clientes.",
+      members: {
+        esteban: { cargo: "CEO & Cofounder", quote: "Empezamos con una visión clara: aplicar tecnología avanzada para impulsar el ecosistema asegurador. Hoy, nuestras soluciones de IA son utilizadas por los principales referentes del sector para optimizar procesos, mejorar la toma de decisiones y brindar una mejor experiencia a sus clientes." },
+        loreto: { cargo: "COO", quote: "Creo profundamente en el poder de la inteligencia artificial cuando está conectada con necesidades reales de negocio" },
+        francisco: { cargo: "CCO", quote: "LISA está provocando un cambio en la industria de seguros, implementando innovación disruptiva con IA para mejorar la relación aseguradora-asegurado y agilizar procesos de forma eficiente y transparente." },
+        luis: { cargo: "CTO", quote: "LISA emplea tecnología avanzada y el potencial de la inteligencia artificial para ofrecer un servicio de excelencias a las empresas de seguros." },
+        diego: { cargo: "Head of Operations", quote: "Escalar, innovar y potenciar nuestros equipos de trabajo para liderar la solución de los seguros es una meta que nos mantiene muy enfocados en LISA." },
+        juan: { cargo: "Head of Customer Success", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar." },
+        rodrigo: { cargo: "Head of Finance", quote: "Creo en el poder del trabajo colaborativo en el diseño abierto para construir mejores resultados. Me inspira impulsar equipos multidisciplinarios, basados en la confianza, el compromiso y la autonomía de cada persona." },
+        marie: { cargo: "PMO", quote: "El objetivo de la IA es resolver problemas y desafíos, para inventar y reinventar." },
+        nicolas: { cargo: "Senior Product Owner", quote: "En LISA buscamos ofrecer soluciones escalables y de gran valor para nuestros clientes, mediante la optimización apoyados en nuestra tecnología." },
+      },
     },
     testimonials: [
       {
@@ -7307,10 +7328,31 @@ const TRANSLATIONS = {
       certification: "Your information, backed by international standards",
       certification_subtitle: "ISO/IEC 27001:2022 Certification",
     },
+    values: {
+      title: ["Our", "values"],
+      items: [
+        { id: "accountability", name: "Accountability", text: "We fulfill our commitment in a reliable manner." },
+        { id: "ease", name: "Ease of use", text: "Intuitive, accessible and easy to adopt: a concept that makes effective use of technology." },
+        { id: "precision", name: "Precision", text: "We execute with accuracy and quality, to obtain reliable results." },
+        { id: "innovation", name: "Innovation", text: "We apply the latest in technology to improve our products." },
+        { id: "speed", name: "Speed", text: "We solve quickly and efficiently." },
+      ],
+    },
     team: {
       eyebrow: "Team",
       title: "The team behind LISA",
       intro: "Our team combines years of insurance experience with deep knowledge of cutting-edge technology and cybersecurity. We speak the language of the industry. We are a multicultural and multidisciplinary team located in several countries in the region, providing greater coverage to our clients.",
+      members: {
+        esteban: { cargo: "CEO & Cofounder", quote: "We started with a clear vision: to apply advanced technology to drive the insurance ecosystem. Today, our AI solutions are used by the leading players in the industry to optimize processes, improve decision-making and provide a better experience to their clients." },
+        loreto: { cargo: "COO", quote: "I deeply believe in the power of artificial intelligence when connected to real business needs." },
+        francisco: { cargo: "CCO", quote: "LISA is driving change in the insurance industry, implementing disruptive innovation with AI to improve the insurer-insured relationship and streamline processes efficiently and transparently." },
+        luis: { cargo: "CTO", quote: "LISA uses advanced technology and the potential of artificial intelligence to deliver an excellent service to insurance companies." },
+        diego: { cargo: "Head of Operations", quote: "Scaling, innovating and empowering our teams to lead the insurance solution is a goal that keeps us very focused at LISA." },
+        juan: { cargo: "Head of Customer Success", quote: "The goal of AI is to solve problems and challenges, to invent and reinvent." },
+        rodrigo: { cargo: "Head of Finance", quote: "I believe in the power of collaborative work in open design to build better results. It inspires me to drive multidisciplinary teams, based on trust, commitment and the autonomy of each person." },
+        marie: { cargo: "PMO", quote: "The goal of AI is to solve problems and challenges, to invent and reinvent." },
+        nicolas: { cargo: "Senior Product Owner", quote: "At LISA we seek to offer scalable solutions of great value to our clients, through optimization supported by our technology." },
+      },
     },
     testimonials: [
       {
@@ -9074,13 +9116,15 @@ function Champions({ language }) {
 
 
 
+
 /**
  * Valores del equipo.
  *
  * El titular se mantiene a la izquierda mientras la lista ocupa el resto del
  * ancho, de modo que los cinco valores se lean de un vistazo.
  */
-function Values() {
+function Values({ language }) {
+  const t = useTranslations(language);
   const [ref, visible] = useReveal({ threshold: 0.15 });
 
   return h(
@@ -9093,7 +9137,7 @@ function Values() {
       h(
         "h2",
         { class: "values__title" },
-        VALUES.title.map((line, i) =>
+        t.values.title.map((line, i) =>
           h("span", { key: i, class: "values__title-line" }, line)
         )
       )
@@ -9102,7 +9146,7 @@ function Values() {
     h(
       "ul",
       { class: "values__list" },
-      VALUES.items.map((item, i) =>
+      t.values.items.map((item, i) =>
         h(
           "li",
           {
@@ -9269,7 +9313,8 @@ function iniciales(nombre) {
     .join("");
 }
 
-function Member({ person, index }) {
+function Member({ person, index, t }) {
+  const memberData = t.team.members[person.id];
   return h(
     "li",
     { class: "member", style: { transitionDelay: `${index * 70}ms` } },
@@ -9295,14 +9340,14 @@ function Member({ person, index }) {
             : h("span", { class: "member__initials" }, iniciales(person.nombre))
         ),
         h("p", { class: "member__name" }, person.nombre),
-        h("p", { class: "member__role" }, person.cargo)
+        h("p", { class: "member__role" }, memberData?.cargo || person.cargo)
       ),
       // Atrás: frase + LinkedIn
-      person.quote &&
+      memberData?.quote &&
         h(
           "div",
           { class: "member__face member__face--back" },
-          h("p", { class: "member__quote" }, person.quote),
+          h("p", { class: "member__quote" }, memberData.quote),
           person.linkedin &&
             h(
               "a",
@@ -9364,46 +9409,49 @@ function Team({ language }) {
     ),
 
     // Fundador, con su testimonio.
-    h(
-      "article",
-      { class: "lead-card" },
-      h(
-        "span",
-        { class: "lead-card__photo" },
-        h("img", {
-          src: lead.foto,
-          alt: `Retrato de ${lead.nombre}`,
-          width: 320,
-          height: 320,
-          decoding: "async",
-        })
-      ),
-      h(
-        "div",
-        { class: "lead-card__body" },
-        h("p", { class: "lead-card__name" }, lead.nombre),
-        h("p", { class: "lead-card__role" }, lead.cargo),
-        h("blockquote", { class: "lead-card__quote" }, lead.quote),
+    (() => {
+      const leadData = t.team.members[lead.id];
+      return h(
+        "article",
+        { class: "lead-card" },
         h(
-          "a",
-          {
-            class: "lead-card__link",
-            href: lead.linkedin,
-            target: "_blank",
-            rel: "noopener noreferrer",
-          },
-          h(Icon, { name: "link", size: 15 }),
-          h("span", null, "LinkedIn")
+          "span",
+          { class: "lead-card__photo" },
+          h("img", {
+            src: lead.foto,
+            alt: `Retrato de ${lead.nombre}`,
+            width: 320,
+            height: 320,
+            decoding: "async",
+          })
+        ),
+        h(
+          "div",
+          { class: "lead-card__body" },
+          h("p", { class: "lead-card__name" }, lead.nombre),
+          h("p", { class: "lead-card__role" }, leadData?.cargo || lead.cargo),
+          h("blockquote", { class: "lead-card__quote" }, leadData?.quote || lead.quote),
+          h(
+            "a",
+            {
+              class: "lead-card__link",
+              href: lead.linkedin,
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+            h(Icon, { name: "link", size: 15 }),
+            h("span", null, "LinkedIn")
+          )
         )
-      )
-    ),
+      );
+    })(),
 
     // Resto del equipo, una fila por nivel.
     TEAM.groups.map((grupo, g) =>
       h(
         "ul",
         { key: g, class: "team__row" },
-        grupo.map((person, i) => h(Member, { key: person.id, person, index: g * 3 + i }))
+        grupo.map((person, i) => h(Member, { key: person.id, person, index: g * 3 + i, t }))
       )
     )
   );
