@@ -7027,6 +7027,10 @@ const TRANSLATIONS = {
       text2022: "Entre 2.600 proyectos de todo el mundo, LISA se convierte en el ganador del Zurich Innovation Championship.",
       year2025: "2025",
       award2025: "Mayor impacto en LATAM",
+      awards: [
+        { year: "2022", name: "Mejor Idea", text: "Entre 2.600 proyectos de todo el mundo, LISA se convierte en el ganador del Zurich Innovation Championship." },
+        { year: "2025", name: "Mayor impacto en LATAM", text: "Mayor impacto en LATAM" },
+      ],
     },
     about: {
       resena: {
@@ -7255,6 +7259,10 @@ const TRANSLATIONS = {
       text2022: "Among 2,600 projects worldwide, LISA becomes the winner of the Zurich Innovation Championship.",
       year2025: "2025",
       award2025: "Greatest impact in LATAM",
+      awards: [
+        { year: "2022", name: "Best Idea", text: "Among 2,600 projects worldwide, LISA becomes the winner of the Zurich Innovation Championship." },
+        { year: "2025", name: "Greatest impact in LATAM", text: "Greatest impact in LATAM" },
+      ],
     },
     about: {
       resena: {
@@ -8951,6 +8959,7 @@ function Footer({ onNavigate }) {
 /* ==== src/components/layout/Champions.js ==== */
 
 
+
 /**
  * Apertura de "Somos LISA": el doble reconocimiento en el Zurich Innovation
  * Championship, con el emblema a la izquierda y la fotografía a la derecha.
@@ -8981,7 +8990,8 @@ function ChampionshipMark() {
     h("path", { class: "zic__line", d: "M42.5 48c-4 1.5-6 4.5-6.5 8l6.5-3.5M53.5 48c4 1.5 6 4.5 6.5 8l-6.5-3.5" })
   );
 }
-function Champions() {
+function Champions({ language }) {
+  const t = useTranslations(language);
   return h(
     "section",
     { class: "zic" },
@@ -9021,11 +9031,11 @@ function Champions() {
       h(
         "div",
         { class: "zic__body" },
-        h("h2", { class: "zic__title" }, CHAMPIONS.title),
+        h("h2", { class: "zic__title" }, t.awards.title),
         h(
           "ul",
           { class: "zic__list" },
-          CHAMPIONS.awards.map((award) =>
+          t.awards.awards.map((award) =>
             h(
               "li",
               { key: award.year, class: "zic__award" },
@@ -9418,9 +9428,9 @@ function AboutPage({ language }) {
   return h(
     "div",
     { class: "about" },
-    h(Champions, null),
+    h(Champions, { language }),
     h(About, { language }),
-    h(Values, null)
+    h(Values, { language })
   );
 }
 

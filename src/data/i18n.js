@@ -117,6 +117,10 @@ export const TRANSLATIONS = {
       text2022: "Entre 2.600 proyectos de todo el mundo, LISA se convierte en el ganador del Zurich Innovation Championship.",
       year2025: "2025",
       award2025: "Mayor impacto en LATAM",
+      awards: [
+        { year: "2022", name: "Mejor Idea", text: "Entre 2.600 proyectos de todo el mundo, LISA se convierte en el ganador del Zurich Innovation Championship." },
+        { year: "2025", name: "Mayor impacto en LATAM", text: "Mayor impacto en LATAM" },
+      ],
     },
     about: {
       resena: {
@@ -345,6 +349,10 @@ export const TRANSLATIONS = {
       text2022: "Among 2,600 projects worldwide, LISA becomes the winner of the Zurich Innovation Championship.",
       year2025: "2025",
       award2025: "Greatest impact in LATAM",
+      awards: [
+        { year: "2022", name: "Best Idea", text: "Among 2,600 projects worldwide, LISA becomes the winner of the Zurich Innovation Championship." },
+        { year: "2025", name: "Greatest impact in LATAM", text: "Greatest impact in LATAM" },
+      ],
     },
     about: {
       resena: {

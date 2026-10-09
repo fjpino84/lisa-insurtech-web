@@ -16,9 +16,9 @@ export function AboutPage({ language }) {
   return h(
     "div",
     { class: "about" },
-    h(Champions, null),
+    h(Champions, { language }),
     h(About, { language }),
-    h(Values, null)
+    h(Values, { language })
   );
 }
 

@@ -1,5 +1,6 @@
 import { h } from "../../vendor/preact.js";
 import { CHAMPIONS } from "../../data/content.js";
+import { useTranslations } from "../../data/i18n.js";
 
 /**
  * Apertura de "Somos LISA": el doble reconocimiento en el Zurich Innovation
@@ -32,7 +33,8 @@ function ChampionshipMark() {
   );
 }
 
-export function Champions() {
+export function Champions({ language }) {
+  const t = useTranslations(language);
   return h(
     "section",
     { class: "zic" },
@@ -72,11 +74,11 @@ export function Champions() {
       h(
         "div",
         { class: "zic__body" },
-        h("h2", { class: "zic__title" }, CHAMPIONS.title),
+        h("h2", { class: "zic__title" }, t.awards.title),
         h(
           "ul",
           { class: "zic__list" },
-          CHAMPIONS.awards.map((award) =>
+          t.awards.awards.map((award) =>
             h(
               "li",
               { key: award.year, class: "zic__award" },
