@@ -203,7 +203,7 @@ export function App() {
               "span",
               { class: "choice__text" },
               h("span", { class: "choice__name" }, "LISA Claims"),
-              h("span", { class: "choice__desc" }, "Liquidación de un siniestro de Gastos Médicos")
+              h("span", { class: "choice__desc" }, t.solutions[0].tagline)
             ),
             h(Icon, { name: "arrow", size: 18, className: "choice__arrow" })
           )
@@ -226,7 +226,7 @@ export function App() {
               "span",
               { class: "choice__text" },
               h("span", { class: "choice__name" }, "LISA vigIA"),
-              h("span", { class: "choice__desc" }, "Investigación de un caso de fraude")
+              h("span", { class: "choice__desc" }, t.solutions[1].tagline)
             ),
             h(Icon, { name: "arrow", size: 18, className: "choice__arrow" })
           )
