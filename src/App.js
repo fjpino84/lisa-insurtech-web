@@ -5,6 +5,7 @@ import { Hero } from "./components/home/Hero.js";
 import { Pillars, Modules } from "./components/home/Pillars.js";
 import { SolutionsPreview, Closing } from "./components/home/SolutionsPreview.js";
 import { Testimonials } from "./components/home/Testimonials.js";
+import { AwardsSection } from "./components/home/AwardsSection.js";
 import { SolutionsPage } from "./components/solutions/SolutionsPage.js";
 import { AboutPage, TeamPage } from "./components/layout/Placeholder.js";
 import { Contact } from "./components/layout/Contact.js";
@@ -147,6 +148,7 @@ export function App() {
           h(Hero, { onDemo: () => setModalOpen(true), language }),
           h(Pillars, { language }),
           h(SolutionsPreview, { onOpenDemo: openDemo, language }),
+          h(AwardsSection, { language }),
           h(Modules, { language }),
           h(Testimonials, { language }),
           h(Closing, { onNavigate: navigate, language })
