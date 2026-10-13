@@ -84,6 +84,7 @@ const MODULES = [
   "src/components/home/ModuleVisuals.js",
   "src/components/home/Pillars.js",
   "src/components/home/SolutionsPreview.js",
+  "src/components/home/AwardsSection.js",
   "src/components/home/Testimonials.js",
   "src/components/solutions/DemoHeader.js",
   "src/components/solutions/PatternCharts.js",
