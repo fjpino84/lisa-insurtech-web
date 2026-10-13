@@ -4567,6 +4567,10 @@ ul, ol {
 }
 
 /* --- Reconocimientos --- */
+.zic__body {
+  flex: 1;
+}
+
 .zic__title {
   font-size: clamp(2.8rem, 4vw, 4rem);
   font-weight: 400;
@@ -7080,8 +7084,8 @@ const FOOTER = {
         { id: "accountability", name: "Accountability", text: "Cumplimos nuestro compromiso de manera confiable.", icon: "shield" },
         { id: "ease", name: "Facilidad de uso", text: "Intuitivo, accesible y fácil de adoptar: un concepto que hace un uso eficaz de la tecnología.", icon: "spark" },
         { id: "precision", name: "Precisión", text: "Ejecutamos con exactitud y calidad, para obtener resultados confiables.", icon: "check" },
-        { id: "innovation", name: "Innovación", text: "Aplicamos lo último en tecnología para mejorar nuestros productos.", icon: "lightbulb" },
-        { id: "speed", name: "Rapidez", text: "Resolvemos de manera ágil y eficiente.", icon: "bolt" },
+        { id: "innovation", name: "Innovación", text: "Aplicamos lo último en tecnología para mejorar nuestros productos.", icon: "chip" },
+        { id: "speed", name: "Rapidez", text: "Resolvemos de manera ágil y eficiente.", icon: "clock" },
       ],
     },
     team: {
@@ -7339,8 +7343,8 @@ const FOOTER = {
         { id: "accountability", name: "Accountability", text: "We fulfill our commitment in a reliable manner.", icon: "shield" },
         { id: "ease", name: "Ease of use", text: "Intuitive, accessible and easy to adopt: a concept that makes effective use of technology.", icon: "spark" },
         { id: "precision", name: "Precision", text: "We execute with accuracy and quality, to obtain reliable results.", icon: "check" },
-        { id: "innovation", name: "Innovation", text: "We apply the latest in technology to improve our products.", icon: "lightbulb" },
-        { id: "speed", name: "Speed", text: "We solve quickly and efficiently.", icon: "bolt" },
+        { id: "innovation", name: "Innovation", text: "We apply the latest in technology to improve our products.", icon: "chip" },
+        { id: "speed", name: "Speed", text: "We solve quickly and efficiently.", icon: "clock" },
       ],
     },
     team: {
@@ -12473,6 +12477,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
 
 
 
+
 /** Secciones válidas del sitio. */
 const ROUTES = ["inicio", "somos", "soluciones", "equipo", "hablemos"];
 
@@ -12607,6 +12612,7 @@ function App() {
           h(Hero, { onDemo: () => setModalOpen(true), language }),
           h(Pillars, { language }),
           h(SolutionsPreview, { onOpenDemo: openDemo, language }),
+          h(AwardsSection, { language }),
           h(Modules, { language }),
           h(Testimonials, { language }),
           h(Closing, { onNavigate: navigate, language })
