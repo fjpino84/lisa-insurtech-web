@@ -171,8 +171,8 @@ export const TRANSLATIONS = {
         { id: "accountability", name: "Accountability", text: "Cumplimos nuestro compromiso de manera confiable.", icon: "shield" },
         { id: "ease", name: "Facilidad de uso", text: "Intuitivo, accesible y fácil de adoptar: un concepto que hace un uso eficaz de la tecnología.", icon: "spark" },
         { id: "precision", name: "Precisión", text: "Ejecutamos con exactitud y calidad, para obtener resultados confiables.", icon: "check" },
-        { id: "innovation", name: "Innovación", text: "Aplicamos lo último en tecnología para mejorar nuestros productos.", icon: "lightbulb" },
-        { id: "speed", name: "Rapidez", text: "Resolvemos de manera ágil y eficiente.", icon: "bolt" },
+        { id: "innovation", name: "Innovación", text: "Aplicamos lo último en tecnología para mejorar nuestros productos.", icon: "chip" },
+        { id: "speed", name: "Rapidez", text: "Resolvemos de manera ágil y eficiente.", icon: "clock" },
       ],
     },
     team: {
@@ -430,8 +430,8 @@ export const TRANSLATIONS = {
         { id: "accountability", name: "Accountability", text: "We fulfill our commitment in a reliable manner.", icon: "shield" },
         { id: "ease", name: "Ease of use", text: "Intuitive, accessible and easy to adopt: a concept that makes effective use of technology.", icon: "spark" },
         { id: "precision", name: "Precision", text: "We execute with accuracy and quality, to obtain reliable results.", icon: "check" },
-        { id: "innovation", name: "Innovation", text: "We apply the latest in technology to improve our products.", icon: "lightbulb" },
-        { id: "speed", name: "Speed", text: "We solve quickly and efficiently.", icon: "bolt" },
+        { id: "innovation", name: "Innovation", text: "We apply the latest in technology to improve our products.", icon: "chip" },
+        { id: "speed", name: "Speed", text: "We solve quickly and efficiently.", icon: "clock" },
       ],
     },
     team: {
