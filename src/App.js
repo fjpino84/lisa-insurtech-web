@@ -135,7 +135,7 @@ export function App() {
       menuOpen,
       onToggleMenu: () => setMenuOpen((v) => !v),
       language,
-      onLanguageChange: () => setLanguage((l) => (l === "es" ? "en" : "es")),
+      onLanguageChange: setLanguage,
     }),
 
     h(

@@ -11,6 +11,51 @@ import { POPULATION, OUTLIERS, COALITION } from "../../data/fwaDemo.js";
 
 const clp = (value) => `$${value.toLocaleString("es-CL")}`;
 
+const CHART_UI = {
+  es: {
+    deviationAriaLabel:
+      "Dispersión de montos por siniestro: la banda sombreada marca el rango esperado y cuatro casos quedan muy por encima.",
+    promedioHistorico: (value) => `Promedio histórico ${value}`,
+    siniestrosMismaPrestacion: "Siniestros de la misma prestación",
+    rangoEsperado: "Rango esperado (±1σ, ±2σ)",
+    atipicos: "Atípicos",
+    casoInvestigado: "Caso investigado",
+    rut: "RUT",
+    documento: "Documento",
+    monto: "Monto",
+    prestacion: "Prestación",
+    fecha: "Fecha",
+    coalitionAriaLabel: (n, nombre) => `Red de coalición: ${n} pacientes concentran sus visitas en el prestador ${nombre}.`,
+    visitasEnDias: (visitas, dias) => `${visitas} en ${dias} días`,
+    visitasLabel: "Visitas",
+    prestador: "Prestador",
+    visitas: (n) => `${n} visitas`,
+    pacientes: (n) => `${n} pacientes`,
+    grosorVinculo: "El grosor del vínculo indica el número de visitas",
+  },
+  en: {
+    deviationAriaLabel:
+      "Claim amount scatter plot: the shaded band marks the expected range and four cases are well above it.",
+    promedioHistorico: (value) => `Historical average ${value}`,
+    siniestrosMismaPrestacion: "Claims for the same service",
+    rangoEsperado: "Expected range (±1σ, ±2σ)",
+    atipicos: "Outliers",
+    casoInvestigado: "Case under investigation",
+    rut: "National ID",
+    documento: "Document",
+    monto: "Amount",
+    prestacion: "Service",
+    fecha: "Date",
+    coalitionAriaLabel: (n, nombre) => `Coalition network: ${n} patients concentrate their visits with provider ${nombre}.`,
+    visitasEnDias: (visitas, dias) => `${visitas} in ${dias} days`,
+    visitasLabel: "Visits",
+    prestador: "Provider",
+    visitas: (n) => `${n} visits`,
+    pacientes: (n) => `${n} patients`,
+    grosorVinculo: "Line thickness indicates the number of visits",
+  },
+};
+
 /** Globo informativo compartido por los dos gráficos. */
 function Tooltip({ data, position }) {
   if (!data) return null;
@@ -70,7 +115,8 @@ function stats(values) {
  * para que la banda de desviación siga siendo legible junto a montos diez
  * veces mayores, sin perder de vista lo lejos que quedan los atípicos.
  */
-export function DeviationChart({ average }) {
+export function DeviationChart({ average, language }) {
+  const ui = CHART_UI[language === "en" ? "en" : "es"];
   const [tip, setTip] = useState(null);
   const box = useRef(null);
 
@@ -110,8 +156,7 @@ export function DeviationChart({ average }) {
         class: "chart__svg",
         viewBox: `0 0 ${W} ${H}`,
         role: "img",
-        "aria-label":
-          "Dispersión de montos por siniestro: la banda sombreada marca el rango esperado y cuatro casos quedan muy por encima.",
+        "aria-label": ui.deviationAriaLabel,
       },
       h(
         "g",
@@ -155,7 +200,7 @@ export function DeviationChart({ average }) {
         h(
           "text",
           { class: "chart__mean-label", x: 6, y: y(mean) - 8 },
-          `Promedio histórico ${clp(mean)}`
+          ui.promedioHistorico(clp(mean))
         ),
 
         // Población dentro de rango
@@ -167,11 +212,11 @@ export function DeviationChart({ average }) {
             cy: y(d.monto),
             r: 5,
             onMouseMove: show(d, [
-              ["RUT", d.rut],
-              ["Documento", d.documento],
-              ["Monto", clp(d.monto)],
-              ["Prestación", d.prestacion],
-              ["Fecha", d.fecha],
+              [ui.rut, d.rut],
+              [ui.documento, d.documento],
+              [ui.monto, clp(d.monto)],
+              [ui.prestacion, d.prestacion],
+              [ui.fecha, d.fecha],
             ]),
             onMouseLeave: hide,
           })
@@ -208,11 +253,11 @@ export function DeviationChart({ average }) {
               cy,
               r: d.esCasoActual ? 8 : 7,
               onMouseMove: show(d, [
-                ["RUT", d.rut],
-                ["Documento", d.documento],
-                ["Monto", clp(d.monto)],
-                ["Prestación", d.prestacion],
-                ["Fecha", d.fecha],
+                [ui.rut, d.rut],
+                [ui.documento, d.documento],
+                [ui.monto, clp(d.monto)],
+                [ui.prestacion, d.prestacion],
+                [ui.fecha, d.fecha],
               ]),
               onMouseLeave: hide,
             }),
@@ -227,7 +272,7 @@ export function DeviationChart({ average }) {
         h(
           "text",
           { class: "chart__axis-title", x: PW / 2, y: PH + 30, "text-anchor": "middle" },
-          "Siniestros de la misma prestación"
+          ui.siniestrosMismaPrestacion
         )
       )
     ),
@@ -235,9 +280,9 @@ export function DeviationChart({ average }) {
     h(
       "p",
       { class: "chart__legend" },
-      h("span", { class: "chart__key chart__key--band" }, "Rango esperado (±1σ, ±2σ)"),
-      h("span", { class: "chart__key chart__key--out" }, "Atípicos"),
-      h("span", { class: "chart__key chart__key--cur" }, "Caso investigado")
+      h("span", { class: "chart__key chart__key--band" }, ui.rangoEsperado),
+      h("span", { class: "chart__key chart__key--out" }, ui.atipicos),
+      h("span", { class: "chart__key chart__key--cur" }, ui.casoInvestigado)
     )
   );
 }
@@ -257,7 +302,8 @@ const ORBIT = 138;
  * repiten visitas. El grosor de cada arista refleja el número de visitas,
  * de modo que la concentración del patrón se aprecia de un vistazo.
  */
-export function CoalitionChart() {
+export function CoalitionChart({ language }) {
+  const ui = CHART_UI[language === "en" ? "en" : "es"];
   const [tip, setTip] = useState(null);
   const box = useRef(null);
 
@@ -281,10 +327,10 @@ export function CoalitionChart() {
       data: {
         title: p.nombre,
         rows: [
-          ["RUT", p.rut],
-          ["Visitas", `${p.visitas} en ${p.dias} días`],
-          ["Monto", clp(p.monto)],
-          ["Prestador", prestador.nombre],
+          [ui.rut, p.rut],
+          [ui.visitasLabel, ui.visitasEnDias(p.visitas, p.dias)],
+          [ui.monto, clp(p.monto)],
+          [ui.prestador, prestador.nombre],
         ],
       },
       position: tooltipPosition(event, box.current),
@@ -301,7 +347,7 @@ export function CoalitionChart() {
         class: "chart__svg",
         viewBox: `0 0 ${GW} ${GH}`,
         role: "img",
-        "aria-label": `Red de coalición: ${pacientes.length} pacientes concentran sus visitas en el prestador ${prestador.nombre}.`,
+        "aria-label": ui.coalitionAriaLabel(pacientes.length, prestador.nombre),
       },
 
       // Anillos de referencia
@@ -357,7 +403,7 @@ export function CoalitionChart() {
             y: my + ((x - CX) / length) * gap,
             "text-anchor": "middle",
           },
-          `${paciente.visitas} visitas`
+          ui.visitas(paciente.visitas)
         );
       }),
 
@@ -391,14 +437,14 @@ export function CoalitionChart() {
       h(
         "text",
         { class: "graph-hub__meta", x: CX, y: GH - 10, "text-anchor": "middle" },
-        `${prestador.rut} · ${pacientes.length} pacientes`
+        `${prestador.rut} · ${ui.pacientes(pacientes.length)}`
       )
     ),
     h(Tooltip, tip ?? {}),
     h(
       "p",
       { class: "chart__legend" },
-      h("span", null, "El grosor del vínculo indica el número de visitas")
+      h("span", null, ui.grosorVinculo)
     )
   );
 }

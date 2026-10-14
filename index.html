@@ -443,23 +443,42 @@ ul, ol {
 .topbar__language {
   display: inline-flex;
   align-items: center;
+  gap: 0.2rem;
+  padding: 0.3rem;
+  border-radius: var(--r-full);
+  background: rgba(15, 30, 51, 0.6);
+  border: 0.1rem solid var(--c-border);
+}
+
+.topbar__language-option {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 50%;
+  width: 3.4rem;
+  height: 2.8rem;
+  border-radius: var(--r-full);
   background: transparent;
-  border: 0.1rem solid rgba(34, 211, 238, 0.3);
+  border: none;
   cursor: pointer;
+  color: var(--c-text-mute);
   transition: all var(--t-base);
 }
 
-.topbar__language:hover {
-  border-color: var(--c-cyan);
-  background: rgba(34, 211, 238, 0.1);
+.topbar__language-option:hover {
+  color: var(--c-text);
+}
+
+.topbar__language-option.is-active {
+  color: var(--c-cyan);
+  background: rgba(34, 211, 238, 0.14);
+  box-shadow: inset 0 0 0 0.1rem rgba(34, 211, 238, 0.4);
 }
 
 .topbar__language-flag {
-  font-size: 1.6rem;
+  font-family: var(--f-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   line-height: 1;
 }
 
@@ -5045,6 +5064,7 @@ ul, ol {
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: grayscale(1);
 }
 
 .lead-card__name {
@@ -5131,12 +5151,13 @@ ul, ol {
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: grayscale(1);
   transition: filter var(--t-base);
 }
 
 /* El retrato recupera algo de vida al pasar el cursor. */
 .member:hover .member__photo img {
-  filter: brightness(1.12);
+  filter: grayscale(1) brightness(1.12);
 }
 
 .member__initials {
@@ -5440,10 +5461,14 @@ ul, ol {
 }
 
 .member__quote {
-  font-size: 1.35rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.5;
   color: var(--c-text-soft);
   margin-bottom: var(--s-3);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
 }
 
 .member__linkedin {
@@ -7581,157 +7606,266 @@ const FOOTER = {
  * Caso de Gastos Médicos, según especificación.
  * Todos los datos son ficticios y sirven únicamente como demostración.
  */
-const CLAIM = {
-  id: "HM-8942",
-  ramo: "Gastos Médicos",
-  /** Número que LISai asigna al caso una vez creado. */
-  numeroCaso: "HH234",
+
+const CONTENT = {
+  es: {
+    CLAIM: {
+      id: "HM-8942",
+      ramo: "Gastos Médicos",
+      numeroCaso: "HH234",
+    },
+    CASE_STATUS: {
+      pendiente: "Caso Pendiente",
+      creado: "N° de Caso",
+    },
+    STAGES: [
+      {
+        id: "recepcion",
+        label: "Recepción",
+        icon: "upload",
+        title: "Recepción de documentos",
+        description:
+          "LISA recibe el expediente por correo, API o portal. Cada archivo se clasifica automáticamente por tipo documental.",
+      },
+      {
+        id: "lisai",
+        label: "LISai (Agente)",
+        icon: "chip",
+        title: "Extracción cognitiva",
+        description:
+          "El agente LISai lee cada documento, extrae los campos mandatorios y asigna un nivel de confianza a cada dato.",
+      },
+      {
+        id: "lisux",
+        label: "LISux (Reglas)",
+        icon: "rules",
+        title: "Motor de reglas de negocio",
+        description:
+          "LISux ejecuta las reglas configuradas para la compañía: cobertura, deducible, preexistencias y topes.",
+      },
+      {
+        id: "decision",
+        label: "Decisión",
+        icon: "gavel",
+        title: "Decisión de liquidación",
+        description:
+          "El sistema emite una resolución trazable con el detalle de cada regla aplicada y su resultado.",
+      },
+    ],
+    DOCUMENTS: [
+      {
+        id: "doc-1",
+        name: "Factura_Hospital_Angeles.pdf",
+        label: "Factura del hospital",
+        type: "PDF",
+        size: "1.2 MB",
+        provided: true,
+      },
+      {
+        id: "doc-2",
+        name: "Resultados_Lab_Oct.pdf",
+        label: "Resultados de laboratorio",
+        type: "PDF",
+        size: "850 KB",
+        provided: true,
+      },
+      {
+        id: "doc-3",
+        name: "Receta_Medica_Firma.jpg",
+        label: "Receta médica",
+        type: "JPG",
+        size: "2.4 MB",
+        provided: false,
+      },
+    ],
+    MISSING_DOC: {
+      title: "Falta un documento obligatorio",
+      text: "No hemos encontrado la receta médica dentro de los documentos validados. Para poder continuar con el proceso, por favor suba la receta aquí.",
+      action: "Subir receta médica",
+      note: "Formatos admitidos: JPG, PNG o PDF. Máximo 10 MB.",
+    },
+    EXTRACTED_FIELDS: [
+      { id: "beneficiario", label: "Beneficiario", value: "Lucas Fiorci", confidence: 99.2 },
+      { id: "rfc", label: "ID Fiscal Proveedor", value: "HAC-990101-XYZ", confidence: 99.8 },
+      { id: "admision", label: "Fecha Admisión", value: "2023-10-21", confidence: 97.5 },
+      { id: "monto", label: "Monto Total Facturado", value: "$12,450.00 USD", confidence: 100 },
+    ],
+    RULES: [
+      {
+        id: "cobertura",
+        label: "Validación de Cobertura Activa",
+        detail: "Póliza vigente al momento del siniestro",
+        resultLabel: "Cobertura vigente",
+      },
+      {
+        id: "deducible",
+        label: "Cálculo de Deducible Remanente",
+        detail: "Deducible anual aplicado: $2,200.00 USD",
+        resultLabel: "Deducible aplicado",
+      },
+      {
+        id: "preexistencia",
+        label: "Verificación de Preexistencias",
+        detail: "Sin preexistencias asociadas al diagnóstico",
+        resultLabel: "Sin hallazgos",
+      },
+      {
+        id: "tope",
+        label: "Validación de Suma Asegurada",
+        detail: "Monto dentro del límite contratado",
+        resultLabel: "Dentro de límite",
+      },
+    ],
+    RULES_READY: "Siniestro listo para pago",
+    DECISION: {
+      title: "Liquidación aprobada, reservas ajustadas",
+      moneda: "USD",
+      tiempo: "4 min 12 s",
+      summary:
+        "LISux aprobó la liquidación tras validar la totalidad de las reglas de negocio configuradas para la compañía. Las reservas técnicas quedaron ajustadas de forma automática.",
+      breakdown: [
+        { label: "Monto facturado", value: "$12,450.00" },
+        { label: "Deducible aplicado", value: "− $2,200.00" },
+        { label: "Monto a liquidar", value: "$10,250.00", total: true },
+      ],
+      handoff: {
+        text: "Ya conociste cómo LISA Claims es capaz de liquidar siniestros de forma 100% automatizada. Ahora prepárate para conocer cómo con LISA vigIA.",
+        actionStrong: "Hacemos visible",
+        actionSoft: "el fraude invisible",
+      },
+    },
+  },
+  en: {
+    CLAIM: {
+      id: "HM-8942",
+      ramo: "Medical Expenses",
+      numeroCaso: "HH234",
+    },
+    CASE_STATUS: {
+      pendiente: "Pending Case",
+      creado: "Case No.",
+    },
+    STAGES: [
+      {
+        id: "recepcion",
+        label: "Intake",
+        icon: "upload",
+        title: "Document intake",
+        description:
+          "LISA receives the file by email, API or portal. Each document is automatically classified by type.",
+      },
+      {
+        id: "lisai",
+        label: "LISai (Agent)",
+        icon: "chip",
+        title: "Cognitive extraction",
+        description:
+          "The LISai agent reads each document, extracts the mandatory fields and assigns a confidence level to each value.",
+      },
+      {
+        id: "lisux",
+        label: "LISux (Rules)",
+        icon: "rules",
+        title: "Business rules engine",
+        description:
+          "LISux runs the rules configured for the company: coverage, deductible, pre-existing conditions and limits.",
+      },
+      {
+        id: "decision",
+        label: "Decision",
+        icon: "gavel",
+        title: "Settlement decision",
+        description:
+          "The system issues a traceable resolution detailing each rule applied and its result.",
+      },
+    ],
+    DOCUMENTS: [
+      {
+        id: "doc-1",
+        name: "Hospital_Invoice_Angeles.pdf",
+        label: "Hospital invoice",
+        type: "PDF",
+        size: "1.2 MB",
+        provided: true,
+      },
+      {
+        id: "doc-2",
+        name: "Lab_Results_Oct.pdf",
+        label: "Lab results",
+        type: "PDF",
+        size: "850 KB",
+        provided: true,
+      },
+      {
+        id: "doc-3",
+        name: "Medical_Prescription_Signed.jpg",
+        label: "Medical prescription",
+        type: "JPG",
+        size: "2.4 MB",
+        provided: false,
+      },
+    ],
+    MISSING_DOC: {
+      title: "A required document is missing",
+      text: "We couldn't find the medical prescription among the validated documents. To continue the process, please upload it here.",
+      action: "Upload medical prescription",
+      note: "Accepted formats: JPG, PNG or PDF. Maximum 10 MB.",
+    },
+    EXTRACTED_FIELDS: [
+      { id: "beneficiario", label: "Beneficiary", value: "Lucas Fiorci", confidence: 99.2 },
+      { id: "rfc", label: "Provider Tax ID", value: "HAC-990101-XYZ", confidence: 99.8 },
+      { id: "admision", label: "Admission Date", value: "2023-10-21", confidence: 97.5 },
+      { id: "monto", label: "Total Billed Amount", value: "$12,450.00 USD", confidence: 100 },
+    ],
+    RULES: [
+      {
+        id: "cobertura",
+        label: "Active Coverage Validation",
+        detail: "Policy active at the time of the claim",
+        resultLabel: "Coverage active",
+      },
+      {
+        id: "deducible",
+        label: "Remaining Deductible Calculation",
+        detail: "Annual deductible applied: $2,200.00 USD",
+        resultLabel: "Deductible applied",
+      },
+      {
+        id: "preexistencia",
+        label: "Pre-existing Conditions Check",
+        detail: "No pre-existing conditions linked to the diagnosis",
+        resultLabel: "No findings",
+      },
+      {
+        id: "tope",
+        label: "Insured Amount Validation",
+        detail: "Amount within the contracted limit",
+        resultLabel: "Within limit",
+      },
+    ],
+    RULES_READY: "Claim ready for payment",
+    DECISION: {
+      title: "Settlement approved, reserves adjusted",
+      moneda: "USD",
+      tiempo: "4 min 12 s",
+      summary:
+        "LISux approved the settlement after validating all the business rules configured for the company. Technical reserves were automatically adjusted.",
+      breakdown: [
+        { label: "Billed amount", value: "$12,450.00" },
+        { label: "Deductible applied", value: "− $2,200.00" },
+        { label: "Amount to settle", value: "$10,250.00", total: true },
+      ],
+      handoff: {
+        text: "You've just seen how LISA Claims can settle claims 100% automatically. Now get ready to see how, with LISA vigIA.",
+        actionStrong: "We make visible",
+        actionSoft: "the invisible fraud",
+      },
+    },
+  },
 };
-
-/** Estado del caso mostrado junto al agente LISai. */
-const CASE_STATUS = {
-  pendiente: "Caso Pendiente",
-  creado: "N° de Caso",
-};
-
-/** Etapas del proceso de liquidación E2E. */
-const STAGES = [
-  {
-    id: "recepcion",
-    label: "Recepción",
-    icon: "upload",
-    title: "Recepción de documentos",
-    description:
-      "LISA recibe el expediente por correo, API o portal. Cada archivo se clasifica automáticamente por tipo documental.",
-  },
-  {
-    id: "lisai",
-    label: "LISai (Agente)",
-    icon: "chip",
-    title: "Extracción cognitiva",
-    description:
-      "El agente LISai lee cada documento, extrae los campos mandatorios y asigna un nivel de confianza a cada dato.",
-  },
-  {
-    id: "lisux",
-    label: "LISux (Reglas)",
-    icon: "rules",
-    title: "Motor de reglas de negocio",
-    description:
-      "LISux ejecuta las reglas configuradas para la compañía: cobertura, deducible, preexistencias y topes.",
-  },
-  {
-    id: "decision",
-    label: "Decisión",
-    icon: "gavel",
-    title: "Decisión de liquidación",
-    description:
-      "El sistema emite una resolución trazable con el detalle de cada regla aplicada y su resultado.",
-  },
-];
-
-/**
- * Documentos obligatorios del expediente.
- *
- * Los dos primeros llegan con el expediente; la receta falta y debe aportarla
- * el usuario durante la simulación.
- */
-const DOCUMENTS = [
-  {
-    id: "doc-1",
-    name: "Factura_Hospital_Angeles.pdf",
-    label: "Factura del hospital",
-    type: "PDF",
-    size: "1.2 MB",
-    provided: true,
-  },
-  {
-    id: "doc-2",
-    name: "Resultados_Lab_Oct.pdf",
-    label: "Resultados de laboratorio",
-    type: "PDF",
-    size: "850 KB",
-    provided: true,
-  },
-  {
-    id: "doc-3",
-    name: "Receta_Medica_Firma.jpg",
-    label: "Receta médica",
-    type: "JPG",
-    size: "2.4 MB",
-    provided: false,
-  },
-];
-
-/** Aviso que solicita el documento que falta. */
-const MISSING_DOC = {
-  title: "Falta un documento obligatorio",
-  text: "No hemos encontrado la receta médica dentro de los documentos validados. Para poder continuar con el proceso, por favor suba la receta aquí.",
-  action: "Subir receta médica",
-  note: "Formatos admitidos: JPG, PNG o PDF. Máximo 10 MB.",
-};
-
-/** Campos que LISai extrae progresivamente. */
-const EXTRACTED_FIELDS = [
-  { id: "beneficiario", label: "Beneficiario", value: "Lucas Fiorci", confidence: 99.2 },
-  { id: "rfc", label: "ID Fiscal Proveedor", value: "HAC-990101-XYZ", confidence: 99.8 },
-  { id: "admision", label: "Fecha Admisión", value: "2023-10-21", confidence: 97.5 },
-  { id: "monto", label: "Monto Total Facturado", value: "$12,450.00 USD", confidence: 100 },
-];
-
-/** Reglas que ejecuta LISux. Todas se resuelven correctamente. */
-const RULES = [
-  {
-    id: "cobertura",
-    label: "Validación de Cobertura Activa",
-    detail: "Póliza vigente al momento del siniestro",
-    resultLabel: "Cobertura vigente",
-  },
-  {
-    id: "deducible",
-    label: "Cálculo de Deducible Remanente",
-    detail: "Deducible anual aplicado: $2,200.00 USD",
-    resultLabel: "Deducible aplicado",
-  },
-  {
-    id: "preexistencia",
-    label: "Verificación de Preexistencias",
-    detail: "Sin preexistencias asociadas al diagnóstico",
-    resultLabel: "Sin hallazgos",
-  },
-  {
-    id: "tope",
-    label: "Validación de Suma Asegurada",
-    detail: "Monto dentro del límite contratado",
-    resultLabel: "Dentro de límite",
-  },
-];
-
-/** Aviso que cierra el motor de reglas cuando todas se validan. */
-const RULES_READY = "Siniestro listo para pago";
-
-/** Resolución final del caso. */
-const DECISION = {
-  title: "Liquidación aprobada, reservas ajustadas",
-  moneda: "USD",
-  tiempo: "4 min 12 s",
-  summary:
-    "LISux aprobó la liquidación tras validar la totalidad de las reglas de negocio configuradas para la compañía. Las reservas técnicas quedaron ajustadas de forma automática.",
-  breakdown: [
-    { label: "Monto facturado", value: "$12,450.00" },
-    { label: "Deducible aplicado", value: "− $2,200.00" },
-    { label: "Monto a liquidar", value: "$10,250.00", total: true },
-  ],
-  /**
-   * Cierre que invita a conocer la segunda solución. La llamada a la acción
-   * se compone de dos mitades para poder destacar sólo la primera.
-   */
-  handoff: {
-    text: "Ya conociste cómo LISA Claims es capaz de liquidar siniestros de forma 100% automatizada. Ahora prepárate para conocer cómo con LISA vigIA.",
-    actionStrong: "Hacemos visible",
-    actionSoft: "el fraude invisible",
-  },
-};
+function getClaimsDemoData(language) {
+  return CONTENT[language === "en" ? "en" : "es"];
+}
 
 
 /* ==== src/data/fwaDemo.js ==== */
@@ -7742,6 +7876,10 @@ const DECISION = {
  * boleta de honorarios adulterada, validación con el SII, patrones de
  * comportamiento en la cartera y casos relacionados por prestador.
  * Toda la información es ficticia y existe únicamente como demostración.
+ *
+ * Los datos de muestra (nombres, RUTs, boletas, montos, fechas) son los
+ * mismos en ambos idiomas por tratarse de un caso chileno ficticio; solo
+ * el texto de interfaz (títulos, labels, descripciones) se traduce.
  */
 const CASE = {
   id: "77940303",
@@ -7756,178 +7894,35 @@ const CASE = {
   finalRisk: 98,
 };
 
-/** Fases del análisis. */
-const PHASES = [
-  {
-    id: "forense",
-    label: "Forense documental",
-    icon: "scan",
-    title: "Motor de análisis forense documental",
-    description:
-      "vigIA inspecciona el documento presentado: numeración, tipografía, coherencia interna de fechas y metadatos del archivo.",
-  },
-  {
-    id: "validacion",
-    label: "Fuentes externas",
-    icon: "globe",
-    title: "Validación con fuentes externas",
-    description:
-      "Contraste con el registro del SII y con la lista de vigilancia interna de identidades con antecedentes.",
-  },
-  {
-    id: "patrones",
-    label: "Patrones",
-    icon: "brain",
-    title: "Modelos de comportamiento de cartera",
-    description:
-      "Modelos que comparan el siniestro con el histórico de la cartera y detectan coaliciones entre beneficiarios y prestador.",
-  },
-  {
-    id: "resolucion",
-    label: "Resolución",
-    icon: "gavel",
-    title: "Recomendación del sistema",
-    description:
-      "vigIA consolida las señales en un puntaje de riesgo y emite una recomendación antes del pago.",
-  },
-];
-
 /**
  * Zonas marcadas sobre la imagen de la boleta.
  * Coordenadas en porcentaje sobre la imagen original.
  */
-const DOC_MARKS = [
-  {
-    id: "numero",
-    x: 72.5,
-    y: 10.5,
-    ancho: 25,
-    alto: 6.5,
-    tipo: "visual",
-    etiqueta: "N° 4761",
-    detalle:
-      "Salto secuencial anómalo respecto de la serie emitida por el prestador, con un artefacto de edición sobre el último dígito.",
-  },
-  {
-    id: "fecha-declarada",
-    x: 71.5,
-    y: 37.5,
-    ancho: 27,
-    alto: 5.5,
-    tipo: "visual",
-    etiqueta: "Fecha declarada",
-    detalle:
-      "La fecha declarada (10 de mayo de 2024) no coincide con la fecha de emisión registrada al pie del documento.",
-  },
-  {
-    id: "monto",
-    x: 71,
-    y: 56,
-    ancho: 27,
-    alto: 9.5,
-    tipo: "visual",
-    etiqueta: "Monto alterado",
-    detalle:
-      "El monto de $905.000 aparece en una tipografía distinta a la del resto del documento y sin el alineado del emisor original.",
-  },
-  {
-    id: "fecha-emision",
-    x: 18,
-    y: 65,
-    ancho: 36,
-    alto: 5,
-    tipo: "visual",
-    etiqueta: "Fecha de emisión",
-    detalle:
-      "La emisión consigna el año 2021, tres años antes de la fecha declarada en el cuerpo de la boleta.",
-  },
-  {
-    id: "timbre",
-    x: 7.5,
-    y: 68.5,
-    ancho: 58,
-    alto: 9,
-    tipo: "metadato",
-    etiqueta: "Timbre SII",
-    detalle:
-      "El código de barras codifica un monto de $108.000, muy inferior a los $905.000 declarados en el documento.",
-  },
+const DOC_MARKS_BASE = [
+  { id: "numero", x: 72.5, y: 10.5, ancho: 25, alto: 6.5, tipo: "visual" },
+  { id: "fecha-declarada", x: 71.5, y: 37.5, ancho: 27, alto: 5.5, tipo: "visual" },
+  { id: "monto", x: 71, y: 56, ancho: 27, alto: 9.5, tipo: "visual" },
+  { id: "fecha-emision", x: 18, y: 65, ancho: 36, alto: 5, tipo: "visual" },
+  { id: "timbre", x: 7.5, y: 68.5, ancho: 58, alto: 9, tipo: "metadato" },
 ];
 
-/** Hallazgos del análisis forense visual. */
-const FORENSIC_SIGNALS = [
-  {
-    id: "numero",
-    label: "Número de boleta",
-    detail:
-      "Se detecta un salto secuencial anómalo respecto de la serie emitida por el prestador.",
-    severity: "alert",
-  },
-  {
-    id: "tipografia",
-    label: "Tipografía del monto",
-    detail:
-      "Fuente distinta en el monto y en la fecha de emisión respecto del resto del documento.",
-    severity: "alert",
-  },
-  {
-    id: "fecha",
-    label: "Fecha de emisión",
-    detail:
-      "El cuerpo declara el 10 de mayo de 2024, mientras que la emisión al pie corresponde al 10/05/2021.",
-    severity: "alert",
-  },
-];
-
-/** Metadatos del archivo presentado. */
-const METADATA = {
+/** Metadatos del archivo presentado (valores, no se traducen). */
+const METADATA_BASE = {
   creacion: "15/08/2021 · 14:32",
   modificacion: "29/05/2024 · 10:15",
   software: "Canva (Web Application)",
-  conclusion:
-    "El rastro digital no miente: el archivo fue creado originalmente en 2021, pero registra ediciones realizadas en Canva durante 2024 para alterar su validez.",
 };
 
-/** Validación contra fuentes externas. */
-const VALIDATIONS = [
-  {
-    id: "sii",
-    fuente: "Agente SII",
-    titulo: "Inconsistencia fiscal detectada",
-    texto:
-      "El monto real registrado en el código bidimensional es de $108.000, mientras que el documento declara $905.000. La boleta no existe en los registros del SII.",
-    montoDeclarado: 905000,
-    montoReal: 108000,
-    severity: "alert",
-  },
-  {
-    id: "watchlist",
-    fuente: "Watchlist",
-    titulo: "Alerta roja de identidad",
-    texto:
-      "El RUT del beneficiario cuenta con antecedentes previos de fraude en nuestra base de datos global.",
-    severity: "alert",
-  },
+/** Validación contra fuentes externas (montos, no se traducen). */
+const VALIDATIONS_BASE = [
+  { id: "sii", fuente: "Agente SII", montoDeclarado: 905000, montoReal: 108000, severity: "alert" },
+  { id: "watchlist", fuente: "Watchlist", severity: "alert" },
 ];
 
-/** Patrones de comportamiento detectados en la cartera. */
-const PATTERNS = {
-  desviacion: {
-    titulo: "Desviación respecto del promedio",
-    promedio: 50000,
-    monto: 905000,
-    relacionados: 3,
-    texto:
-      "Alta desviación respecto del promedio histórico de $50.000 para este tipo de siniestro. Se identificaron 3 beneficiarios adicionales con una desviación similar.",
-  },
-  coalicion: {
-    titulo: "Patrón de coalición",
-    visitas: 15,
-    dias: 7,
-    pacientes: 4,
-    texto:
-      "El beneficiario visitó al mismo prestador 15 veces en solo 7 días. Se encontraron 4 pacientes con el mismo comportamiento sobre el mismo prestador.",
-  },
+/** Patrones de comportamiento detectados en la cartera (valores, no se traducen). */
+const PATTERNS_BASE = {
+  desviacion: { promedio: 50000, monto: 905000, relacionados: 3 },
+  coalicion: { visitas: 15, dias: 7, pacientes: 4 },
 };
 
 /**
@@ -7949,23 +7944,6 @@ const PROVIDER = {
   especialidad: "Psicología y psicopedagogía",
   comuna: "Vitacura",
   antiguedad: "Desde 2019",
-  nota:
-    "Concentra la mayoría de los siniestros críticos de la cartera. Sus boletas presentan saltos de numeración y montos alterados de forma sistemática.",
-};
-
-/** Resolución final del caso. */
-const RESOLUTION = {
-  title: "Pago bloqueado · Derivar a investigación",
-  score: 98,
-  savings: 905000,
-  moneda: "CLP",
-  summary:
-    "vigIA consolidó evidencia forense, fiscal y de comportamiento antes del pago. La combinación de un documento adulterado, la inexistencia de la boleta en el SII y la coalición con el prestador sitúa el caso en el nivel crítico de la cartera.",
-  actions: [
-    "Retención preventiva del pago",
-    "Derivación automática a la unidad de investigación",
-    "Revisión de los 4 casos relacionados del mismo prestador",
-  ],
 };
 
 /**
@@ -8018,40 +7996,426 @@ const COALITION = {
   ],
 };
 
-/**
- * Reporte que se remite a la unidad de fraude al cerrar el caso.
- * El envío es simulado: no sale ningún dato del navegador.
- */
-const REPORT = {
-  action: "Enviar reporte al equipo de fraude",
-  title: "Enviar reporte al equipo de fraude",
-  file: {
-    name: "INV-2024-8832_Fiochi_Reporte.pdf",
-    size: "1.8 MB",
-    pages: 12,
+const UI = {
+  es: {
+    PHASES: [
+      {
+        id: "forense",
+        label: "Forense documental",
+        icon: "scan",
+        title: "Motor de análisis forense documental",
+        description:
+          "vigIA inspecciona el documento presentado: numeración, tipografía, coherencia interna de fechas y metadatos del archivo.",
+      },
+      {
+        id: "validacion",
+        label: "Fuentes externas",
+        icon: "globe",
+        title: "Validación con fuentes externas",
+        description:
+          "Contraste con el registro del SII y con la lista de vigilancia interna de identidades con antecedentes.",
+      },
+      {
+        id: "patrones",
+        label: "Patrones",
+        icon: "brain",
+        title: "Modelos de comportamiento de cartera",
+        description:
+          "Modelos que comparan el siniestro con el histórico de la cartera y detectan coaliciones entre beneficiarios y prestador.",
+      },
+      {
+        id: "resolucion",
+        label: "Resolución",
+        icon: "gavel",
+        title: "Recomendación del sistema",
+        description:
+          "vigIA consolida las señales en un puntaje de riesgo y emite una recomendación antes del pago.",
+      },
+    ],
+    docMarkLabels: {
+      numero: {
+        etiqueta: "N° 4761",
+        detalle:
+          "Salto secuencial anómalo respecto de la serie emitida por el prestador, con un artefacto de edición sobre el último dígito.",
+      },
+      "fecha-declarada": {
+        etiqueta: "Fecha declarada",
+        detalle:
+          "La fecha declarada (10 de mayo de 2024) no coincide con la fecha de emisión registrada al pie del documento.",
+      },
+      monto: {
+        etiqueta: "Monto alterado",
+        detalle:
+          "El monto de $905.000 aparece en una tipografía distinta a la del resto del documento y sin el alineado del emisor original.",
+      },
+      "fecha-emision": {
+        etiqueta: "Fecha de emisión",
+        detalle:
+          "La emisión consigna el año 2021, tres años antes de la fecha declarada en el cuerpo de la boleta.",
+      },
+      timbre: {
+        etiqueta: "Timbre SII",
+        detalle:
+          "El código de barras codifica un monto de $108.000, muy inferior a los $905.000 declarados en el documento.",
+      },
+    },
+    forensicSignals: [
+      {
+        id: "numero",
+        label: "Número de boleta",
+        detail: "Se detecta un salto secuencial anómalo respecto de la serie emitida por el prestador.",
+        severity: "alert",
+      },
+      {
+        id: "tipografia",
+        label: "Tipografía del monto",
+        detail: "Fuente distinta en el monto y en la fecha de emisión respecto del resto del documento.",
+        severity: "alert",
+      },
+      {
+        id: "fecha",
+        label: "Fecha de emisión",
+        detail: "El cuerpo declara el 10 de mayo de 2024, mientras que la emisión al pie corresponde al 10/05/2021.",
+        severity: "alert",
+      },
+    ],
+    metaLabels: {
+      creacion: "Creación",
+      modificacion: "Última modificación",
+      software: "Software",
+    },
+    metaConclusion:
+      "El rastro digital no miente: el archivo fue creado originalmente en 2021, pero registra ediciones realizadas en Canva durante 2024 para alterar su validez.",
+    validationLabels: {
+      sii: {
+        titulo: "Inconsistencia fiscal detectada",
+        texto:
+          "El monto real registrado en el código bidimensional es de $108.000, mientras que el documento declara $905.000. La boleta no existe en los registros del SII.",
+      },
+      watchlist: {
+        titulo: "Alerta roja de identidad",
+        texto: "El RUT del beneficiario cuenta con antecedentes previos de fraude en nuestra base de datos global.",
+      },
+    },
+    PATTERNS: {
+      desviacion: {
+        titulo: "Desviación respecto del promedio",
+        texto:
+          "Alta desviación respecto del promedio histórico de $50.000 para este tipo de siniestro. Se identificaron 3 beneficiarios adicionales con una desviación similar.",
+      },
+      coalicion: {
+        titulo: "Patrón de coalición",
+        texto:
+          "El beneficiario visitó al mismo prestador 15 veces en solo 7 días. Se encontraron 4 pacientes con el mismo comportamiento sobre el mismo prestador.",
+      },
+    },
+    providerLabels: {
+      nota: "Concentra la mayoría de los siniestros críticos de la cartera. Sus boletas presentan saltos de numeración y montos alterados de forma sistemática.",
+    },
+    RESOLUTION: {
+      title: "Pago bloqueado · Derivar a investigación",
+      score: 98,
+      savings: 905000,
+      summary:
+        "vigIA consolidó evidencia forense, fiscal y de comportamiento antes del pago. La combinación de un documento adulterado, la inexistencia de la boleta en el SII y la coalición con el prestador sitúa el caso en el nivel crítico de la cartera.",
+      actions: [
+        "Retención preventiva del pago",
+        "Derivación automática a la unidad de investigación",
+        "Revisión de los 4 casos relacionados del mismo prestador",
+      ],
+    },
+    REPORT: {
+      action: "Enviar reporte al equipo de fraude",
+      title: "Enviar reporte al equipo de fraude",
+      file: { name: "INV-2024-8832_Fiochi_Reporte.pdf", size: "1.8 MB", pages: 12 },
+      destino: "unidad.fraude@lisa.la",
+      resumen: [
+        { label: "Caso", value: "77940303" },
+        { label: "Beneficiario", value: "Ramiro Lucas Fiochi" },
+        { label: "Puntaje de riesgo", value: "98%", alert: true },
+        { label: "Monto retenido", value: "$905.000" },
+        { label: "Hallazgos", value: "7 señales de alto riesgo" },
+        { label: "Casos vinculados", value: "4 del mismo prestador" },
+      ],
+      adjuntos: [
+        "Boleta de honorarios N° 4761 con marcas forenses",
+        "Informe de metadatos del archivo",
+        "Contraste con registro del SII",
+        "Red de coalición y casos relacionados",
+      ],
+      send: "Enviar reporte",
+      sending: "Enviando…",
+      sentTitle: "Reporte enviado",
+      sentText:
+        "El expediente completo se remitió a la unidad de investigación. El pago queda retenido hasta que concluya el análisis.",
+      note: "Envío simulado: ningún dato sale de este navegador.",
+    },
+    ui: {
+      hallazgos: (n) => `${n} hallazgos`,
+      prestador: (nombre) => `Prestador: ${nombre}`,
+      pulseZona: "Pulse sobre una zona marcada para ver el detalle.",
+      metadatosArchivo: "Metadatos del archivo",
+      puntajeRiesgo: "Puntaje de riesgo",
+      siniestro: (id) => `Siniestro ${id}`,
+      beneficiario: "Beneficiario",
+      rut: "RUT",
+      prestacion: "Prestación",
+      monto: "Monto",
+      hallazgosForenses: "Hallazgos forenses",
+      inicieAnalisis: "Inicie el análisis para inspeccionar el documento.",
+      validacionExterna: "Validación externa",
+      pendienteFuentes: "Pendiente de la fase de fuentes externas.",
+      declarado: "Declarado",
+      realSii: "Real (SII)",
+      patronesComportamiento: "Patrones de comportamiento",
+      pendientePatrones: "Pendiente de la fase de patrones.",
+      casosRelacionados: "Casos relacionados",
+      fasesAnalisis: "Fases del análisis",
+      fase: (i, total) => `Fase ${i} de ${total}`,
+      listoComenzar: "Listo para comenzar",
+      riesgo: "Riesgo",
+      iniciarAnalisis: "Iniciar análisis",
+      siguienteFase: "Siguiente fase",
+      analizando: "Analizando…",
+      reiniciar: "Reiniciar",
+      hallazgoAria: (etiqueta) => `Hallazgo: ${etiqueta}`,
+      perdidaEvitada: "Pérdida evitada",
+      adjunto: "Adjunto",
+      paginas: (n, size) => `PDF · ${n} páginas · ${size}`,
+      reporteIncluye: "El reporte incluye",
+      destinatario: "Destinatario: ",
+    },
   },
-  destino: "unidad.fraude@lisa.la",
-  resumen: [
-    { label: "Caso", value: "77940303" },
-    { label: "Beneficiario", value: "Ramiro Lucas Fiochi" },
-    { label: "Puntaje de riesgo", value: "98%", alert: true },
-    { label: "Monto retenido", value: "$905.000" },
-    { label: "Hallazgos", value: "7 señales de alto riesgo" },
-    { label: "Casos vinculados", value: "4 del mismo prestador" },
-  ],
-  adjuntos: [
-    "Boleta de honorarios N° 4761 con marcas forenses",
-    "Informe de metadatos del archivo",
-    "Contraste con registro del SII",
-    "Red de coalición y casos relacionados",
-  ],
-  send: "Enviar reporte",
-  sending: "Enviando…",
-  sentTitle: "Reporte enviado",
-  sentText:
-    "El expediente completo se remitió a la unidad de investigación. El pago queda retenido hasta que concluya el análisis.",
-  note: "Envío simulado: ningún dato sale de este navegador.",
+  en: {
+    PHASES: [
+      {
+        id: "forense",
+        label: "Document forensics",
+        icon: "scan",
+        title: "Document forensic analysis engine",
+        description:
+          "vigIA inspects the submitted document: numbering, typography, internal date consistency and file metadata.",
+      },
+      {
+        id: "validacion",
+        label: "External sources",
+        icon: "globe",
+        title: "Validation against external sources",
+        description:
+          "Cross-check against the tax authority registry and the internal watchlist of flagged identities.",
+      },
+      {
+        id: "patrones",
+        label: "Patterns",
+        icon: "brain",
+        title: "Portfolio behavior models",
+        description:
+          "Models that compare the claim against portfolio history and detect coalitions between beneficiaries and the provider.",
+      },
+      {
+        id: "resolucion",
+        label: "Resolution",
+        icon: "gavel",
+        title: "System recommendation",
+        description:
+          "vigIA consolidates the signals into a risk score and issues a recommendation before payment.",
+      },
+    ],
+    docMarkLabels: {
+      numero: {
+        etiqueta: "No. 4761",
+        detalle:
+          "Anomalous sequence jump relative to the provider's issued series, with an edit artifact on the last digit.",
+      },
+      "fecha-declarada": {
+        etiqueta: "Declared date",
+        detalle: "The declared date (May 10, 2024) doesn't match the issue date recorded at the bottom of the document.",
+      },
+      monto: {
+        etiqueta: "Altered amount",
+        detalle: "The amount of $905,000 appears in a different typeface than the rest of the document and without the original issuer's alignment.",
+      },
+      "fecha-emision": {
+        etiqueta: "Issue date",
+        detalle: "The issue date shows year 2021, three years before the date declared in the body of the receipt.",
+      },
+      timbre: {
+        etiqueta: "Tax stamp",
+        detalle: "The barcode encodes an amount of $108,000, far below the $905,000 declared in the document.",
+      },
+    },
+    forensicSignals: [
+      {
+        id: "numero",
+        label: "Receipt number",
+        detail: "An anomalous sequence jump is detected relative to the provider's issued series.",
+        severity: "alert",
+      },
+      {
+        id: "tipografia",
+        label: "Amount typography",
+        detail: "Different typeface in the amount and issue date compared to the rest of the document.",
+        severity: "alert",
+      },
+      {
+        id: "fecha",
+        label: "Issue date",
+        detail: "The body declares May 10, 2024, while the issue date at the bottom corresponds to 05/10/2021.",
+        severity: "alert",
+      },
+    ],
+    metaLabels: {
+      creacion: "Created",
+      modificacion: "Last modified",
+      software: "Software",
+    },
+    metaConclusion:
+      "The digital trail doesn't lie: the file was originally created in 2021, but shows edits made in Canva during 2024 to alter its validity.",
+    validationLabels: {
+      sii: {
+        titulo: "Tax inconsistency detected",
+        texto:
+          "The real amount recorded in the 2D barcode is $108,000, while the document declares $905,000. The receipt doesn't exist in the tax authority's records.",
+      },
+      watchlist: {
+        titulo: "Identity red flag",
+        texto: "The beneficiary's national ID has prior fraud records in our global database.",
+      },
+    },
+    PATTERNS: {
+      desviacion: {
+        titulo: "Deviation from average",
+        texto:
+          "High deviation from the historical average of $50,000 for this type of claim. 3 additional beneficiaries with a similar deviation were identified.",
+      },
+      coalicion: {
+        titulo: "Coalition pattern",
+        texto: "The beneficiary visited the same provider 15 times in just 7 days. 4 patients with the same behavior toward the same provider were found.",
+      },
+    },
+    providerLabels: {
+      nota: "Concentrates most of the portfolio's critical claims. Their receipts systematically show numbering jumps and altered amounts.",
+    },
+    RESOLUTION: {
+      title: "Payment blocked · Refer to investigation",
+      score: 98,
+      savings: 905000,
+      summary:
+        "vigIA consolidated forensic, fiscal and behavioral evidence before payment. The combination of an altered document, the receipt's nonexistence in tax records, and the coalition with the provider places the case at the portfolio's critical level.",
+      actions: [
+        "Preventive payment hold",
+        "Automatic referral to the investigation unit",
+        "Review of the 4 related cases from the same provider",
+      ],
+    },
+    REPORT: {
+      action: "Send report to fraud team",
+      title: "Send report to fraud team",
+      file: { name: "INV-2024-8832_Fiochi_Report.pdf", size: "1.8 MB", pages: 12 },
+      destino: "fraud.unit@lisa.la",
+      resumen: [
+        { label: "Case", value: "77940303" },
+        { label: "Beneficiary", value: "Ramiro Lucas Fiochi" },
+        { label: "Risk score", value: "98%", alert: true },
+        { label: "Amount held", value: "$905,000" },
+        { label: "Findings", value: "7 high-risk signals" },
+        { label: "Linked cases", value: "4 from the same provider" },
+      ],
+      adjuntos: [
+        "Fee receipt No. 4761 with forensic marks",
+        "File metadata report",
+        "Cross-check against tax authority records",
+        "Coalition network and related cases",
+      ],
+      send: "Send report",
+      sending: "Sending…",
+      sentTitle: "Report sent",
+      sentText: "The complete file was sent to the investigation unit. Payment remains on hold until the analysis concludes.",
+      note: "Simulated submission: no data leaves this browser.",
+    },
+    ui: {
+      hallazgos: (n) => `${n} findings`,
+      prestador: (nombre) => `Provider: ${nombre}`,
+      pulseZona: "Click on a marked area to see the detail.",
+      metadatosArchivo: "File metadata",
+      puntajeRiesgo: "Risk score",
+      siniestro: (id) => `Claim ${id}`,
+      beneficiario: "Beneficiary",
+      rut: "National ID",
+      prestacion: "Service",
+      monto: "Amount",
+      hallazgosForenses: "Forensic findings",
+      inicieAnalisis: "Start the analysis to inspect the document.",
+      validacionExterna: "External validation",
+      pendienteFuentes: "Pending the external sources phase.",
+      declarado: "Declared",
+      realSii: "Actual (tax registry)",
+      patronesComportamiento: "Behavior patterns",
+      pendientePatrones: "Pending the patterns phase.",
+      casosRelacionados: "Related cases",
+      fasesAnalisis: "Analysis phases",
+      fase: (i, total) => `Phase ${i} of ${total}`,
+      listoComenzar: "Ready to start",
+      riesgo: "Risk",
+      iniciarAnalisis: "Start analysis",
+      siguienteFase: "Next phase",
+      analizando: "Analyzing…",
+      reiniciar: "Restart",
+      hallazgoAria: (etiqueta) => `Finding: ${etiqueta}`,
+      perdidaEvitada: "Loss avoided",
+      adjunto: "Attached",
+      paginas: (n, size) => `PDF · ${n} pages · ${size}`,
+      reporteIncluye: "The report includes",
+      destinatario: "Recipient: ",
+    },
+  },
 };
+function getFwaDemoData(language) {
+  const lang = language === "en" ? "en" : "es";
+  const t = UI[lang];
+
+  const DOC_MARKS = DOC_MARKS_BASE.map((mark) => ({
+    ...mark,
+    ...t.docMarkLabels[mark.id],
+  }));
+
+  const METADATA = {
+    ...METADATA_BASE,
+    creacionLabel: t.metaLabels.creacion,
+    modificacionLabel: t.metaLabels.modificacion,
+    softwareLabel: t.metaLabels.software,
+    conclusion: t.metaConclusion,
+  };
+
+  const FORENSIC_SIGNALS = t.forensicSignals;
+
+  const VALIDATIONS = VALIDATIONS_BASE.map((v) => ({
+    ...v,
+    ...t.validationLabels[v.id],
+  }));
+
+  const PATTERNS = {
+    desviacion: { ...PATTERNS_BASE.desviacion, ...t.PATTERNS.desviacion },
+    coalicion: { ...PATTERNS_BASE.coalicion, ...t.PATTERNS.coalicion },
+  };
+
+  const PROVIDER_FULL = { ...PROVIDER, nota: t.providerLabels.nota };
+
+  return {
+    CASE,
+    PHASES: t.PHASES,
+    DOC_MARKS,
+    FORENSIC_SIGNALS,
+    METADATA,
+    VALIDATIONS,
+    PATTERNS,
+    RELATED_CASES,
+    PROVIDER: PROVIDER_FULL,
+    RESOLUTION: t.RESOLUTION,
+    REPORT: t.REPORT,
+    ui: t.ui,
+  };
+}
 
 
 /* ==== src/hooks/useReveal.js ==== */
@@ -9024,14 +9388,30 @@ function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, languag
         "div",
         { class: "topbar__controls" },
         h(
-          "button",
-          {
-            type: "button",
-            class: "topbar__language",
-            title: language === "es" ? "English version" : "Versión en español",
-            onClick: onLanguageChange,
-          },
-          h("span", { class: "topbar__language-flag" }, language === "es" ? "🇬🇧" : "🇪🇸")
+          "div",
+          { class: "topbar__language", role: "group", "aria-label": "Idioma / Language" },
+          h(
+            "button",
+            {
+              type: "button",
+              class: `topbar__language-option ${language === "es" ? "is-active" : ""}`,
+              title: "Español",
+              "aria-pressed": language === "es",
+              onClick: () => onLanguageChange("es"),
+            },
+            h("span", { class: "topbar__language-flag" }, "ES")
+          ),
+          h(
+            "button",
+            {
+              type: "button",
+              class: `topbar__language-option ${language === "en" ? "is-active" : ""}`,
+              title: "English",
+              "aria-pressed": language === "en",
+              onClick: () => onLanguageChange("en"),
+            },
+            h("span", { class: "topbar__language-flag" }, "EN")
+          )
         ),
         h(
           "button",
@@ -10832,6 +11212,51 @@ function DemoHeader({ id, tagline }) {
 
 const clp = (value) => `$${value.toLocaleString("es-CL")}`;
 
+const CHART_UI = {
+  es: {
+    deviationAriaLabel:
+      "Dispersión de montos por siniestro: la banda sombreada marca el rango esperado y cuatro casos quedan muy por encima.",
+    promedioHistorico: (value) => `Promedio histórico ${value}`,
+    siniestrosMismaPrestacion: "Siniestros de la misma prestación",
+    rangoEsperado: "Rango esperado (±1σ, ±2σ)",
+    atipicos: "Atípicos",
+    casoInvestigado: "Caso investigado",
+    rut: "RUT",
+    documento: "Documento",
+    monto: "Monto",
+    prestacion: "Prestación",
+    fecha: "Fecha",
+    coalitionAriaLabel: (n, nombre) => `Red de coalición: ${n} pacientes concentran sus visitas en el prestador ${nombre}.`,
+    visitasEnDias: (visitas, dias) => `${visitas} en ${dias} días`,
+    visitasLabel: "Visitas",
+    prestador: "Prestador",
+    visitas: (n) => `${n} visitas`,
+    pacientes: (n) => `${n} pacientes`,
+    grosorVinculo: "El grosor del vínculo indica el número de visitas",
+  },
+  en: {
+    deviationAriaLabel:
+      "Claim amount scatter plot: the shaded band marks the expected range and four cases are well above it.",
+    promedioHistorico: (value) => `Historical average ${value}`,
+    siniestrosMismaPrestacion: "Claims for the same service",
+    rangoEsperado: "Expected range (±1σ, ±2σ)",
+    atipicos: "Outliers",
+    casoInvestigado: "Case under investigation",
+    rut: "National ID",
+    documento: "Document",
+    monto: "Amount",
+    prestacion: "Service",
+    fecha: "Date",
+    coalitionAriaLabel: (n, nombre) => `Coalition network: ${n} patients concentrate their visits with provider ${nombre}.`,
+    visitasEnDias: (visitas, dias) => `${visitas} in ${dias} days`,
+    visitasLabel: "Visits",
+    prestador: "Provider",
+    visitas: (n) => `${n} visits`,
+    pacientes: (n) => `${n} patients`,
+    grosorVinculo: "Line thickness indicates the number of visits",
+  },
+};
+
 /** Globo informativo compartido por los dos gráficos. */
 function Tooltip({ data, position }) {
   if (!data) return null;
@@ -10891,7 +11316,8 @@ function stats(values) {
  * para que la banda de desviación siga siendo legible junto a montos diez
  * veces mayores, sin perder de vista lo lejos que quedan los atípicos.
  */
-function DeviationChart({ average }) {
+function DeviationChart({ average, language }) {
+  const ui = CHART_UI[language === "en" ? "en" : "es"];
   const [tip, setTip] = useState(null);
   const box = useRef(null);
 
@@ -10931,8 +11357,7 @@ function DeviationChart({ average }) {
         class: "chart__svg",
         viewBox: `0 0 ${W} ${H}`,
         role: "img",
-        "aria-label":
-          "Dispersión de montos por siniestro: la banda sombreada marca el rango esperado y cuatro casos quedan muy por encima.",
+        "aria-label": ui.deviationAriaLabel,
       },
       h(
         "g",
@@ -10976,7 +11401,7 @@ function DeviationChart({ average }) {
         h(
           "text",
           { class: "chart__mean-label", x: 6, y: y(mean) - 8 },
-          `Promedio histórico ${clp(mean)}`
+          ui.promedioHistorico(clp(mean))
         ),
 
         // Población dentro de rango
@@ -10988,11 +11413,11 @@ function DeviationChart({ average }) {
             cy: y(d.monto),
             r: 5,
             onMouseMove: show(d, [
-              ["RUT", d.rut],
-              ["Documento", d.documento],
-              ["Monto", clp(d.monto)],
-              ["Prestación", d.prestacion],
-              ["Fecha", d.fecha],
+              [ui.rut, d.rut],
+              [ui.documento, d.documento],
+              [ui.monto, clp(d.monto)],
+              [ui.prestacion, d.prestacion],
+              [ui.fecha, d.fecha],
             ]),
             onMouseLeave: hide,
           })
@@ -11029,11 +11454,11 @@ function DeviationChart({ average }) {
               cy,
               r: d.esCasoActual ? 8 : 7,
               onMouseMove: show(d, [
-                ["RUT", d.rut],
-                ["Documento", d.documento],
-                ["Monto", clp(d.monto)],
-                ["Prestación", d.prestacion],
-                ["Fecha", d.fecha],
+                [ui.rut, d.rut],
+                [ui.documento, d.documento],
+                [ui.monto, clp(d.monto)],
+                [ui.prestacion, d.prestacion],
+                [ui.fecha, d.fecha],
               ]),
               onMouseLeave: hide,
             }),
@@ -11048,7 +11473,7 @@ function DeviationChart({ average }) {
         h(
           "text",
           { class: "chart__axis-title", x: PW / 2, y: PH + 30, "text-anchor": "middle" },
-          "Siniestros de la misma prestación"
+          ui.siniestrosMismaPrestacion
         )
       )
     ),
@@ -11056,9 +11481,9 @@ function DeviationChart({ average }) {
     h(
       "p",
       { class: "chart__legend" },
-      h("span", { class: "chart__key chart__key--band" }, "Rango esperado (±1σ, ±2σ)"),
-      h("span", { class: "chart__key chart__key--out" }, "Atípicos"),
-      h("span", { class: "chart__key chart__key--cur" }, "Caso investigado")
+      h("span", { class: "chart__key chart__key--band" }, ui.rangoEsperado),
+      h("span", { class: "chart__key chart__key--out" }, ui.atipicos),
+      h("span", { class: "chart__key chart__key--cur" }, ui.casoInvestigado)
     )
   );
 }
@@ -11078,7 +11503,8 @@ const ORBIT = 138;
  * repiten visitas. El grosor de cada arista refleja el número de visitas,
  * de modo que la concentración del patrón se aprecia de un vistazo.
  */
-function CoalitionChart() {
+function CoalitionChart({ language }) {
+  const ui = CHART_UI[language === "en" ? "en" : "es"];
   const [tip, setTip] = useState(null);
   const box = useRef(null);
 
@@ -11102,10 +11528,10 @@ function CoalitionChart() {
       data: {
         title: p.nombre,
         rows: [
-          ["RUT", p.rut],
-          ["Visitas", `${p.visitas} en ${p.dias} días`],
-          ["Monto", clp(p.monto)],
-          ["Prestador", prestador.nombre],
+          [ui.rut, p.rut],
+          [ui.visitasLabel, ui.visitasEnDias(p.visitas, p.dias)],
+          [ui.monto, clp(p.monto)],
+          [ui.prestador, prestador.nombre],
         ],
       },
       position: tooltipPosition(event, box.current),
@@ -11122,7 +11548,7 @@ function CoalitionChart() {
         class: "chart__svg",
         viewBox: `0 0 ${GW} ${GH}`,
         role: "img",
-        "aria-label": `Red de coalición: ${pacientes.length} pacientes concentran sus visitas en el prestador ${prestador.nombre}.`,
+        "aria-label": ui.coalitionAriaLabel(pacientes.length, prestador.nombre),
       },
 
       // Anillos de referencia
@@ -11178,7 +11604,7 @@ function CoalitionChart() {
             y: my + ((x - CX) / length) * gap,
             "text-anchor": "middle",
           },
-          `${paciente.visitas} visitas`
+          ui.visitas(paciente.visitas)
         );
       }),
 
@@ -11212,14 +11638,14 @@ function CoalitionChart() {
       h(
         "text",
         { class: "graph-hub__meta", x: CX, y: GH - 10, "text-anchor": "middle" },
-        `${prestador.rut} · ${pacientes.length} pacientes`
+        `${prestador.rut} · ${ui.pacientes(pacientes.length)}`
       )
     ),
     h(Tooltip, tip ?? {}),
     h(
       "p",
       { class: "chart__legend" },
-      h("span", null, "El grosor del vínculo indica el número de visitas")
+      h("span", null, ui.grosorVinculo)
     )
   );
 }
@@ -11235,20 +11661,79 @@ function CoalitionChart() {
  * el proceso no continúa. Todos los datos son simulados.
  */
 
-/** Documentos que llegan con el expediente. */
-const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
-
 /** Estado de validación de cada documento. */
-const ESTADOS = {
-  espera: { label: "En espera", icon: "clock", tone: "espera" },
-  recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
-  validado: { label: "Validado", icon: "check", tone: "validado" },
-  pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
-};function ClaimsDemo({ onGoToFwa }) {
+const ESTADOS_BY_LANG = {
+  es: {
+    espera: { label: "En espera", icon: "clock", tone: "espera" },
+    recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
+    validado: { label: "Validado", icon: "check", tone: "validado" },
+    pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
+  },
+  en: {
+    espera: { label: "Waiting", icon: "clock", tone: "espera" },
+    recibido: { label: "Received", icon: "upload", tone: "recibido" },
+    validado: { label: "Validated", icon: "check", tone: "validado" },
+    pendiente: { label: "Pending", icon: "alert", tone: "pendiente" },
+  },
+};
+
+const UI_BY_LANG = {
+  es: {
+    documentosObligatorios: "Documentos obligatorios",
+    archivos: (n) => `${n} archivos`,
+    iniciarSimulacion: "Iniciar simulación",
+    siguienteEtapa: "Siguiente etapa",
+    procesando: "Procesando…",
+    reiniciar: "Reiniciar",
+    subir: "Subir",
+    subirAria: (label) => `Subir ${label}`,
+    extraccionCognitiva: "LISai · Extracción cognitiva",
+    analizandoDocumento: (i, total) => `Analizando documento ${i} de ${total}`,
+    enEsperaRecepcion: "En espera de recepción",
+    extraccionEmpieza: "El agente comenzará la extracción cuando los documentos estén validados.",
+    motorReglas: "LISux · Motor de reglas",
+    evaluadas: (done, total) => `${done}/${total} evaluadas`,
+    enEsperaLisai: "En espera de LISai",
+    datosSimulados: "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales.",
+  },
+  en: {
+    documentosObligatorios: "Required documents",
+    archivos: (n) => `${n} files`,
+    iniciarSimulacion: "Start simulation",
+    siguienteEtapa: "Next stage",
+    procesando: "Processing…",
+    reiniciar: "Restart",
+    subir: "Upload",
+    subirAria: (label) => `Upload ${label}`,
+    extraccionCognitiva: "LISai · Cognitive extraction",
+    analizandoDocumento: (i, total) => `Analyzing document ${i} of ${total}`,
+    enEsperaRecepcion: "Waiting for intake",
+    extraccionEmpieza: "The agent will start extraction once the documents are validated.",
+    motorReglas: "LISux · Rules engine",
+    evaluadas: (done, total) => `${done}/${total} evaluated`,
+    enEsperaLisai: "Waiting for LISai",
+    datosSimulados: "Simulated data for demonstration purposes. No information shown corresponds to real people or claims.",
+  },
+};function ClaimsDemo({ onGoToFwa, language }) {
+  const lang = language === "en" ? "en" : "es";
+  const {
+    CLAIM,
+    CASE_STATUS,
+    STAGES,
+    DOCUMENTS,
+    MISSING_DOC,
+    EXTRACTED_FIELDS,
+    RULES,
+    RULES_READY,
+    DECISION,
+  } = getClaimsDemoData(lang);
+  const ESTADOS = ESTADOS_BY_LANG[lang];
+  const ui = UI_BY_LANG[lang];
+  const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
+
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
-  const narrationAudioRef = useRef(null);
 
   // Recepción: documentos recibidos, validados y receta aportada.
   const [docsIn, setDocsIn] = useState(0);
@@ -11298,13 +11783,6 @@ const ESTADOS = {
     setStarted(true);
     setStage(0);
     scrollToWork();
-
-    // Reproduce audio de explicación (0:42 - 1:18)
-    if (narrationAudioRef.current) {
-      narrationAudioRef.current.currentTime = 42;
-      narrationAudioRef.current.playbackRate = 1.2;
-      narrationAudioRef.current.play();
-    }
 
     PROVIDED.forEach((unused, i) => {
       schedule(() => setDocsIn(i + 1), 500 * (i + 1));
@@ -11421,21 +11899,6 @@ const ESTADOS = {
       )
     ),
 
-    // ---------- Audio de bienvenida ----------
-    !started &&
-      h(
-        "div",
-        { style: { marginBottom: "var(--s-5)" } },
-        h(AudioPlayer, {
-          src: "assets/voz/narrador.mp3",
-          startTime: "0:12",
-          endTime: "0:42",
-          label: "Escuchar: Al abrir landing de LISA Claims",
-          speed: 1.2,
-          autoplay: true,
-        })
-      ),
-
     // ---------- Controles ----------
     h(
       "div",
@@ -11454,13 +11917,13 @@ const ESTADOS = {
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: runReception },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, "Iniciar simulación")
+            h("span", null, ui.iniciarSimulacion)
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: next },
-            h("span", null, "Siguiente etapa"),
+            h("span", null, ui.siguienteEtapa),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -11468,7 +11931,7 @@ const ESTADOS = {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner" }),
-            "Procesando…"
+            ui.procesando
           ),
         // El reinicio solo se ofrece al terminar todo el proceso.
         finished &&
@@ -11476,7 +11939,7 @@ const ESTADOS = {
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, "Reiniciar")
+            h("span", null, ui.reiniciar)
           )
       )
     ),
@@ -11493,8 +11956,8 @@ const ESTADOS = {
         h(
           "header",
           { class: "panel__head" },
-          h("h4", { class: "panel__title" }, "Documentos obligatorios"),
-          h("span", { class: "panel__count" }, `${allValidated} archivos`)
+          h("h4", { class: "panel__title" }, ui.documentosObligatorios),
+          h("span", { class: "panel__count" }, ui.archivos(allValidated))
         ),
         h(
           "ul",
@@ -11533,7 +11996,7 @@ const ESTADOS = {
                   "span",
                   { class: "doc__action" },
                   h(Icon, { name: "upload", size: 15 }),
-                  h("span", null, "Subir")
+                  h("span", null, ui.subir)
                 ),
             ];
 
@@ -11547,7 +12010,7 @@ const ESTADOS = {
                       type: "button",
                       class: "doc__button",
                       onClick: () => setAskUpload(true),
-                      "aria-label": `Subir ${doc.label}`,
+                      "aria-label": ui.subirAria(doc.label),
                     },
                     contenido
                   )
@@ -11575,13 +12038,13 @@ const ESTADOS = {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, "LISai · Extracción cognitiva"),
+                h("h4", { class: "panel__title" }, ui.extraccionCognitiva),
                 h(
                   "p",
                   { class: "panel__sub" },
                   stage >= 1
-                    ? `Analizando documento ${Math.min(fieldsShown + 1, DOCUMENTS.length)} de ${DOCUMENTS.length}`
-                    : "En espera de recepción"
+                    ? ui.analizandoDocumento(Math.min(fieldsShown + 1, DOCUMENTS.length), DOCUMENTS.length)
+                    : ui.enEsperaRecepcion
                 )
               )
             ),
@@ -11596,7 +12059,7 @@ const ESTADOS = {
             ? h(
                 "p",
                 { class: "panel__empty" },
-                "El agente comenzará la extracción cuando los documentos estén validados."
+                ui.extraccionEmpieza
               )
             : h(
                 "div",
@@ -11645,12 +12108,12 @@ const ESTADOS = {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "rules", size: 20 })),
-              h("h4", { class: "panel__title" }, "LISux · Motor de reglas")
+              h("h4", { class: "panel__title" }, ui.motorReglas)
             ),
             h(
               "span",
               { class: "chip" },
-              stage >= 2 ? `${rulesDone}/${RULES.length} evaluadas` : "En espera de LISai"
+              stage >= 2 ? ui.evaluadas(rulesDone, RULES.length) : ui.enEsperaLisai
             )
           ),
           h(
@@ -11764,14 +12227,7 @@ const ESTADOS = {
           h(Icon, { name: "arrow", size: 18 })
         )
       )
-    ),
-
-    // Audio de narración para reproducir al iniciar simulación
-    h("audio", {
-      ref: narrationAudioRef,
-      src: "assets/voz/narrador.mp3",
-      preload: "metadata",
-    })
+    )
   );
 }
 
@@ -11811,7 +12267,23 @@ function DocPreview({ doc, active }) {
 const PHASE_SCORE = [0, 62, 88, 98, 98];
 
 /** Formatea un importe en pesos chilenos. */
-const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo() {
+const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo({ language }) {
+  const lang = language === "en" ? "en" : "es";
+  const {
+    CASE,
+    PHASES,
+    DOC_MARKS,
+    FORENSIC_SIGNALS,
+    METADATA,
+    VALIDATIONS,
+    PATTERNS,
+    RELATED_CASES,
+    PROVIDER,
+    RESOLUTION,
+    REPORT,
+    ui,
+  } = getFwaDemoData(lang);
+
   const [phase, setPhase] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -12015,11 +12487,11 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                 "div",
                 null,
                 h("h4", { class: "panel__title" }, CASE.documento),
-                h("p", { class: "panel__sub" }, `Prestador: ${CASE.prestador}`)
+                h("p", { class: "panel__sub" }, ui.prestador(CASE.prestador))
               )
             ),
             marksShown > 0 &&
-              h("span", { class: "chip chip--danger" }, `${marksShown} hallazgos`)
+              h("span", { class: "chip chip--danger" }, ui.hallazgos(marksShown))
           ),
 
           // Documento con las zonas marcadas
@@ -12049,7 +12521,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                     height: `${m.alto}%`,
                   },
                   onClick: () => setActiveMark(activeMark === m.id ? null : m.id),
-                  "aria-label": `Hallazgo: ${m.etiqueta}`,
+                  "aria-label": ui.hallazgoAria(m.etiqueta),
                 },
                 h("span", { class: "boleta__tag" }, m.etiqueta)
               )
@@ -12061,7 +12533,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               "p",
               { class: "boleta__hint" },
               h(Icon, { name: "eye", size: 14 }),
-              h("span", null, mark ? mark.detalle : "Pulse sobre una zona marcada para ver el detalle.")
+              h("span", null, mark ? mark.detalle : ui.pulseZona)
             )
         ),
 
@@ -12077,7 +12549,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                 "div",
                 { class: "panel__head-left" },
                 h("span", { class: "panel__icon panel__icon--danger" }, h(Icon, { name: "file", size: 20 })),
-                h("h4", { class: "panel__title" }, "Metadatos del archivo")
+                h("h4", { class: "panel__title" }, ui.metadatosArchivo)
               )
             ),
             h(
@@ -12086,19 +12558,19 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Creación"),
+                h("span", { class: "meta-list__label" }, METADATA.creacionLabel),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.creacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Última modificación"),
+                h("span", { class: "meta-list__label" }, METADATA.modificacionLabel),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.modificacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Software"),
+                h("span", { class: "meta-list__label" }, METADATA.softwareLabel),
                 h("span", { class: "meta-list__value meta-list__value--alert" }, METADATA.software)
               )
             ),
@@ -12121,8 +12593,8 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
             h(
               "div",
               null,
-              h("p", { class: "score__label" }, "Puntaje de riesgo"),
-              h("p", { class: "score__case u-mono" }, `Siniestro ${CASE.id}`)
+              h("p", { class: "score__label" }, ui.puntajeRiesgo),
+              h("p", { class: "score__case u-mono" }, ui.siniestro(CASE.id))
             ),
             h(
               "p",
@@ -12139,10 +12611,10 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
           h(
             "dl",
             { class: "score__facts" },
-            h("div", null, h("dt", null, "Beneficiario"), h("dd", null, CASE.subject)),
-            h("div", null, h("dt", null, "RUT"), h("dd", { class: "u-mono" }, CASE.rut)),
-            h("div", null, h("dt", null, "Prestación"), h("dd", null, CASE.prestacion)),
-            h("div", null, h("dt", null, "Monto"), h("dd", { class: "u-mono" }, money(CASE.monto)))
+            h("div", null, h("dt", null, ui.beneficiario), h("dd", null, CASE.subject)),
+            h("div", null, h("dt", null, ui.rut), h("dd", { class: "u-mono" }, CASE.rut)),
+            h("div", null, h("dt", null, ui.prestacion), h("dd", null, CASE.prestacion)),
+            h("div", null, h("dt", null, ui.monto), h("dd", { class: "u-mono" }, money(CASE.monto)))
           )
         ),
 
@@ -12157,11 +12629,11 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "search", size: 20 })),
-              h("h4", { class: "panel__title" }, "Hallazgos forenses")
+              h("h4", { class: "panel__title" }, ui.hallazgosForenses)
             )
           ),
           signalsShown === 0
-            ? h("p", { class: "panel__empty" }, "Inicie el análisis para inspeccionar el documento.")
+            ? h("p", { class: "panel__empty" }, ui.inicieAnalisis)
             : h(
                 "ul",
                 { class: "signals" },
@@ -12192,11 +12664,11 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "globe", size: 20 })),
-              h("h4", { class: "panel__title" }, "Validación externa")
+              h("h4", { class: "panel__title" }, ui.validacionExterna)
             )
           ),
           phase < 1
-            ? h("p", { class: "panel__empty" }, "Pendiente de la fase de fuentes externas.")
+            ? h("p", { class: "panel__empty" }, ui.pendienteFuentes)
             : h(
                 "ul",
                 { class: "validations" },
@@ -12218,13 +12690,13 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, "Declarado"),
+                          h("span", { class: "amounts__label" }, ui.declarado),
                           h("span", { class: "amounts__value amounts__value--alert u-mono" }, money(v.montoDeclarado))
                         ),
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, "Real (SII)"),
+                          h("span", { class: "amounts__label" }, ui.realSii),
                           h("span", { class: "amounts__value u-mono" }, money(v.montoReal))
                         )
                       )
@@ -12247,11 +12719,11 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
           "div",
           { class: "panel__head-left" },
           h("span", { class: "panel__icon" }, h(Icon, { name: "brain", size: 20 })),
-          h("h4", { class: "panel__title" }, "Patrones de comportamiento")
+          h("h4", { class: "panel__title" }, ui.patronesComportamiento)
         )
       ),
       phase < 2
-        ? h("p", { class: "panel__empty" }, "Pendiente de la fase de patrones.")
+        ? h("p", { class: "panel__empty" }, ui.pendientePatrones)
         : h(
             "div",
             { class: "patterns" },
@@ -12269,7 +12741,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                   h(Icon, { name: "chart", size: 16 }),
                   h("span", null, PATTERNS.desviacion.titulo)
                 ),
-                h(DeviationChart, { average: PATTERNS.desviacion.promedio }),
+                h(DeviationChart, { average: PATTERNS.desviacion.promedio, language: lang }),
                 h("p", { class: "pattern__text" }, PATTERNS.desviacion.texto)
               ),
               h(
@@ -12281,7 +12753,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                   h(Icon, { name: "team", size: 16 }),
                   h("span", null, PATTERNS.coalicion.titulo)
                 ),
-                h(CoalitionChart, null),
+                h(CoalitionChart, { language: lang }),
                 h("p", { class: "pattern__text" }, PATTERNS.coalicion.texto)
               )
             ),
@@ -12293,7 +12765,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               h(
                 "p",
                 { class: "related__head" },
-                h("span", null, "Casos relacionados"),
+                h("span", null, ui.casosRelacionados),
                 h("span", { class: "chip chip--danger" }, PROVIDER.nombre)
               ),
               h(
@@ -12329,7 +12801,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
       // Recorrido por fases
       h(
         "ol",
-        { class: "deck__steps", "aria-label": "Fases del análisis" },
+        { class: "deck__steps", "aria-label": ui.fasesAnalisis },
         PHASES.map((p, i) =>
           h(
             "li",
@@ -12355,7 +12827,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
         h(
           "p",
           { class: "deck__phase-hint" },
-          started ? `Fase ${phase + 1} de ${PHASES.length}` : "Listo para comenzar"
+          started ? ui.fase(phase + 1, PHASES.length) : ui.listoComenzar
         )
       ),
 
@@ -12363,7 +12835,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
       h(
         "div",
         { class: "deck__score" },
-        h("span", { class: "deck__score-label" }, "Riesgo"),
+        h("span", { class: "deck__score-label" }, ui.riesgo),
         h("span", { class: `deck__score-value deck__score-value--${riskLevel} u-mono` }, `${score}%`)
       ),
 
@@ -12376,13 +12848,13 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: start },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, "Iniciar análisis")
+            h("span", null, ui.iniciarAnalisis)
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: next },
-            h("span", null, "Siguiente fase"),
+            h("span", null, ui.siguienteFase),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -12390,14 +12862,14 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner spinner--danger" }),
-            "Analizando…"
+            ui.analizando
           ),
         finished &&
           h(
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, "Reiniciar")
+            h("span", null, ui.reiniciar)
           )
       )
     ),
@@ -12420,7 +12892,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
       h(
         "div",
         { class: "resolution__score" },
-        h("span", { class: "resolution__score-label" }, "Puntaje de riesgo"),
+        h("span", { class: "resolution__score-label" }, ui.puntajeRiesgo),
         h("span", { class: "resolution__score-value u-mono" }, `${RESOLUTION.score}%`)
       ),
       h(
@@ -12438,7 +12910,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
       h(
         "div",
         { class: "resolution__saving" },
-        h("span", { class: "resolution__saving-label" }, "Pérdida evitada"),
+        h("span", { class: "resolution__saving-label" }, ui.perdidaEvitada),
         h("span", { class: "resolution__saving-value u-mono" }, money(RESOLUTION.savings))
       ),
 
@@ -12500,10 +12972,10 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
                 h(
                   "p",
                   { class: "report-file__meta" },
-                  `PDF · ${REPORT.file.pages} páginas · ${REPORT.file.size}`
+                  ui.paginas(REPORT.file.pages, REPORT.file.size)
                 )
               ),
-              h("span", { class: "report-file__tag" }, "Adjunto")
+              h("span", { class: "report-file__tag" }, ui.adjunto)
             ),
 
             // Resumen del caso
@@ -12524,7 +12996,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
             h(
               "div",
               { class: "report-contents" },
-              h("p", { class: "report-contents__title" }, "El reporte incluye"),
+              h("p", { class: "report-contents__title" }, ui.reporteIncluye),
               h(
                 "ul",
                 null,
@@ -12543,7 +13015,7 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
               "p",
               { class: "report-to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, "Destinatario: "),
+              h("span", null, ui.destinatario),
               h("strong", null, REPORT.destino)
             ),
 
@@ -12630,8 +13102,8 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
         h("span", { class: "demo-frame__label" }, language === "es" ? "Entorno de demostración" : "Demo environment")
       ),
       active === "claims"
-        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa") })
-        : h(FwaDemo, null)
+        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa"), language })
+        : h(FwaDemo, { language })
     ),
 
     h(
@@ -12641,15 +13113,17 @@ const money = (value) => `$${value.toLocaleString("es-CL")}`;function FwaDemo()
       h(
         "span",
         null,
-        "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales."
+        language === "es"
+          ? "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales."
+          : "Simulated data for demonstration purposes. No information shown corresponds to real people or claims."
       )
     ),
 
     // Selector de producto, al final de la página.
     h(
       "div",
-      { class: "switcher", role: "tablist", "aria-label": "Seleccionar producto" },
-      SOLUTIONS.map((item) =>
+      { class: "switcher", role: "tablist", "aria-label": language === "es" ? "Seleccionar producto" : "Select product" },
+      t.solutions.map((item) =>
         h(
           "button",
           {
@@ -12812,7 +13286,7 @@ function App() {
       menuOpen,
       onToggleMenu: () => setMenuOpen((v) => !v),
       language,
-      onLanguageChange: () => setLanguage((l) => (l === "es" ? "en" : "es")),
+      onLanguageChange: setLanguage,
     }),
 
     h(

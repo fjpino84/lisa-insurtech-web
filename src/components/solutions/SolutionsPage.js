@@ -4,7 +4,6 @@ import { ClaimsDemo } from "./ClaimsDemo.js";
 import { FwaDemo } from "./FwaDemo.js";
 import { DemoHeader } from "./DemoHeader.js";
 import { SolutionName } from "../shared/SolutionName.js";
-import { SOLUTIONS } from "../../data/content.js";
 import { useTranslations } from "../../data/i18n.js";
 
 /**
@@ -67,8 +66,8 @@ export function SolutionsPage({ initial = "claims", language }) {
         h("span", { class: "demo-frame__label" }, language === "es" ? "Entorno de demostración" : "Demo environment")
       ),
       active === "claims"
-        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa") })
-        : h(FwaDemo, null)
+        ? h(ClaimsDemo, { onGoToFwa: () => select("fwa"), language })
+        : h(FwaDemo, { language })
     ),
 
     h(
@@ -78,15 +77,17 @@ export function SolutionsPage({ initial = "claims", language }) {
       h(
         "span",
         null,
-        "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales."
+        language === "es"
+          ? "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales."
+          : "Simulated data for demonstration purposes. No information shown corresponds to real people or claims."
       )
     ),
 
     // Selector de producto, al final de la página.
     h(
       "div",
-      { class: "switcher", role: "tablist", "aria-label": "Seleccionar producto" },
-      SOLUTIONS.map((item) =>
+      { class: "switcher", role: "tablist", "aria-label": language === "es" ? "Seleccionar producto" : "Select product" },
+      t.solutions.map((item) =>
         h(
           "button",
           {

@@ -1,19 +1,8 @@
 import { h, useState, useEffect, useRef, useCallback } from "../../vendor/preact.js";
 import { Icon } from "../shared/Icon.js";
-import { AudioPlayer } from "../shared/AudioPlayer.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
-import {
-  CLAIM,
-  CASE_STATUS,
-  STAGES,
-  DOCUMENTS,
-  MISSING_DOC,
-  EXTRACTED_FIELDS,
-  RULES,
-  RULES_READY,
-  DECISION,
-} from "../../data/claimsDemo.js";
+import { getClaimsDemoData } from "../../data/claimsDemo.js";
 
 /**
  * Mockup interactivo de LISA Claims sobre un siniestro de Gastos Médicos.
@@ -23,22 +12,81 @@ import {
  * el proceso no continúa. Todos los datos son simulados.
  */
 
-/** Documentos que llegan con el expediente. */
-const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
-
 /** Estado de validación de cada documento. */
-const ESTADOS = {
-  espera: { label: "En espera", icon: "clock", tone: "espera" },
-  recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
-  validado: { label: "Validado", icon: "check", tone: "validado" },
-  pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
+const ESTADOS_BY_LANG = {
+  es: {
+    espera: { label: "En espera", icon: "clock", tone: "espera" },
+    recibido: { label: "Recibido", icon: "upload", tone: "recibido" },
+    validado: { label: "Validado", icon: "check", tone: "validado" },
+    pendiente: { label: "Pendiente", icon: "alert", tone: "pendiente" },
+  },
+  en: {
+    espera: { label: "Waiting", icon: "clock", tone: "espera" },
+    recibido: { label: "Received", icon: "upload", tone: "recibido" },
+    validado: { label: "Validated", icon: "check", tone: "validado" },
+    pendiente: { label: "Pending", icon: "alert", tone: "pendiente" },
+  },
 };
 
-export function ClaimsDemo({ onGoToFwa }) {
+const UI_BY_LANG = {
+  es: {
+    documentosObligatorios: "Documentos obligatorios",
+    archivos: (n) => `${n} archivos`,
+    iniciarSimulacion: "Iniciar simulación",
+    siguienteEtapa: "Siguiente etapa",
+    procesando: "Procesando…",
+    reiniciar: "Reiniciar",
+    subir: "Subir",
+    subirAria: (label) => `Subir ${label}`,
+    extraccionCognitiva: "LISai · Extracción cognitiva",
+    analizandoDocumento: (i, total) => `Analizando documento ${i} de ${total}`,
+    enEsperaRecepcion: "En espera de recepción",
+    extraccionEmpieza: "El agente comenzará la extracción cuando los documentos estén validados.",
+    motorReglas: "LISux · Motor de reglas",
+    evaluadas: (done, total) => `${done}/${total} evaluadas`,
+    enEsperaLisai: "En espera de LISai",
+    datosSimulados: "Datos simulados con fines demostrativos. Ninguna información mostrada corresponde a personas o siniestros reales.",
+  },
+  en: {
+    documentosObligatorios: "Required documents",
+    archivos: (n) => `${n} files`,
+    iniciarSimulacion: "Start simulation",
+    siguienteEtapa: "Next stage",
+    procesando: "Processing…",
+    reiniciar: "Restart",
+    subir: "Upload",
+    subirAria: (label) => `Upload ${label}`,
+    extraccionCognitiva: "LISai · Cognitive extraction",
+    analizandoDocumento: (i, total) => `Analyzing document ${i} of ${total}`,
+    enEsperaRecepcion: "Waiting for intake",
+    extraccionEmpieza: "The agent will start extraction once the documents are validated.",
+    motorReglas: "LISux · Rules engine",
+    evaluadas: (done, total) => `${done}/${total} evaluated`,
+    enEsperaLisai: "Waiting for LISai",
+    datosSimulados: "Simulated data for demonstration purposes. No information shown corresponds to real people or claims.",
+  },
+};
+
+export function ClaimsDemo({ onGoToFwa, language }) {
+  const lang = language === "en" ? "en" : "es";
+  const {
+    CLAIM,
+    CASE_STATUS,
+    STAGES,
+    DOCUMENTS,
+    MISSING_DOC,
+    EXTRACTED_FIELDS,
+    RULES,
+    RULES_READY,
+    DECISION,
+  } = getClaimsDemoData(lang);
+  const ESTADOS = ESTADOS_BY_LANG[lang];
+  const ui = UI_BY_LANG[lang];
+  const PROVIDED = DOCUMENTS.filter((doc) => doc.provided);
+
   const [stage, setStage] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
-  const narrationAudioRef = useRef(null);
 
   // Recepción: documentos recibidos, validados y receta aportada.
   const [docsIn, setDocsIn] = useState(0);
@@ -88,13 +136,6 @@ export function ClaimsDemo({ onGoToFwa }) {
     setStarted(true);
     setStage(0);
     scrollToWork();
-
-    // Reproduce audio de explicación (0:42 - 1:18)
-    if (narrationAudioRef.current) {
-      narrationAudioRef.current.currentTime = 42;
-      narrationAudioRef.current.playbackRate = 1.2;
-      narrationAudioRef.current.play();
-    }
 
     PROVIDED.forEach((unused, i) => {
       schedule(() => setDocsIn(i + 1), 500 * (i + 1));
@@ -211,21 +252,6 @@ export function ClaimsDemo({ onGoToFwa }) {
       )
     ),
 
-    // ---------- Audio de bienvenida ----------
-    !started &&
-      h(
-        "div",
-        { style: { marginBottom: "var(--s-5)" } },
-        h(AudioPlayer, {
-          src: "assets/voz/narrador.mp3",
-          startTime: "0:12",
-          endTime: "0:42",
-          label: "Escuchar: Al abrir landing de LISA Claims",
-          speed: 1.2,
-          autoplay: true,
-        })
-      ),
-
     // ---------- Controles ----------
     h(
       "div",
@@ -244,13 +270,13 @@ export function ClaimsDemo({ onGoToFwa }) {
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: runReception },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, "Iniciar simulación")
+            h("span", null, ui.iniciarSimulacion)
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--primary btn--pulse", onClick: next },
-            h("span", null, "Siguiente etapa"),
+            h("span", null, ui.siguienteEtapa),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -258,7 +284,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner" }),
-            "Procesando…"
+            ui.procesando
           ),
         // El reinicio solo se ofrece al terminar todo el proceso.
         finished &&
@@ -266,7 +292,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, "Reiniciar")
+            h("span", null, ui.reiniciar)
           )
       )
     ),
@@ -283,8 +309,8 @@ export function ClaimsDemo({ onGoToFwa }) {
         h(
           "header",
           { class: "panel__head" },
-          h("h4", { class: "panel__title" }, "Documentos obligatorios"),
-          h("span", { class: "panel__count" }, `${allValidated} archivos`)
+          h("h4", { class: "panel__title" }, ui.documentosObligatorios),
+          h("span", { class: "panel__count" }, ui.archivos(allValidated))
         ),
         h(
           "ul",
@@ -323,7 +349,7 @@ export function ClaimsDemo({ onGoToFwa }) {
                   "span",
                   { class: "doc__action" },
                   h(Icon, { name: "upload", size: 15 }),
-                  h("span", null, "Subir")
+                  h("span", null, ui.subir)
                 ),
             ];
 
@@ -337,7 +363,7 @@ export function ClaimsDemo({ onGoToFwa }) {
                       type: "button",
                       class: "doc__button",
                       onClick: () => setAskUpload(true),
-                      "aria-label": `Subir ${doc.label}`,
+                      "aria-label": ui.subirAria(doc.label),
                     },
                     contenido
                   )
@@ -365,13 +391,13 @@ export function ClaimsDemo({ onGoToFwa }) {
               h(
                 "div",
                 null,
-                h("h4", { class: "panel__title" }, "LISai · Extracción cognitiva"),
+                h("h4", { class: "panel__title" }, ui.extraccionCognitiva),
                 h(
                   "p",
                   { class: "panel__sub" },
                   stage >= 1
-                    ? `Analizando documento ${Math.min(fieldsShown + 1, DOCUMENTS.length)} de ${DOCUMENTS.length}`
-                    : "En espera de recepción"
+                    ? ui.analizandoDocumento(Math.min(fieldsShown + 1, DOCUMENTS.length), DOCUMENTS.length)
+                    : ui.enEsperaRecepcion
                 )
               )
             ),
@@ -386,7 +412,7 @@ export function ClaimsDemo({ onGoToFwa }) {
             ? h(
                 "p",
                 { class: "panel__empty" },
-                "El agente comenzará la extracción cuando los documentos estén validados."
+                ui.extraccionEmpieza
               )
             : h(
                 "div",
@@ -435,12 +461,12 @@ export function ClaimsDemo({ onGoToFwa }) {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "rules", size: 20 })),
-              h("h4", { class: "panel__title" }, "LISux · Motor de reglas")
+              h("h4", { class: "panel__title" }, ui.motorReglas)
             ),
             h(
               "span",
               { class: "chip" },
-              stage >= 2 ? `${rulesDone}/${RULES.length} evaluadas` : "En espera de LISai"
+              stage >= 2 ? ui.evaluadas(rulesDone, RULES.length) : ui.enEsperaLisai
             )
           ),
           h(
@@ -554,14 +580,7 @@ export function ClaimsDemo({ onGoToFwa }) {
           h(Icon, { name: "arrow", size: 18 })
         )
       )
-    ),
-
-    // Audio de narración para reproducir al iniciar simulación
-    h("audio", {
-      ref: narrationAudioRef,
-      src: "assets/voz/narrador.mp3",
-      preload: "metadata",
-    })
+    )
   );
 }
 

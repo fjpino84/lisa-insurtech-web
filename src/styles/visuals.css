@@ -847,6 +847,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: grayscale(1);
 }
 
 .lead-card__name {
@@ -933,12 +934,13 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: grayscale(1);
   transition: filter var(--t-base);
 }
 
 /* El retrato recupera algo de vida al pasar el cursor. */
 .member:hover .member__photo img {
-  filter: brightness(1.12);
+  filter: grayscale(1) brightness(1.12);
 }
 
 .member__initials {
@@ -1242,10 +1244,14 @@
 }
 
 .member__quote {
-  font-size: 1.35rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.5;
   color: var(--c-text-soft);
   margin-bottom: var(--s-3);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
 }
 
 .member__linkedin {

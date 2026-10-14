@@ -72,14 +72,30 @@ export function TopBar({ current, onNavigate, scrolled, menuOpen, onToggleMenu, 
         "div",
         { class: "topbar__controls" },
         h(
-          "button",
-          {
-            type: "button",
-            class: "topbar__language",
-            title: language === "es" ? "English version" : "Versión en español",
-            onClick: onLanguageChange,
-          },
-          h("span", { class: "topbar__language-flag" }, language === "es" ? "🇬🇧" : "🇪🇸")
+          "div",
+          { class: "topbar__language", role: "group", "aria-label": "Idioma / Language" },
+          h(
+            "button",
+            {
+              type: "button",
+              class: `topbar__language-option ${language === "es" ? "is-active" : ""}`,
+              title: "Español",
+              "aria-pressed": language === "es",
+              onClick: () => onLanguageChange("es"),
+            },
+            h("span", { class: "topbar__language-flag" }, "ES")
+          ),
+          h(
+            "button",
+            {
+              type: "button",
+              class: `topbar__language-option ${language === "en" ? "is-active" : ""}`,
+              title: "English",
+              "aria-pressed": language === "en",
+              onClick: () => onLanguageChange("en"),
+            },
+            h("span", { class: "topbar__language-flag" }, "EN")
+          )
         ),
         h(
           "button",

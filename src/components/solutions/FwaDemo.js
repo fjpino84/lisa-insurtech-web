@@ -3,19 +3,7 @@ import { Icon } from "../shared/Icon.js";
 import { Modal } from "../shared/Modal.js";
 import { useScrollTo } from "../../hooks/useScrollTo.js";
 import { DeviationChart, CoalitionChart } from "./PatternCharts.js";
-import {
-  CASE,
-  PHASES,
-  DOC_MARKS,
-  FORENSIC_SIGNALS,
-  METADATA,
-  VALIDATIONS,
-  PATTERNS,
-  RELATED_CASES,
-  PROVIDER,
-  RESOLUTION,
-  REPORT,
-} from "../../data/fwaDemo.js";
+import { getFwaDemoData } from "../../data/fwaDemo.js";
 
 /**
  * Mockup interactivo de LISA vigIA sobre el caso Ramiro Lucas Fiochi.
@@ -31,7 +19,23 @@ const PHASE_SCORE = [0, 62, 88, 98, 98];
 /** Formatea un importe en pesos chilenos. */
 const money = (value) => `$${value.toLocaleString("es-CL")}`;
 
-export function FwaDemo() {
+export function FwaDemo({ language }) {
+  const lang = language === "en" ? "en" : "es";
+  const {
+    CASE,
+    PHASES,
+    DOC_MARKS,
+    FORENSIC_SIGNALS,
+    METADATA,
+    VALIDATIONS,
+    PATTERNS,
+    RELATED_CASES,
+    PROVIDER,
+    RESOLUTION,
+    REPORT,
+    ui,
+  } = getFwaDemoData(lang);
+
   const [phase, setPhase] = useState(0);
   const [running, setRunning] = useState(false);
   const [started, setStarted] = useState(false);
@@ -235,11 +239,11 @@ export function FwaDemo() {
                 "div",
                 null,
                 h("h4", { class: "panel__title" }, CASE.documento),
-                h("p", { class: "panel__sub" }, `Prestador: ${CASE.prestador}`)
+                h("p", { class: "panel__sub" }, ui.prestador(CASE.prestador))
               )
             ),
             marksShown > 0 &&
-              h("span", { class: "chip chip--danger" }, `${marksShown} hallazgos`)
+              h("span", { class: "chip chip--danger" }, ui.hallazgos(marksShown))
           ),
 
           // Documento con las zonas marcadas
@@ -269,7 +273,7 @@ export function FwaDemo() {
                     height: `${m.alto}%`,
                   },
                   onClick: () => setActiveMark(activeMark === m.id ? null : m.id),
-                  "aria-label": `Hallazgo: ${m.etiqueta}`,
+                  "aria-label": ui.hallazgoAria(m.etiqueta),
                 },
                 h("span", { class: "boleta__tag" }, m.etiqueta)
               )
@@ -281,7 +285,7 @@ export function FwaDemo() {
               "p",
               { class: "boleta__hint" },
               h(Icon, { name: "eye", size: 14 }),
-              h("span", null, mark ? mark.detalle : "Pulse sobre una zona marcada para ver el detalle.")
+              h("span", null, mark ? mark.detalle : ui.pulseZona)
             )
         ),
 
@@ -297,7 +301,7 @@ export function FwaDemo() {
                 "div",
                 { class: "panel__head-left" },
                 h("span", { class: "panel__icon panel__icon--danger" }, h(Icon, { name: "file", size: 20 })),
-                h("h4", { class: "panel__title" }, "Metadatos del archivo")
+                h("h4", { class: "panel__title" }, ui.metadatosArchivo)
               )
             ),
             h(
@@ -306,19 +310,19 @@ export function FwaDemo() {
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Creación"),
+                h("span", { class: "meta-list__label" }, METADATA.creacionLabel),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.creacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Última modificación"),
+                h("span", { class: "meta-list__label" }, METADATA.modificacionLabel),
                 h("span", { class: "meta-list__value u-mono" }, METADATA.modificacion)
               ),
               h(
                 "li",
                 null,
-                h("span", { class: "meta-list__label" }, "Software"),
+                h("span", { class: "meta-list__label" }, METADATA.softwareLabel),
                 h("span", { class: "meta-list__value meta-list__value--alert" }, METADATA.software)
               )
             ),
@@ -341,8 +345,8 @@ export function FwaDemo() {
             h(
               "div",
               null,
-              h("p", { class: "score__label" }, "Puntaje de riesgo"),
-              h("p", { class: "score__case u-mono" }, `Siniestro ${CASE.id}`)
+              h("p", { class: "score__label" }, ui.puntajeRiesgo),
+              h("p", { class: "score__case u-mono" }, ui.siniestro(CASE.id))
             ),
             h(
               "p",
@@ -359,10 +363,10 @@ export function FwaDemo() {
           h(
             "dl",
             { class: "score__facts" },
-            h("div", null, h("dt", null, "Beneficiario"), h("dd", null, CASE.subject)),
-            h("div", null, h("dt", null, "RUT"), h("dd", { class: "u-mono" }, CASE.rut)),
-            h("div", null, h("dt", null, "Prestación"), h("dd", null, CASE.prestacion)),
-            h("div", null, h("dt", null, "Monto"), h("dd", { class: "u-mono" }, money(CASE.monto)))
+            h("div", null, h("dt", null, ui.beneficiario), h("dd", null, CASE.subject)),
+            h("div", null, h("dt", null, ui.rut), h("dd", { class: "u-mono" }, CASE.rut)),
+            h("div", null, h("dt", null, ui.prestacion), h("dd", null, CASE.prestacion)),
+            h("div", null, h("dt", null, ui.monto), h("dd", { class: "u-mono" }, money(CASE.monto)))
           )
         ),
 
@@ -377,11 +381,11 @@ export function FwaDemo() {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "search", size: 20 })),
-              h("h4", { class: "panel__title" }, "Hallazgos forenses")
+              h("h4", { class: "panel__title" }, ui.hallazgosForenses)
             )
           ),
           signalsShown === 0
-            ? h("p", { class: "panel__empty" }, "Inicie el análisis para inspeccionar el documento.")
+            ? h("p", { class: "panel__empty" }, ui.inicieAnalisis)
             : h(
                 "ul",
                 { class: "signals" },
@@ -412,11 +416,11 @@ export function FwaDemo() {
               "div",
               { class: "panel__head-left" },
               h("span", { class: "panel__icon" }, h(Icon, { name: "globe", size: 20 })),
-              h("h4", { class: "panel__title" }, "Validación externa")
+              h("h4", { class: "panel__title" }, ui.validacionExterna)
             )
           ),
           phase < 1
-            ? h("p", { class: "panel__empty" }, "Pendiente de la fase de fuentes externas.")
+            ? h("p", { class: "panel__empty" }, ui.pendienteFuentes)
             : h(
                 "ul",
                 { class: "validations" },
@@ -438,13 +442,13 @@ export function FwaDemo() {
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, "Declarado"),
+                          h("span", { class: "amounts__label" }, ui.declarado),
                           h("span", { class: "amounts__value amounts__value--alert u-mono" }, money(v.montoDeclarado))
                         ),
                         h(
                           "div",
                           { class: "amounts__item" },
-                          h("span", { class: "amounts__label" }, "Real (SII)"),
+                          h("span", { class: "amounts__label" }, ui.realSii),
                           h("span", { class: "amounts__value u-mono" }, money(v.montoReal))
                         )
                       )
@@ -467,11 +471,11 @@ export function FwaDemo() {
           "div",
           { class: "panel__head-left" },
           h("span", { class: "panel__icon" }, h(Icon, { name: "brain", size: 20 })),
-          h("h4", { class: "panel__title" }, "Patrones de comportamiento")
+          h("h4", { class: "panel__title" }, ui.patronesComportamiento)
         )
       ),
       phase < 2
-        ? h("p", { class: "panel__empty" }, "Pendiente de la fase de patrones.")
+        ? h("p", { class: "panel__empty" }, ui.pendientePatrones)
         : h(
             "div",
             { class: "patterns" },
@@ -489,7 +493,7 @@ export function FwaDemo() {
                   h(Icon, { name: "chart", size: 16 }),
                   h("span", null, PATTERNS.desviacion.titulo)
                 ),
-                h(DeviationChart, { average: PATTERNS.desviacion.promedio }),
+                h(DeviationChart, { average: PATTERNS.desviacion.promedio, language: lang }),
                 h("p", { class: "pattern__text" }, PATTERNS.desviacion.texto)
               ),
               h(
@@ -501,7 +505,7 @@ export function FwaDemo() {
                   h(Icon, { name: "team", size: 16 }),
                   h("span", null, PATTERNS.coalicion.titulo)
                 ),
-                h(CoalitionChart, null),
+                h(CoalitionChart, { language: lang }),
                 h("p", { class: "pattern__text" }, PATTERNS.coalicion.texto)
               )
             ),
@@ -513,7 +517,7 @@ export function FwaDemo() {
               h(
                 "p",
                 { class: "related__head" },
-                h("span", null, "Casos relacionados"),
+                h("span", null, ui.casosRelacionados),
                 h("span", { class: "chip chip--danger" }, PROVIDER.nombre)
               ),
               h(
@@ -549,7 +553,7 @@ export function FwaDemo() {
       // Recorrido por fases
       h(
         "ol",
-        { class: "deck__steps", "aria-label": "Fases del análisis" },
+        { class: "deck__steps", "aria-label": ui.fasesAnalisis },
         PHASES.map((p, i) =>
           h(
             "li",
@@ -575,7 +579,7 @@ export function FwaDemo() {
         h(
           "p",
           { class: "deck__phase-hint" },
-          started ? `Fase ${phase + 1} de ${PHASES.length}` : "Listo para comenzar"
+          started ? ui.fase(phase + 1, PHASES.length) : ui.listoComenzar
         )
       ),
 
@@ -583,7 +587,7 @@ export function FwaDemo() {
       h(
         "div",
         { class: "deck__score" },
-        h("span", { class: "deck__score-label" }, "Riesgo"),
+        h("span", { class: "deck__score-label" }, ui.riesgo),
         h("span", { class: `deck__score-value deck__score-value--${riskLevel} u-mono` }, `${score}%`)
       ),
 
@@ -596,13 +600,13 @@ export function FwaDemo() {
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: start },
             h(Icon, { name: "play", size: 15 }),
-            h("span", null, "Iniciar análisis")
+            h("span", null, ui.iniciarAnalisis)
           ),
         canAdvance &&
           h(
             "button",
             { type: "button", class: "btn btn--danger btn--pulse", onClick: next },
-            h("span", null, "Siguiente fase"),
+            h("span", null, ui.siguienteFase),
             h(Icon, { name: "arrow", size: 16 })
           ),
         running &&
@@ -610,14 +614,14 @@ export function FwaDemo() {
             "span",
             { class: "demo__working" },
             h("span", { class: "spinner spinner--danger" }),
-            "Analizando…"
+            ui.analizando
           ),
         finished &&
           h(
             "button",
             { type: "button", class: "btn btn--ghost", onClick: reset },
             h(Icon, { name: "refresh", size: 15 }),
-            h("span", null, "Reiniciar")
+            h("span", null, ui.reiniciar)
           )
       )
     ),
@@ -640,7 +644,7 @@ export function FwaDemo() {
       h(
         "div",
         { class: "resolution__score" },
-        h("span", { class: "resolution__score-label" }, "Puntaje de riesgo"),
+        h("span", { class: "resolution__score-label" }, ui.puntajeRiesgo),
         h("span", { class: "resolution__score-value u-mono" }, `${RESOLUTION.score}%`)
       ),
       h(
@@ -658,7 +662,7 @@ export function FwaDemo() {
       h(
         "div",
         { class: "resolution__saving" },
-        h("span", { class: "resolution__saving-label" }, "Pérdida evitada"),
+        h("span", { class: "resolution__saving-label" }, ui.perdidaEvitada),
         h("span", { class: "resolution__saving-value u-mono" }, money(RESOLUTION.savings))
       ),
 
@@ -720,10 +724,10 @@ export function FwaDemo() {
                 h(
                   "p",
                   { class: "report-file__meta" },
-                  `PDF · ${REPORT.file.pages} páginas · ${REPORT.file.size}`
+                  ui.paginas(REPORT.file.pages, REPORT.file.size)
                 )
               ),
-              h("span", { class: "report-file__tag" }, "Adjunto")
+              h("span", { class: "report-file__tag" }, ui.adjunto)
             ),
 
             // Resumen del caso
@@ -744,7 +748,7 @@ export function FwaDemo() {
             h(
               "div",
               { class: "report-contents" },
-              h("p", { class: "report-contents__title" }, "El reporte incluye"),
+              h("p", { class: "report-contents__title" }, ui.reporteIncluye),
               h(
                 "ul",
                 null,
@@ -763,7 +767,7 @@ export function FwaDemo() {
               "p",
               { class: "report-to" },
               h(Icon, { name: "mail", size: 15 }),
-              h("span", null, "Destinatario: "),
+              h("span", null, ui.destinatario),
               h("strong", null, REPORT.destino)
             ),
 
