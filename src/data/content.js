@@ -283,6 +283,19 @@ export const AWARDS = [
   { org: "Momentum GNP", detail: "México, 2024" },
 ];
 
+/** Logos de clientes, para el carrusel de confianza. */
+export const CLIENTS = [
+  { id: "zurich", name: "Zurich", logo: "assets/clientes/zurich.png" },
+  { id: "zurich-santander", name: "Zurich Santander", logo: "assets/clientes/zurich-santander.png" },
+  { id: "bci", name: "BCI Seguros", logo: "assets/clientes/bci.png" },
+  { id: "consorcio", name: "Consorcio", logo: "assets/clientes/consorcio.png" },
+  { id: "gnp", name: "GNP Seguros", logo: "assets/clientes/gnp.png" },
+  { id: "la-segunda", name: "La Segunda Seguros", logo: "assets/clientes/la-segunda.png" },
+  { id: "mercantil-andina", name: "Mercantil Andina", logo: "assets/clientes/mercantil-andina.png" },
+  { id: "metlife", name: "MetLife", logo: "assets/clientes/metlife.png" },
+  { id: "pacifico", name: "Pacífico Seguros", logo: "assets/clientes/pacifico.png" },
+];
+
 
 export const TESTIMONIALS = [
   {

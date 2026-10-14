@@ -122,6 +122,9 @@ export const TRANSLATIONS = {
         { year: "2025", name: "Mayor impacto en LATAM", text: "Mayor impacto en LATAM" },
       ],
     },
+    clients: {
+      title: "Han confiado en nosotros",
+    },
     about: {
       resena: {
         title: "Transformamos la gestión de siniestros con inteligencia artificial",
@@ -380,6 +383,9 @@ export const TRANSLATIONS = {
         { year: "2022", name: "Best Idea", text: "Among 2,600 projects worldwide, LISA becomes the winner of the Zurich Innovation Championship." },
         { year: "2025", name: "Greatest impact in LATAM", text: "Greatest impact in LATAM" },
       ],
+    },
+    clients: {
+      title: "Trusted by",
     },
     about: {
       resena: {

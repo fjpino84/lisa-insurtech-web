@@ -85,6 +85,7 @@ const MODULES = [
   "src/components/home/Pillars.js",
   "src/components/home/SolutionsPreview.js",
   "src/components/home/AwardsSection.js",
+  "src/components/home/ClientsCarousel.js",
   "src/components/home/Testimonials.js",
   "src/components/solutions/DemoHeader.js",
   "src/components/solutions/PatternCharts.js",
@@ -141,6 +142,15 @@ const IMAGES = [
   "assets/equipo/rodrigo.jpg",
   "assets/equipo/marie.jpg",
   "assets/equipo/nicolas.jpg",
+  "assets/clientes/zurich.png",
+  "assets/clientes/zurich-santander.png",
+  "assets/clientes/bci.png",
+  "assets/clientes/consorcio.png",
+  "assets/clientes/gnp.png",
+  "assets/clientes/la-segunda.png",
+  "assets/clientes/mercantil-andina.png",
+  "assets/clientes/metlife.png",
+  "assets/clientes/pacifico.png",
 ];
 
 IMAGES.forEach((file) => {
