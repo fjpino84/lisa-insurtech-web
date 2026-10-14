@@ -148,9 +148,9 @@ export function App() {
           h(Hero, { onDemo: () => setModalOpen(true), language }),
           h(Pillars, { language }),
           h(SolutionsPreview, { onOpenDemo: openDemo, language }),
-          h(AwardsSection, { language }),
           h(Modules, { language }),
           h(Testimonials, { language }),
+          h(AwardsSection, { language }),
           h(Closing, { onNavigate: navigate, language })
         ),
 
