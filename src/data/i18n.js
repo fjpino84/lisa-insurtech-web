@@ -54,10 +54,6 @@ export const TRANSLATIONS = {
         name: { prefix: "LIS", suffix: "ux", tone: "purple" },
         title: "Reglas de negocio a la medida de cada póliza",
         text: "Transformamos las pólizas de nuestros clientes en un motor de reglas de negocio capaz de procesar toda la información necesaria para tomar decisiones de liquidación. Cada interacción se vuelve clara, justa y excepcionalmente rápida.",
-        metrics: [
-          { value: "99.9%", label: "Precisión" },
-          { value: "<1s", label: "Latencia" },
-        ],
       },
       {
         id: "fwa",
@@ -318,10 +314,6 @@ export const TRANSLATIONS = {
         name: { prefix: "LIS", suffix: "ux", tone: "purple" },
         title: "Business rules tailored to each policy",
         text: "We transform our clients' policies into a business rules engine capable of processing all the information necessary to make settlement decisions. Every interaction becomes clear, fair and exceptionally fast.",
-        metrics: [
-          { value: "99.9%", label: "Accuracy" },
-          { value: "<1s", label: "Latency" },
-        ],
       },
       {
         id: "fwa",

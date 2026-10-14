@@ -74,10 +74,6 @@ export const PILLARS = [
     name: { prefix: "LIS", suffix: "ux", tone: "purple" },
     title: "Reglas de negocio a la medida de cada póliza",
     text: "Transformamos las pólizas de nuestros clientes en un motor de reglas de negocio capaz de procesar toda la información necesaria para tomar decisiones de liquidación. Cada interacción se vuelve clara, justa y excepcionalmente rápida.",
-    stats: [
-      { value: "99.9%", label: "Precisión" },
-      { value: "<1s", label: "Latencia" },
-    ],
   },
   {
     id: "fwa",
