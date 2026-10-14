@@ -19,7 +19,7 @@ export function AwardsSection({ language }) {
         h(
           "li",
           { key: award.org, class: "award" },
-          h(Icon, { name: "award", size: 24, class: "award__icon" }),
+          h(Icon, { name: "trophy", size: 24, class: "award__icon" }),
           h(
             "div",
             null,

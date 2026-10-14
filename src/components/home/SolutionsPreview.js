@@ -121,7 +121,6 @@ export function SolutionsPreview({ onOpenDemo, language }) {
  */
 export function Closing({ onNavigate, language }) {
   const t = useTranslations(language);
-  const [awardsRef, awardsVisible] = useReveal({ threshold: 0.15 });
   const [ctaRef, ctaVisible] = useReveal({ threshold: 0.3 });
 
   return h(
@@ -130,18 +129,6 @@ export function Closing({ onNavigate, language }) {
     h(
       "div",
       { class: "u-container" },
-
-      // --- Reconocimientos de la industria ---
-      h(
-        "div",
-        { class: `awards ${awardsVisible ? "is-visible" : ""}`, ref: awardsRef },
-        h("p", { class: "awards__label" }, t.awards.label),
-        h(
-          "ul",
-          { class: "awards__list" },
-          t.awards.title && h("li", null, h("p", null, t.awards.title))
-        )
-      ),
 
       // --- Llamada a la acción final ---
       h(

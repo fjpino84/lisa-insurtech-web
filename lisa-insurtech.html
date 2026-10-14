@@ -10418,7 +10418,6 @@ function SolutionsPreview({ onOpenDemo, language }) {
  */
 function Closing({ onNavigate, language }) {
   const t = useTranslations(language);
-  const [awardsRef, awardsVisible] = useReveal({ threshold: 0.15 });
   const [ctaRef, ctaVisible] = useReveal({ threshold: 0.3 });
 
   return h(
@@ -10427,18 +10426,6 @@ function Closing({ onNavigate, language }) {
     h(
       "div",
       { class: "u-container" },
-
-      // --- Reconocimientos de la industria ---
-      h(
-        "div",
-        { class: `awards ${awardsVisible ? "is-visible" : ""}`, ref: awardsRef },
-        h("p", { class: "awards__label" }, t.awards.label),
-        h(
-          "ul",
-          { class: "awards__list" },
-          t.awards.title && h("li", null, h("p", null, t.awards.title))
-        )
-      ),
 
       // --- Llamada a la acción final ---
       h(
@@ -10479,7 +10466,7 @@ function AwardsSection({ language }) {
         h(
           "li",
           { key: award.org, class: "award" },
-          h(Icon, { name: "award", size: 24, class: "award__icon" }),
+          h(Icon, { name: "trophy", size: 24, class: "award__icon" }),
           h(
             "div",
             null,
