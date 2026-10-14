@@ -10622,24 +10622,24 @@ function ClientsCarousel({ language }) {
     h(
       "div",
       { class: "u-container" },
-      h("p", { class: "clients__title" }, t.clients.title)
-    ),
-    h(
-      "div",
-      { class: "clients__track" },
+      h("p", { class: "clients__title" }, t.clients.title),
       h(
-        "ul",
-        { class: "clients__list" },
-        track.map((client, i) =>
-          h(
-            "li",
-            { key: `${client.id}-${i}`, class: "clients__item" },
-            h("img", {
-              src: client.logo,
-              alt: client.name,
-              loading: "lazy",
-              decoding: "async",
-            })
+        "div",
+        { class: "clients__track" },
+        h(
+          "ul",
+          { class: "clients__list" },
+          track.map((client, i) =>
+            h(
+              "li",
+              { key: `${client.id}-${i}`, class: "clients__item" },
+              h("img", {
+                src: client.logo,
+                alt: client.name,
+                loading: "lazy",
+                decoding: "async",
+              })
+            )
           )
         )
       )
