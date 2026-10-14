@@ -552,16 +552,19 @@
 }
 
 /* --- Reconocimientos --- */
-.awards {
-  margin-top: var(--s-9);
-  padding-top: var(--s-7);
-  border-top: 0.1rem solid var(--c-border);
+.awards-section {
   opacity: 0;
   transition: opacity var(--t-slow);
 }
 
-.awards.is-visible {
+.awards-section.is-visible {
   opacity: 1;
+}
+
+.awards {
+  margin-top: var(--s-9);
+  padding-top: var(--s-7);
+  border-top: 0.1rem solid var(--c-border);
 }
 
 .awards__label {

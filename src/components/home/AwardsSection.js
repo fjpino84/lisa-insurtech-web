@@ -10,27 +10,35 @@ export function AwardsSection({ language }) {
 
   return h(
     "section",
-    { class: `awards ${visible ? "is-visible" : ""}`, ref },
-    h("p", { class: "awards__label" }, t.awards.label),
+    { class: `awards-section ${visible ? "is-visible" : ""}`, ref },
     h(
-      "ul",
-      { class: "awards__list" },
-      AWARDS.map((award) =>
+      "div",
+      { class: "u-container" },
+      h(
+        "div",
+        { class: "awards" },
+        h("p", { class: "awards__label" }, t.awards.label),
         h(
-          "li",
-          { key: award.org, class: "award" },
-          h(Icon, { name: "trophy", size: 24, class: "award__icon" }),
-          h(
-            "div",
-            null,
+          "ul",
+          { class: "awards__list" },
+          AWARDS.map((award) =>
             h(
-              "div",
-              { class: "award__org" },
-              h("span", null, award.org),
-              award.highlight &&
-                h("span", { class: "award__badge" }, award.highlight)
-            ),
-            h("p", { class: "award__detail" }, award.detail)
+              "li",
+              { key: award.org, class: "award" },
+              h(Icon, { name: "trophy", size: 24, class: "award__icon" }),
+              h(
+                "div",
+                null,
+                h(
+                  "div",
+                  { class: "award__org" },
+                  h("span", null, award.org),
+                  award.highlight &&
+                    h("span", { class: "award__badge" }, award.highlight)
+                ),
+                h("p", { class: "award__detail" }, award.detail)
+              )
+            )
           )
         )
       )
