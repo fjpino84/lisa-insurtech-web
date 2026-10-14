@@ -142,6 +142,8 @@ const IMAGES = [
   "assets/equipo/rodrigo.jpg",
   "assets/equipo/marie.jpg",
   "assets/equipo/nicolas.jpg",
+  "assets/equipo/armando.jpg",
+  "assets/equipo/kenny.png",
   "assets/clientes/zurich.png",
   "assets/clientes/zurich-santander.png",
   "assets/clientes/bci.png",
