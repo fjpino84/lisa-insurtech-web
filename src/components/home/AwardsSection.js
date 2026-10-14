@@ -25,17 +25,17 @@ export function AwardsSection({ language }) {
             h(
               "li",
               { key: award.org, class: "award" },
-              h(Icon, { name: "trophy", size: 24, class: "award__icon" }),
+              award.highlight &&
+                h("span", { class: "award__badge" }, award.highlight),
+              h(
+                "span",
+                { class: "award__icon" },
+                h(Icon, { name: "trophy", size: 20 })
+              ),
               h(
                 "div",
-                null,
-                h(
-                  "div",
-                  { class: "award__org" },
-                  h("span", null, award.org),
-                  award.highlight &&
-                    h("span", { class: "award__badge" }, award.highlight)
-                ),
+                { class: "award__body" },
+                h("p", { class: "award__org" }, award.org),
                 h("p", { class: "award__detail" }, award.detail)
               )
             )
