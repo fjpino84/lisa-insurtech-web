@@ -190,6 +190,7 @@ export const TRANSLATIONS = {
         nicolas: { cargo: "Senior Product Owner", quote: "En LISA buscamos ofrecer soluciones escalables y de gran valor para nuestros clientes, mediante la optimización apoyados en nuestra tecnología." },
         armando: { cargo: "Senior Cloud Architect", quote: "En LISA creemos en el poder de la arquitectura cloud y la inteligencia artificial para transformar ideas en soluciones innovadoras, escalables y seguras. Mi pasión es diseñar infraestructuras inteligentes, impulsar la automatización y aprovechar el potencial de la IA para construir el futuro de la tecnología." },
         kenny: { cargo: "Ssr Ruby Backend Developer", quote: "En LISA, he vivido de primera mano cómo la IA transforma la industria aseguradora: desde el desarrollo tecnológico, automatizamos procesos complejos para elevar sustancialmente la rapidez y calidad de servicio de nuestros clientes." },
+        yamil: { cargo: "Analista Customer Support", quote: "Los resultados nos unen, el respeto nos sostiene y las buenas vibras nos impulsa. Una empresa donde los buenos resultados y el clima laboral van de la mano." },
       },
     },
     testimonials: [
@@ -450,6 +451,7 @@ export const TRANSLATIONS = {
         nicolas: { cargo: "Senior Product Owner", quote: "At LISA we seek to offer scalable solutions of great value to our clients, through optimization supported by our technology." },
         armando: { cargo: "Senior Cloud Architect", quote: "At LISA we believe in the power of cloud architecture and artificial intelligence to turn ideas into innovative, scalable and secure solutions. My passion is designing intelligent infrastructures, driving automation and harnessing the potential of AI to build the future of technology." },
         kenny: { cargo: "Ssr Ruby Backend Developer", quote: "At LISA, I've seen firsthand how AI transforms the insurance industry: from technology development, we automate complex processes to substantially raise the speed and quality of service for our clients." },
+        yamil: { cargo: "Customer Support Analyst", quote: "Results bring us together, respect holds us up, and good vibes drive us forward. A company where great results and a great work environment go hand in hand." },
       },
     },
     testimonials: [

@@ -257,6 +257,7 @@ export const TEAM = {
       { id: "nicolas", nombre: "Nicolás Nash", cargo: "Senior Product Owner", foto: "assets/equipo/nicolas.jpg", quote: "En LISA buscamos ofrecer soluciones escalables y de gran valor para nuestros clientes, mediante la optimización apoyados en nuestra tecnología.", linkedin: "https://www.linkedin.com/company/lisainsurtech" },
       { id: "armando", nombre: "Armando Fuentes", cargo: "Senior Cloud Architect", foto: "assets/equipo/armando.jpg", quote: "En LISA creemos en el poder de la arquitectura cloud y la inteligencia artificial para transformar ideas en soluciones innovadoras, escalables y seguras. Mi pasión es diseñar infraestructuras inteligentes, impulsar la automatización y aprovechar el potencial de la IA para construir el futuro de la tecnología.", linkedin: "https://www.linkedin.com/in/armandofcom/" },
       { id: "kenny", nombre: "Kenny Ortega", cargo: "Ssr Ruby Backend Developer", foto: "assets/equipo/kenny.png", quote: "En LISA, he vivido de primera mano cómo la IA transforma la industria aseguradora: desde el desarrollo tecnológico, automatizamos procesos complejos para elevar sustancialmente la rapidez y calidad de servicio de nuestros clientes.", linkedin: "https://www.linkedin.com/in/kennyortega" },
+      { id: "yamil", nombre: "Yamil Jaluf", cargo: "Analista Customer Support", foto: "assets/equipo/yamil.jpg", quote: "Los resultados nos unen, el respeto nos sostiene y las buenas vibras nos impulsa. Una empresa donde los buenos resultados y el clima laboral van de la mano.", linkedin: "https://www.linkedin.com/in/eduardo-yamil-jaluf-nayar-01019b23a/?isSelfProfile=true" },
     ],
   ],
 };
@@ -292,6 +293,9 @@ export const CLIENTS = [
   { id: "mercantil-andina", name: "Mercantil Andina", logo: "assets/clientes/mercantil-andina.png" },
   { id: "gnp", name: "GNP Seguros", logo: "assets/clientes/gnp.png" },
   { id: "pacifico", name: "Pacífico Seguros", logo: "assets/clientes/pacifico.png" },
+  { id: "esencial", name: "Esencial Grupo Alemana", logo: "assets/clientes/esencial.png" },
+  { id: "fid", name: "FID Seguros", logo: "assets/clientes/fid.png" },
+  { id: "marsh", name: "Marsh", logo: "assets/clientes/marsh.png" },
 ];
 
 

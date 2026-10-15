@@ -144,6 +144,7 @@ const IMAGES = [
   "assets/equipo/nicolas.jpg",
   "assets/equipo/armando.jpg",
   "assets/equipo/kenny.png",
+  "assets/equipo/yamil.jpg",
   "assets/clientes/zurich.png",
   "assets/clientes/zurich-santander.png",
   "assets/clientes/bci.png",
@@ -153,6 +154,9 @@ const IMAGES = [
   "assets/clientes/mercantil-andina.png",
   "assets/clientes/metlife.png",
   "assets/clientes/pacifico.png",
+  "assets/clientes/esencial.png",
+  "assets/clientes/fid.png",
+  "assets/clientes/marsh.png",
 ];
 
 IMAGES.forEach((file) => {
